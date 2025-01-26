@@ -1,0 +1,6 @@
+
+[[Snippets]]
+Description = "Kill app on port"
+Output = ""
+Tag = []
+command = "lsof -ti :<port> | xargs kill -9"

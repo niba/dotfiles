@@ -7,6 +7,21 @@ return {
         formatters = {
           file = {
             filename_first = true, -- display filename before the file path
+            truncate = 100,
+          },
+        },
+      },
+      win = {
+        input = {
+          keys = {
+            ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
+            ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
+          },
+        },
+        list = {
+          keys = {
+            ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
+            ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
           },
         },
       },
@@ -25,6 +40,20 @@ return {
           Snacks.picker.resume()
         end,
         desc = "Resume picker",
+      },
+      {
+        "<leader>su",
+        function()
+          Snacks.picker.undo()
+        end,
+        desc = "Open undo history",
+      },
+      {
+        "<leader>sP",
+        function()
+          Snacks.picker.files({ rtp = true, pattern = "file:md$ " })
+        end,
+        desc = "Lazy plugins",
       },
       {
         "<leader>sZ",

@@ -1,0 +1,62 @@
+#!/bin/sh
+
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+
+
+$HOME/.config/yabai/create_spaces_multi.sh
+
+yabai -m config layout stack
+
+yabai -m config window_animation_duration    0.0
+# yabai -m config mouse_follows_focus on
+
+function yabai_rule {
+  yabai -m rule --add "$@"
+  yabai -m rule --apply "$@"
+}
+
+yabai_rule app="kitty$" space=terminal
+
+yabai_rule app="Code" space=code
+
+yabai_rule app="Arc$" space=browser
+yabai -m signal --add event=window_created app="^Arc$" action="~/.config/yabai/yabai_arc_rules.sh"
+
+yabai_rule app="Chrome$" space=browser
+yabai_rule app="Brave Browser" space=browser
+yabai_rule app="Microsoft Edge" space=browser
+
+yabai_rule app="Notion$" space=productivity
+yabai_rule app="Obsidian" space=productivity
+
+yabai_rule app="Chromium$" space=other
+yabai_rule app="Electron$" space=other
+yabai_rule app="Microsoft Teams" space=other
+yabai_rule app="Figma" space=other
+yabai_rule app="QuickGPT" space=other
+yabai_rule app="Notes$" space=other
+yabai_rule app="Discord$" space=other
+yabai_rule app="Bazecor$" space=other
+yabai_rule app="Spotify$" space=other
+yabai_rule app="Toggl Track" space=other
+yabai_rule app="Messenger" space=other
+yabai_rule app="Bitwarden" space=other
+
+yabai_rule app="pgAdmin 4" space=helper
+yabai_rule app="xStation5" space=helper
+yabai_rule app="TradingView" space=helper
+yabai_rule app="RedisInsight-v2" space=helper
+yabai_rule app="Postman" space=helper
+
+yabai_rule app="^System Preferences$" manage=off layer=normal
+yabai_rule app="^System Settings$" manage=off layer=normal
+yabai_rule app="^Finder$" manage=off layer=normal
+yabai_rule app="Activity Monitor" manage=off layer=normal
+yabai_rule app="^Raycast$" manage=off layer=normal
+yabai_rule app="Calendar&" manage=off layer=normal
+yabai_rule app="Calculator$" manage=off layer=normal
+yabai_rule app="Notes$" manage=off layer=normal
+yabai_rule app="League of Legends$" manage=off layer=normal
+yabai_rule app="Steam Helper" manage=off layer=normal

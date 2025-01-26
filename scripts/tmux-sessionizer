@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+	selected=$1
+else
+	# selected=$(fd -H --prune --exclude "node_modules" "^.git\$" ~/Documents/Projects/ | xargs -I{} dirname {} | while read -r p; do zoxide query -l -s "$p/"; done | sort -rnk1 | fzf --no-sort | awk '{print $2}')
+	selected=$(fd -H --no-ignore-vcs --prune --exclude "node_modules" "^.git\$" ~/Documents/Projects/ | xargs -I{} dirname {} | fzf)
+	# selectedtest=$(fd -H --prune --exclude "node_modules" "^.git\$" ~/Documents/Projects/ | xargs -I{} dirname {})
+	# selected=$(find ~/Documents/projects -mindepth 1 -maxdepth 1 -type d | fzf)
+fi
+
+# Create an associative array with default score of 0 for all repos
+# declare -A repo_scores
+# for repo in $repos; do
+#     repo_scores["$repo"]=0
+# done
+#
+# # Update the scores from zoxide
+# while IFS='|' read -r score repo; do
+#     repo_scores["$repo"]=$score
+# done < <(zoxide query --list)
+#
+# # Print and sort by scores
+# for repo in "${!repo_scores[@]}"; do
+#     echo "${repo_scores[$repo]}|$repo"
+# done | sort -rn | cut -f2 -d '|'
+#
+# sorted_repos=$(for repo in $repos; do
+# 	zoxide query --score "$repo"
+# done)
+#
+# sorted_repos2=$(for repo in $repos; do
+# 	zoxide query -s -l "$repo"
+# done)
+# sorted_repos2=$(while read -r p; do zoxide query -l -s "$p/"; done)
+# echo "sorted: $sorted_repos"
+# echo "sorted2: $sorted_repos2"
+echo "selected: $selected"
+
+if [[ -z $selected ]]; then
+	exit 0
+fi
+selected_name=$(echo "$selected" | sed -n 's/.*\/Users\/niba\/Documents\/Projects\/\(.*\)/\1/p' | tr / _ | tr . _)
+tmux_running=$(pgrep tmux)
+
+echo "selected name: $selected_name"
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+	tmux new-session -s $selected_name -c $selected
+	exit 0
+fi
+
+if ! tmux has-session -t=$selected_name 2>/dev/null; then
+	tmux new-session -ds $selected_name -c $selected
+fi
+
+tmux switch-client -t $selected_name

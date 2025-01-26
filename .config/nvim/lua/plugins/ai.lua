@@ -1,5 +1,13 @@
 local enabled = false
 
+local prepare_data_for_json = function(data)
+  if type(data) == "table" then
+    return data.body
+  end
+  local find_json_start = string.find(data, "{") or 1
+  return string.sub(data, find_json_start)
+end
+
 local custom_prompt =
   [[You are an expert in Web development, including CSS, JavaScript, TypeScript, React, Tailwind, Node.JS and Markdown, you are also expert in system programming using rust and expert in lua and neovim editor. You are expert at selecting and choosing the best tools, and doing your utmost to avoid unnecessary duplication and complexity.
 
@@ -20,100 +28,6 @@ You are keenly aware of security, and make sure at every step that we don't do a
 Finally, it is important that everything produced is operationally sound. We consider how to host, manage, monitor and maintain our solutions. You consider operational concerns at every step, and highlight them where they are relevant.]]
 
 return {
-  {
-    "frankroeder/parrot.nvim",
-    enabled = false,
-    tag = "v0.3.2",
-    dependencies = { "ibhagwan/fzf-lua", "nvim-lua/plenary.nvim" },
-    keys = {
-      {
-        "<leader>aa",
-        "<cmd>PrtChatToggle vsplit<cr>",
-        desc = "Toggle Chat",
-        mode = { "n", "v" },
-      },
-    },
-    config = function()
-      require("parrot").setup({
-        toggle_target = "vsplit",
-        providers = {
-          pplx = {
-            api_key = os.getenv("PERPLEXITY_API_KEY"),
-            -- OPTIONAL
-            -- gpg command
-            -- api_key = { "gpg", "--decrypt", vim.fn.expand("$HOME") .. "/pplx_api_key.txt.gpg"  },
-            -- macOS security tool
-            -- api_key = { "/usr/bin/security", "find-generic-password", "-s pplx-api-key", "-w" },
-          },
-          openai = {
-            api_key = os.getenv("OPENAI_API_KEY"),
-          },
-          anthropic = {
-            api_key = os.getenv("ANTHROPIC_API_KEY"),
-          },
-          mistral = {
-            api_key = os.getenv("MISTRAL_API_KEY"),
-          },
-        },
-        --       agents = {
-        -- chat = {
-        --
-        --         },
-        --         command = {
-        --
-        --         }
-        --       },
-        hooks = {
-          Explain = function(prt, params)
-            local template = [[
-        Your task is to take the code snippet from {{filename}} and explain it with gradually increasing complexity.
-        Break down the code's functionality, purpose, and key components.
-        The goal is to help the reader understand what the code does and how it works.
-
-        ```{{filetype}}
-        {{selection}}
-        ```
-
-        Use the markdown format with codeblocks and inline code.
-        Explanation of the code above:
-        ]]
-            local agent = prt.get_chat_agent()
-            prt.logger.info("Explaining selection with agent: " .. agent.name)
-            prt.Prompt(params, prt.ui.Target.new, nil, agent.model, template, agent.system_prompt, agent.provider)
-          end,
-          CompleteFullContext = function(prt, params)
-            local template = [[
-          I have the following code from {{filename}}:
-
-          ```{{filetype}}
-          {{filecontent}}
-          ```
-
-          Please look at the following section specifically:
-          ```{{filetype}}
-          {{selection}}
-          ```
-
-          Please finish the code above carefully and logically.
-          Respond just with the snippet of code that should be inserted.
-          ]]
-            local agent = prt.get_command_agent()
-            prt.Prompt(params, prt.ui.Target.append, nil, agent.model, template, agent.system_prompt, agent.provider)
-          end,
-        },
-        -- agents = {
-        --   chat = {
-        --     {
-        --       name = "CodeLlama",
-        --       model = { model = "codellama", temperature = 1.5, top_p = 1, num_ctx = 8192, min_p = 0.05 },
-        --       system_prompt = "Help me!",
-        --       provider = "ollama",
-        --     }
-        --   }
-        -- },
-      })
-    end,
-  },
   {
     "olimorris/codecompanion.nvim",
     enabled = true,
@@ -213,11 +127,66 @@ return {
             },
           })
         end,
+        deepseek = function()
+          return require("codecompanion.adapters").extend("deepseek", {
+            env = {
+              api_key = "DEEPSEEK_API_KEY",
+            },
+            schema = {
+              model = {
+                default = "deepseek-reasoner",
+              },
+              temperature = {
+                default = 0,
+              },
+            },
+            handlers = {
+              chat_output = function(self, data)
+                local output = {}
+
+                if data and data ~= "" then
+                  local data_mod = prepare_data_for_json(data)
+                  local ok, json = pcall(vim.json.decode, data_mod, { luanil = { object = true } })
+
+                  if ok and json.choices and #json.choices > 0 then
+                    local choice = json.choices[1]
+                    local delta = (self.opts and self.opts.stream) and choice.delta or choice.message
+
+                    if delta then
+                      if delta.role then
+                        output.role = delta.role
+                      else
+                        output.role = nil
+                      end
+
+                      output.content = ""
+
+                      -- ADD THINKING OUTPUT
+                      if delta.reasoning_content then
+                        output.content = delta.reasoning_content
+                      end
+
+                      if delta.content then
+                        output.content = output.content .. delta.content
+                      end
+
+                      return {
+                        status = "success",
+                        output = output,
+                      }
+                    end
+                  end
+                end
+              end,
+            },
+          })
+        end,
         gemini = function()
           return require("codecompanion.adapters").extend("gemini", {
             schema = {
               model = {
-                default = "gemini-2.0-flash-exp",
+                -- default = "gemini-2.0-flash-exp",
+                default = "gemini-2.0-flash-thinking-exp",
               },
               max_tokens = {
                 default = 8192,
@@ -228,7 +197,7 @@ return {
       },
       display = {
         chat = {
-          show_settings = true,
+          show_settings = false,
         },
       },
       strategies = {
@@ -288,7 +257,7 @@ return {
             },
             change_adapter = {
               modes = {
-                n = "<localleader>A",
+                n = "<localleader>a",
               },
             },
             fold_code = {
@@ -378,9 +347,6 @@ return {
             {
               role = "system",
               content = custom_prompt,
-              -- content = function(context)
-              --   return custom_prompt
-              -- end,
             },
             {
               role = "user",

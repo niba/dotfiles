@@ -17,6 +17,7 @@ vim.opt.conceallevel = 1
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
 vim.opt.jumpoptions = "stack,view"
+vim.opt.timeoutlen = 1000
 
 vim.diagnostic.config({
   float = { border = "rounded" },

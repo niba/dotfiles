@@ -7,21 +7,36 @@ return {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
+    enabled = true,
     opts = {
+      -- old keymaps
+      -- keymaps = {
+      --   normal = "gsa",
+      --   normal_cur = "gsas",
+      --   normal_line = "gsA",
+      --   normal_cur_line = "gsAs",
+      --   visual = "gsa",
+      --   visual_line = "gsA",
+      --   delete = "gsd",
+      --   change = "gsr",
+      --   change_line = "gsR",
+      -- },
+
       keymaps = {
-        insert = "<C-g>s",
-        insert_line = "<C-g>S",
-        normal = "gsa",
-        normal_cur = "gsas",
-        normal_line = "gsA",
-        normal_cur_line = "gsAs",
-        visual = "gsa",
-        visual_line = "gsA",
-        delete = "gsd",
-        change = "gsr",
-        change_line = "gsR",
+        insert = false,
+        insert_line = false,
+        normal = "r",
+        normal_line = "rr",
+        normal_cur_line = "R",
+        normal_cur = "rR",
+
+        visual = "r",
+        visual_line = "R",
+        delete = "dr",
+        change = "cr",
+        change_line = "cR",
       },
-      move_cursor = "sticky",
+      -- move_cursor = "sticky",
       aliases = {
         ["("] = ")",
         ["["] = "]",

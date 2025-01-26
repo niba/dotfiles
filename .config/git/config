@@ -1,0 +1,83 @@
+[user]
+    email = kamil.nibisz@gmail.com
+    name = niba
+
+[push]
+    autoSetupRemote = true
+    default = current
+
+[core]
+	pager = delta --diff-so-fancy
+	editor = nvim
+
+; [interactive]
+;     diffFilter = delta --color-only
+[interactive]
+    diffFilter = delta --color-only --diff-so-fancy --side-by-side --diff-highlight --features=interactive
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+
+[merge]
+    conflictstyle = diff3
+
+[delta]
+    navigate = true
+    features = mellow-barbet
+    ; syntax-theme = discord
+    line-numbers = true
+    true-color = always
+    side-by-side = false
+    diff-so-fancy = true
+    diif-highlight = true
+
+[diff]
+    colorMoved = default
+    ; tool = difftastic
+    ; external = difft
+; [diff]
+;     tool = nvimdiff
+; [difftool "nvimdiff"]
+;     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+; [pager]
+;     difftool = true
+;
+; [difftool "difftastic"]
+;     cmd = difft "$LOCAL" "$REMOTE"
+;
+; [difftool]
+;     prompt = false
+
+; [alias]
+;     dft = difftool
+
+[branch]
+    autoSetupMerge = false
+
+
+
+[include]
+    path = ~/.config/delta/themes.gitconfig
+
+[color]
+	ui = auto
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	grep = auto
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	func = 146 bold
+	commit = yellow bold
+	whitespace = red reverse
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[rerere]
+	enabled = true

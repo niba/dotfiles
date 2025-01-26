@@ -130,7 +130,6 @@ vim.keymap.set(
   { desc = "Close other windows", remap = true, silent = true }
 )
 
-
 function CloseOtherWindows()
   local current_win = vim.api.nvim_get_current_win()
   for _, win in pairs(vim.api.nvim_list_wins()) do
