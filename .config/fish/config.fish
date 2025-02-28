@@ -12,6 +12,7 @@ status --is-interactive; and pyenv init --path | source
 
 starship init fish | source
 zoxide init fish | source
+jj util completion fish | source
 
 ## BINDINGS
 fish_default_key_bindings -M insert
@@ -36,3 +37,5 @@ if test ! -f ~/.op-env
     reload_env
 end
 source ~/.op-env
+
+alias devturbo="/Users/niba/Documents/Projects/forks/turborepo/target/debug/turbo"

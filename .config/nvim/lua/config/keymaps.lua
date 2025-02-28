@@ -13,7 +13,6 @@
 -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 --
 -- we don't use tabs
-vim.print("setup keymaps")
 vim.keymap.del("n", "<leader><tab>l")
 vim.keymap.del("n", "<leader><tab>o")
 vim.keymap.del("n", "<leader><tab>f")
@@ -67,6 +66,12 @@ vim.keymap.set({ "x" }, "<leader>y", yank_and_append, { desc = "Yank and append 
 vim.keymap.set("x", "u", "<nop>")
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("i", "<C-c>", "<esc>")
+
+vim.keymap.set({ "n", "s" }, "<C-c>", function()
+  vim.cmd("noh")
+  LazyVim.cmp.actions.snippet_stop()
+  return "<C-c>"
+end, { expr = true, desc = "Escape and Clear hlsearch" })
 
 -- breaks navigation in cmp
 -- vim.keymap.set("n", "<C-d>", "<C-d>zz")
@@ -160,6 +165,27 @@ vim.api.nvim_set_keymap(
   ":lua CopyDiagnosticToClipboard()<CR>",
   { desc = "Copy diagnostic", noremap = true, silent = true }
 )
+
+vim.keymap.set("n", "<C-q>", function()
+  -- Check if we're in tmux
+  local in_tmux = os.getenv("TMUX") ~= nil
+
+  if in_tmux then
+    -- Get current tmux session name
+    local current_session = vim.fn.system("tmux display-message -p '#S'"):gsub("\n", "")
+
+    -- Get only the part before whitespace
+    local session_prefix = current_session:match("^(%S+)")
+
+    -- Check if we're in dotfiles session (ignoring any numbers after)
+    if session_prefix == "dotfiles" or session_prefix == "notes" or session_prefix == "NVIM_POPUP" then
+      vim.fn.system("tmux detach-client")
+    else
+      -- Optional: Print message if not in dotfiles session
+      print("Not in dotfiles session")
+    end
+  end
+end, { desc = "Detach from dotfiles tmux session" })
 
 -- TESTING AREA
 -- Window movement

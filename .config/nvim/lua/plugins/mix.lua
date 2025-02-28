@@ -74,7 +74,6 @@ return {
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
-    enabled = true,
     opts = {
       ignored_next_char = "%w",
 
@@ -107,7 +106,7 @@ return {
       options = {
         globalstatus = true,
         disabled_filetypes = {
-          statusline = { "dashboard", "lazy", "alpha", "starter", "Trouble", "CodeCompanion" },
+          statusline = { "dashboard", "lazy", "alpha", "starter", "Trouble", "CodeCompanion", "snacks_layout_box" },
 
           winbar = {
             "dapui_scopes",
@@ -117,6 +116,8 @@ return {
             "dap-repl",
             "dapui_console",
 
+            "snacks_layout_box",
+            "snacks_picker_input",
             "checkhealth",
             "dashboard",
             "neo-tree",

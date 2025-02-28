@@ -172,6 +172,7 @@ return {
   -- },
   {
     "nvim-telescope/telescope.nvim",
+    enabled = false,
     dependencies = { "tsakirist/telescope-lazy.nvim" },
     keys = {
       { "<leader><space>", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },

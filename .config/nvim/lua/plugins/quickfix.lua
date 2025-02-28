@@ -1,6 +1,7 @@
-local enabled = false
+local enabled = true
+local force_trouble = false
 
-if not enabled then
+if force_trouble then
   -- Open always in trouble
   vim.api.nvim_create_autocmd("BufRead", {
     callback = function(ev)

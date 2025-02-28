@@ -18,7 +18,7 @@ return {
   },
   {
     "cbochs/grapple.nvim",
-    enabled = true,
+    enabled = false,
     opts = {
       scope = "git_branch", -- also try out "git_branch"
       win_opts = {

@@ -1,12 +1,34 @@
 local enabled = false
 
-local prepare_data_for_json = function(data)
-  if type(data) == "table" then
-    return data.body
-  end
-  local find_json_start = string.find(data, "{") or 1
-  return string.sub(data, find_json_start)
-end
+local my_prompt = [[
+You are an expert in programming  especially web development and system development. You are master of typescript, react, tailwind, rust, lua, nodejs, markdown and neovim editor. You are expert at selecting and choosing the best tools, and doing your utmost to avoid unnecessary duplication and complexity.
+
+When making a suggestion, you break things down in to discrete changes, and suggest a small test after each stage to make sure things are on the right track.
+
+Produce code to illustrate examples, or when directed to in the conversation. If you can answer without code, that is preferred, and you will be asked to elaborate if it is required.
+
+Before writing or suggesting code, you conduct a deep-dive review of the existing code and describe how it works between <CODE_REVIEW> tags. Once you have completed the review, you produce a careful plan for the change in <PLANNING> tags. Pay attention to variable names and string literals - when reproducing code make sure that these do not change unless necessary or directed. If naming something by convention surround in double colons and in ::UPPERCASE::.
+
+Finally, you produce correct outputs that provide the right balance between solving the immediate problem and remaining generic and flexible.
+
+You always ask for clarifications if anything is unclear or ambiguous. You stop to discuss trade-offs and implementation options if there are choices to make.
+
+It is important that you follow this approach, and do your best to teach your interlocutor about making effective decisions. You avoid apologising unnecessarily, and review the conversation to never repeat earlier mistakes.
+
+You are keenly aware of security, and make sure at every step that we don't do anything that could compromise data or introduce new vulnerabilities. Whenever there is a potential security risk (e.g. input handling, authentication management) you will do an additional review, showing your reasoning between <SECURITY_REVIEW> tags.
+
+Finally, it is important that everything produced is operationally sound. We consider how to host, manage, monitor and maintain our solutions. You consider operational concerns at every step, and highlight them where they are relevant..
+
+You must:
+- Use Markdown formatting in your answers.
+- Include the programming language name at the start of the Markdown code blocks.
+- Avoid including line numbers in code blocks.
+- Avoid wrapping the whole response in triple backticks.
+- Only return code that's relevant to the task at hand. You may not need to return all of the code that the user has shared.
+- Use actual line breaks instead of '\n' in your response to begin new lines.
+- Use '\n' only when you want a literal backslash followed by a character 'n'.
+- All non-code responses must be in %s.
+]]
 
 local custom_prompt =
   [[You are an expert in Web development, including CSS, JavaScript, TypeScript, React, Tailwind, Node.JS and Markdown, you are also expert in system programming using rust and expert in lua and neovim editor. You are expert at selecting and choosing the best tools, and doing your utmost to avoid unnecessary duplication and complexity.
@@ -27,10 +49,12 @@ You are keenly aware of security, and make sure at every step that we don't do a
 
 Finally, it is important that everything produced is operationally sound. We consider how to host, manage, monitor and maintain our solutions. You consider operational concerns at every step, and highlight them where they are relevant.]]
 
+local gemini_pro = "gemini-2.0-pro-exp-02-05"
 return {
   {
     "olimorris/codecompanion.nvim",
     enabled = true,
+    dev = false,
     event = "BufEnter",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -114,15 +138,39 @@ return {
       },
     },
     opts = {
+      opts = {
+        log_level = "TRACE",
+        system_prompt = function(opts)
+          return my_prompt
+        end,
+      },
       adapters = {
+        openai = function()
+          return require("codecompanion.adapters").extend("openai", {
+            schema = {
+              model = {
+                default = "o3-mini-2025-01-31",
+              },
+              max_tokens = {
+                default = 16384,
+              },
+            },
+          })
+        end,
         anthropic = function()
           return require("codecompanion.adapters").extend("anthropic", {
             schema = {
-              model = {
-                default = "claude-3-5-sonnet-20241022",
-              },
+              -- model = {
+              --   default = "claude-3-7-sonnet-20250219",
+              -- },
               max_tokens = {
                 default = 8192,
+              },
+              extended_thinking = {
+                default = false,
+              },
+              temperature = {
+                default = 0,
               },
             },
           })
@@ -140,56 +188,66 @@ return {
                 default = 0,
               },
             },
-            handlers = {
-              chat_output = function(self, data)
-                local output = {}
-
-                if data and data ~= "" then
-                  local data_mod = prepare_data_for_json(data)
-                  local ok, json = pcall(vim.json.decode, data_mod, { luanil = { object = true } })
-
-                  if ok and json.choices and #json.choices > 0 then
-                    local choice = json.choices[1]
-                    local delta = (self.opts and self.opts.stream) and choice.delta or choice.message
-
-                    if delta then
-                      if delta.role then
-                        output.role = delta.role
-                      else
-                        output.role = nil
-                      end
-
-                      output.content = ""
-
-                      -- ADD THINKING OUTPUT
-                      if delta.reasoning_content then
-                        output.content = delta.reasoning_content
-                      end
-
-                      if delta.content then
-                        output.content = output.content .. delta.content
-                      end
-
-                      return {
-                        status = "success",
-                        output = output,
-                      }
-                    end
-                  end
-                end
-              end,
-            },
           })
         end,
         gemini = function()
           return require("codecompanion.adapters").extend("gemini", {
+            -- url = "https://generativelanguage.googleapis.com/v1alpha/models/${model}:streamGenerateContent?alt=sse&key=${api_key}",
+            -- headers = {
+            --   ["Content-Type"] = "application/json",
+            --   -- ["X-Goog-Api-Version"] = "v1alpha",
+            --   -- ["http_options"] = '{"api_version" = "v1alpha",}',
+            --   -- ["api_version"] = "v1alpha",
+            -- },
+            handlers = {
+              form_parameters = function(self, params, messages)
+                if self.schema.model.default == "gemini-2.0-flash-thinking-exp-01-21" then
+                  return vim.tbl_extend("keep", params or {}, {
+                    generationConfig = {
+                      thinkingConfig = {
+                        includeThoughts = true,
+                      },
+                    },
+                    -- generation_config = {
+                    --   thinking_config = {
+                    --     include_thoughts = true,
+                    --   },
+                    -- },
+                  })
+                end
+                print("form_parameters " .. vim.inspect(params))
+                return params
+              end,
+              chat_output = function(self, data)
+                local output = {}
+
+                if data and data ~= "" then
+                  data = data:sub(6)
+                  local ok, json = pcall(vim.json.decode, data, { luanil = { object = true } })
+
+                  if ok and json.candidates and json.candidates[1].content then
+                    output.role = "llm"
+                    output.content = json.candidates[1].content.parts[1].text
+
+                    return {
+                      status = "success",
+                      output = output,
+                    }
+                  end
+                end
+              end,
+            },
             schema = {
               model = {
                 -- default = "gemini-2.0-flash-exp",
-                default = "gemini-2.0-flash-thinking-exp",
+                -- default = "gemini-2.0-flash-thinking-exp-01-21",
+                default = gemini_pro,
               },
               max_tokens = {
                 default = 8192,
+              },
+              temperature = {
+                default = 0,
               },
             },
           })
@@ -344,10 +402,10 @@ return {
             auto_submit = false,
           },
           prompts = {
-            {
-              role = "system",
-              content = custom_prompt,
-            },
+            -- {
+            --   role = "system",
+            --   content = custom_prompt,
+            -- },
             {
               role = "user",
               content = "\n \n",
@@ -384,42 +442,6 @@ return {
           auto_trigger = true,
           accept = false, -- disable built-in keymapping
         },
-      })
-    end,
-  },
-
-  -- copilot status in lualine
-  -- this is taken from the copilot lazyvim extras at:
-  -- https://www.lazyvim.org/plugins/extras/coding.copilot
-  {
-    "nvim-lualine/lualine.nvim",
-    optional = true,
-    event = "VeryLazy",
-    opts = function(_, opts)
-      local Util = require("lazyvim.util")
-      local colors = {
-        [""] = Util.ui.fg("Special"),
-        ["Normal"] = Util.ui.fg("Special"),
-        ["Warning"] = Util.ui.fg("DiagnosticError"),
-        ["InProgress"] = Util.ui.fg("DiagnosticWarn"),
-      }
-      table.insert(opts.sections.lualine_x, 2, {
-        function()
-          local icon = require("lazyvim.config").icons.kinds.Copilot
-          local status = require("copilot.api").status.data
-          return icon .. (status.message or "")
-        end,
-        cond = function()
-          local ok, clients = pcall(vim.lsp.get_active_clients, { name = "copilot", bufnr = 0 })
-          return ok and #clients > 0
-        end,
-        color = function()
-          if not package.loaded["copilot"] then
-            return
-          end
-          local status = require("copilot.api").status.data
-          return colors[status.status] or colors[""]
-        end,
       })
     end,
   },

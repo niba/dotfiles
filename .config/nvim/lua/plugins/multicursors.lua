@@ -24,7 +24,7 @@ return {
         "<s-up>",
         function()
           local mc = require("multicursor-nvim")
-          mc.addCursor("k")
+          mc.lineAddCursor(-1)
         end,
         mode = { "n", "v" },
         desc = "Add multicursor up",
@@ -33,10 +33,28 @@ return {
         "<s-down>",
         function()
           local mc = require("multicursor-nvim")
-          mc.addCursor("j")
+          mc.lineAddCursor(1)
         end,
         mode = { "n", "v" },
         desc = "Add multicursor down",
+      },
+      {
+        "<c-s-up>",
+        function()
+          local mc = require("multicursor-nvim")
+          mc.lineSkipCursor(-1)
+        end,
+        mode = { "n", "v" },
+        desc = "Skip multicursor up",
+      },
+      {
+        "<c-s-down>",
+        function()
+          local mc = require("multicursor-nvim")
+          mc.lineSkipCursor(1)
+        end,
+        mode = { "n", "v" },
+        desc = "Skip multicursor down",
       },
       {
         "<F7>",

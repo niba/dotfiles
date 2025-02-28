@@ -97,6 +97,7 @@ return {
   },
   {
     "folke/persistence.nvim",
+    enable = false,
     keys = {
       {
         "<leader>ql",

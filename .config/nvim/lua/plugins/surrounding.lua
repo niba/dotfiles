@@ -4,6 +4,23 @@ return {
     enabled = false,
   },
   {
+    "xzbdmw/clasp.nvim",
+    config = function()
+      require("clasp").setup({
+        pairs = { ["{"] = "}", ['"'] = '"', ["'"] = "'", ["("] = ")", ["["] = "]" },
+      })
+      -- jumping from smallest region to largest region
+      vim.keymap.set({ "n", "i" }, "<s-m-l>", function()
+        require("clasp").wrap("next")
+      end)
+
+      -- jumping from largest region to smallest region
+      vim.keymap.set({ "n", "i" }, "<s-m-h>", function()
+        require("clasp").wrap("prev")
+      end)
+    end,
+  },
+  {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
@@ -26,12 +43,14 @@ return {
         insert = false,
         insert_line = false,
         normal = "r",
-        normal_line = "rr",
-        normal_cur_line = "R",
-        normal_cur = "rR",
+        normal_line = "R",
+
+        normal_cur = "rr",
+        normal_cur_line = "Rr",
 
         visual = "r",
         visual_line = "R",
+
         delete = "dr",
         change = "cr",
         change_line = "cR",

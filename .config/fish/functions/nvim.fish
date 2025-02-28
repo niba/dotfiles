@@ -1,4 +1,4 @@
-function nvim
+function nvim_legacy
     # Determine if the current directory is inside a git repository
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1
         # Get the root directory of the Git repository

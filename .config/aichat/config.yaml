@@ -2,5 +2,4 @@
 
 model: claude
 clients:
-- type: claude
-  api_key: ste
+  - type: claude

@@ -239,4 +239,6 @@ vim.defer_fn(function()
   swap_sessions(M.current(), nil)
 end, 60000)
 
+print("ups ups")
+
 return M

@@ -6,6 +6,7 @@ end
 set -gx EDITOR nvim
 set -gx PAGER less
 set -gx MANPAGER "nvim +Man!"
+set -gx JJ_CONFIG "$XDG_CONFIG_HOME/jj/config.toml"
 
 set -q MANPATH || set -gx MANPATH ''
 for manpath in

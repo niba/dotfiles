@@ -76,7 +76,6 @@ local trigger_snippet_text = ";"
 return {
   {
     "saghen/blink.cmp",
-    enabled = next_gen_cmp,
     opts = {
       appearance = {
         use_nvim_cmp_as_default = true,
@@ -90,7 +89,17 @@ return {
         ["<C-d>"] = { "scroll_documentation_down", "fallback" },
       },
       completion = {
-        accept = { auto_brackets = { enabled = false } },
+        accept = {
+          auto_brackets = {
+            enabled = false,
+            kind_resolution = {
+              enabled = false,
+            },
+            semantic_token_resolution = {
+              enabled = false,
+            },
+          },
+        },
         ghost_text = {
           enabled = false,
         },

@@ -6,33 +6,47 @@
     autoSetupRemote = true
     default = current
 
-[core]
-	pager = delta --diff-so-fancy
-	editor = nvim
+[tag]
+    sort = version:refname
 
-; [interactive]
-;     diffFilter = delta --color-only
+[core]
+	  ; pager = delta --diff-so-fancy
+	  editor = nvim
+
 [interactive]
     diffFilter = delta --color-only --diff-so-fancy --side-by-side --diff-highlight --features=interactive
 
 [delta]
     navigate = true    # use n and N to move between diff sections
 
-[merge]
-    conflictstyle = diff3
-
 [delta]
     navigate = true
     features = mellow-barbet
-    ; syntax-theme = discord
     line-numbers = true
     true-color = always
     side-by-side = false
     diff-so-fancy = true
     diif-highlight = true
 
+[merge]
+    conflictstyle = zdiff3
+
+[push]
+    default = simple
+    autoSetupRemote = true
+    followTags = true
+
+
+[rerere]
+    enabled = true
+    autoupdate = true
+
 [diff]
-    colorMoved = default
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+    ; external = difft
     ; tool = difftastic
     ; external = difft
 ; [diff]
@@ -48,11 +62,15 @@
 ; [difftool]
 ;     prompt = false
 
-; [alias]
-;     dft = difftool
+[alias]
+    out = "log @{u}.."
+    dl = -c diff.external=difft log -p --ext-diff
+    ds = -c diff.external=difft show --ext-diff
+    dft = -c diff.external=difft diff
 
 [branch]
     autoSetupMerge = false
+	  sort = -committerdate
 
 
 
@@ -79,5 +97,3 @@
 	oldHighlight = red bold 52
 	newNormal = green bold
 	newHighlight = green bold 22
-[rerere]
-	enabled = true

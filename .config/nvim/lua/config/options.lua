@@ -4,6 +4,7 @@
 --
 --
 -- vim.o.shada = ""
+-- vim.o.shada = ""
 vim.opt.hidden = true
 vim.g.maplocalleader = ","
 
@@ -17,7 +18,7 @@ vim.opt.conceallevel = 1
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
 vim.opt.jumpoptions = "stack,view"
-vim.opt.timeoutlen = 1000
+vim.opt.timeoutlen = 400
 
 vim.diagnostic.config({
   float = { border = "rounded" },
