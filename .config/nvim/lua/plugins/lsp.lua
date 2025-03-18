@@ -61,6 +61,23 @@ return {
         virtual_text = false,
       },
       servers = {
+        eslint = {
+          settings = {
+            format = false,
+            workingDirectories = { mode = "auto" }, -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
+          },
+          flags = {
+            allow_incremental_sync = false,
+            debounce_text_changes = 1000,
+          },
+          -- keys = {
+          --   {
+          --     "<leader>ef",
+          --     ":EslintFixAll<CR>",
+          --     desc = desc("Fix all"),
+          --   },
+          -- },
+        },
         lua_ls = {
           settings = {
             Lua = {

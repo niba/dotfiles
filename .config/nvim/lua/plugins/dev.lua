@@ -15,7 +15,7 @@ return {
       {
         "<leader>ml",
         function()
-          require("continuum").list()
+          require("continuum").search()
         end,
         desc = "List sessions",
       },

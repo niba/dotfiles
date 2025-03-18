@@ -92,6 +92,45 @@ local flash_on_picker = function(picker)
   })
 end
 
+local function fuzzy_oil()
+  local find_command = {
+    "fd",
+    "--type",
+    "d",
+    "--color",
+    "never",
+  }
+
+  vim.fn.jobstart(find_command, {
+    stdout_buffered = true,
+    on_stdout = function(_, data)
+      if data then
+        local filtered = vim.tbl_filter(function(el)
+          return el ~= ""
+        end, data)
+
+        local items = {}
+        for _, v in ipairs(filtered) do
+          table.insert(items, { text = v })
+        end
+
+        ---@module 'snacks'
+        Snacks.picker.pick({
+          source = "directories",
+          items = items,
+          layout = { preset = "select" },
+          format = "text",
+          confirm = function(picker, item)
+            picker:close()
+            require("oil").open(item.text)
+            -- vim.cmd("Oil " .. item.text)
+          end,
+        })
+      end
+    end,
+  })
+end
+
 local quick_layout = {
   preview = false,
   layout = {
@@ -305,7 +344,7 @@ return {
       {
         "<leader>fo",
         function()
-          Snacks.picker.explorer()
+          fuzzy_oil()
         end,
         desc = "Smart find",
       },

@@ -29,7 +29,8 @@
     diif-highlight = true
 
 [merge]
-    conflictstyle = zdiff3
+    ; conflictstyle = zdiff3
+    ; conflictstyle = zdiff3
 
 [push]
     default = simple
@@ -38,11 +39,11 @@
 
 
 [rerere]
-    enabled = true
+    enabled = false
     autoupdate = true
 
 [diff]
-    algorithm = histogram
+    ; algorithm = histogram
     colorMoved = plain
     mnemonicPrefix = true
     renames = true

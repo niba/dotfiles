@@ -103,11 +103,18 @@ return {
         ghost_text = {
           enabled = false,
         },
+        list = {
+          selection = {
+            auto_insert = false,
+          },
+        },
         menu = {
           border = "single",
           winblend = 0,
         },
         documentation = {
+          auto_show_delay_ms = 50,
+          update_delay_ms = 50,
           window = {
             border = "single",
             winblend = 0,

@@ -302,15 +302,15 @@ return {
           },
         },
         hooks = {
-          -- diff_buf_win_enter = function()
-          --   -- Change local options in diff buffers
-          --   vim.opt_local.foldenable = false
-          --   -- vim.opt_local.list = false
-          --   -- vim.opt_local.colorcolumn = { 80 }
-          -- end,
-          -- diff_buf_read = function()
-          --   vim.api.nvim_input("gg]czz")
-          -- end,
+          diff_buf_win_enter = function()
+            -- Change local options in diff buffers
+            vim.opt_local.foldenable = false
+            -- vim.opt_local.list = false
+            -- vim.opt_local.colorcolumn = { 80 }
+          end,
+          diff_buf_read = function()
+            vim.api.nvim_input("gg]czz")
+          end,
           -- view_opened = function(view)
           --   print(
           --     ("A new %s was opened on tab page %d!")

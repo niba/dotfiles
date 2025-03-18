@@ -10,7 +10,8 @@ return {
           rosewater = "#efc9c2",
           flamingo = "#ebb2b2",
           pink = "#f2a7de",
-          mauve = "#b889f4",
+          -- mauve = "#b889f4",
+          mauve = "#C792EA",
           red = "#ea7183",
           maroon = "#ea838c",
           peach = "#f39967",
@@ -19,19 +20,19 @@ return {
           teal = "#78cec1",
           sky = "#91d7e3",
           sapphire = "#68bae0",
-          blue = "#739df2",
-          -- lavender = "#a0a8f6",
-          -- lavender = "#a4acf7",
+          blue = "#73a8f2",
           lavender = "#939df5",
           text = "#b5c1f1",
           subtext1 = "#a6b0d8",
           subtext0 = "#959ec2",
+
           overlay2 = "#848cad",
           overlay1 = "#717997",
           overlay0 = "#63677f",
           surface2 = "#505469",
           surface1 = "#3e4255",
           surface0 = "#2c2f40",
+          --
           -- overlay2 = "#939ab7",
           -- overlay1 = "#8087a2",
           -- overlay0 = "#6e738d",
@@ -39,10 +40,158 @@ return {
           -- surface1 = "#494d64",
           -- surface0 = "#363a4f",
 
-          base = "#1a1c2a",
+          -- base = "#1a1c2a",
+          -- base = "#131621",
+          base = "#151925",
           mantle = "#141620",
           crust = "#0e0f16",
         },
+        --
+        --
+        --
+        -- AI generated
+        -- macchiato = {
+        --
+        --   -- Background colors
+        --   base = "#0F111A", -- Main background (already matches)
+        --   mantle = "#0F111A", -- Secondary background
+        --   crust = "#0F111A", -- Tertiary background
+        --
+        --   -- Text colors
+        --   text = "#babed8", -- Primary text color from Material Ocean
+        --   subtext1 = "#8F93A2", -- Dimmed text color derived from Material Ocean
+        --   subtext0 = "#717CB4", -- Selection color from Material Ocean
+        --   overlay2 = "#525975", -- Sidebar foreground from Material Ocean
+        --   overlay1 = "#4B526D", -- Statusbar foreground from Material Ocean
+        --   overlay0 = "#3B3F51", -- Guides color from Material Ocean
+        --   surface2 = "#3B3F51", -- Line numbers from Material Ocean
+        --   surface1 = "#292D3E", -- Sidebar background from Material Ocean
+        --   surface0 = "#1A1C25", -- Input background from Material Ocean
+        --
+        --   -- Syntax highlighting colors
+        --   rosewater = "#B2CCD6", -- Material paleblue
+        --   flamingo = "#ff9cac", -- Material pink
+        --   pink = "#ff9cac", -- Material pink
+        --   mauve = "#C792EA", -- Material purple (already matches)
+        --   red = "#f07178", -- Material red (already matches in maroon)
+        --   maroon = "#f07178", -- Material red (already matches)
+        --   peach = "#F78C6C", -- Material orange
+        --   yellow = "#FFCB6B", -- Material yellow (already matches)
+        --   green = "#C3E88D", -- Material green (already matches)
+        --   teal = "#89DDFF", -- Material cyan
+        --   sky = "#89DDFF", -- Material cyan
+        --   sapphire = "#82AAFF", -- Material blue
+        --   blue = "#82AAFF", -- Material blue
+        --   lavender = "#C792EA", -- Material purple
+        -- },
+
+        -- CUSTOM
+        -- macchiato = {
+        --   rosewater = "#f5e0dc",
+        --   flamingo = "#f2cdcd",
+        --   pink = "#f5c2e7",
+        --   mauve = "#c792ea",
+        --   red = "#f38ba8",
+        --   maroon = "#f07178",
+        --   peach = "#fab387",
+        --   yellow = "#ffcb6b",
+        --   green = "#c3e88d",
+        --   teal = "#94e2d5",
+        --   sky = "#89dceb",
+        --   sapphire = "#74c7ec",
+        --   blue = "#89b4fa",
+        --   lavender = "#fea6ba",
+        --   text = "#b5c1f1",
+        --   subtext1 = "#a6b0d8",
+        --   subtext0 = "#959ec2",
+        --   overlay2 = "#848cad",
+        --   overlay1 = "#717997",
+        --   overlay0 = "#63677f",
+        --   surface2 = "#505469",
+        --   surface1 = "#3e4255",
+        --   surface0 = "#2c2f40",
+        --   -- text = "#cdd6f4",
+        --   -- subtext1 = "#bac2de",
+        --   -- subtext0 = "#a6adc8",
+        --   -- overlay2 = "#9399b2",
+        --   -- overlay1 = "#7f849c",
+        --   -- overlay0 = "#6c7086",
+        --   -- surface2 = "#585b70",
+        --   -- surface1 = "#45475a",
+        --   -- surface0 = "#313244",
+        --   base = "#0f111a",
+        --   mantle = "#181825",
+        --   crust = "#11111b",
+        -- },
+        -- CUSTOM 2
+        -- defaultAccent: '#80CBC4',
+        -- background: '#0F111A',
+        -- backgroundAlt: '#0F111A',
+        -- contrastBorder: '#0F111A',
+        -- comments: '#464B5D',
+        -- caret: '#FFCC00',
+        -- findHighlight: '#FFCC00',
+        -- foreground: '#babed8',
+        -- focusBorder: '#FFFFFF',
+        -- guides: '#3B3F51',
+        -- lineNumbers: '#3B3F5180',
+        -- invisibles: '#80869E50',
+        -- lineHighlight: '#000000',
+        -- selection: '#717CB45',
+        -- shadow: '#00000030',
+        -- inputBackground: '#1A1C25',
+        -- inputForeground: '#EEFFFF',
+        -- inputBorder: '#FFFFFF10',
+        -- scrollbars: '#8F93A220',
+        -- scrollbarsHover: '#8F93A210',
+        -- statusbarForeground: '#4B526D',
+        -- sidebarBackground: '#292D3E',
+        -- sidebarForeground: '#525975',
+        -- listHoverForeground: '#FFFFFF',
+        -- listHoverBackground: '#292D3E',
+        -- tabActiveForeground: '#FFFFFF',
+        -- inactiveSelectionBackground: '#00000030',
+        -- findMatchBackground: '#000000',
+        -- findMatchHighlightBackground: '#00000050',
+        -- findMatchHighlightBorder: '#ffffff30',
+        -- macchiato = {
+        --   rosewater = "#f5e0dc",
+        --   flamingo = "#f2cdcd",
+        --   pink = "#f5c2e7",
+        --   mauve = "#c792ea",
+        --   red = "#f38ba8",
+        --   maroon = "#f07178",
+        --   peach = "#fab387",
+        --   yellow = "#ffcb6b",
+        --   green = "#c3e88d",
+        --   teal = "#94e2d5",
+        --   sky = "#89dceb",
+        --   sapphire = "#74c7ec",
+        --   blue = "#89b4fa",
+        --   lavender = "#fea6ba",
+        --   text = "#b5c1f1",
+        --   subtext1 = "#a6b0d8",
+        --   subtext0 = "#959ec2",
+        --   overlay2 = "#848cad",
+        --   overlay1 = "#717997",
+        --   overlay0 = "#63677f",
+        --   surface2 = "#505469",
+        --   surface1 = "#3e4255",
+        --   -- surface1 = "#434A6D",
+        --   surface0 = "#2c2f40",
+        --   -- text = "#cdd6f4",
+        --   -- subtext1 = "#bac2de",
+        --   -- subtext0 = "#a6adc8",
+        --   -- overlay2 = "#9399b2",
+        --   -- overlay1 = "#7f849c",
+        --   -- overlay0 = "#6c7086",
+        --   -- surface2 = "#585b70",
+        --   -- surface1 = "#45475a",
+        --   -- surface0 = "#313244",
+        --   base = "#131621",
+        --   mantle = "#181825",
+        --   crust = "#11111b",
+        -- },
       },
       flavour = "macchiato",
       background = {
@@ -61,10 +210,10 @@ return {
           ["MiniDiffSignUntracked"] = { fg = C.green },
           GrugFarResultsMatchAdded = { link = "DiffAdd" },
           GrugFarResultsMatchRemoved = { link = "DiffDelete" },
-          -- GrugFarResultsMatchAdded = { fg = C.green, bg = "#5e492f" },
-          -- GrugFarResultsMatchRemoved = { fg = C.maroon, bg = "#5e492f" },
-          Visual = { bg = C.surface2, style = { "bold" } },
-          VisualNOS = { bg = C.surface2, style = { "bold" } },
+
+          -- Visual = { bg = C.surface2, style = { "bold" } },
+          -- VisualNOS = { bg = C.surface2, style = { "bold" } },
+
           LspReferenceText = { bg = C.surface0 },
           LspReferenceRead = { bg = C.surface0 },
           LspReferenceWrite = { bg = C.surface0 },
@@ -78,8 +227,6 @@ return {
           BlinkCmpLabelDeprecated = { fg = C.overlay0, style = { "strikethrough" } },
           BlinkCmpDocBorder = { fg = C.overlay0, bg = C.base },
           BlinkCmpDoc = { fg = C.text, bg = C.base },
-          -- MiniDiffOverContext = { bg = "#0b263d" },
-          -- ["@variable"] = { fg = C.maroon, style = O.styles.variables or {} },
         }
       end,
       integrations = {
@@ -243,7 +390,31 @@ return {
     enabled = true,
     lazy = false,
     priority = 1000,
-    opts = { style = "moon" },
+    opts = {
+      style = "moon",
+      -- transparent = false,
+      -- terminal_colors = true,
+      -- styles = {
+      --   comments = { italic = true },
+      --   keywords = { italic = true },
+      --   functions = {},
+      --   variables = {},
+      --   sidebars = "dark",
+      --   floats = "dark",
+      -- },
+      -- sidebars = { "qf", "help", "terminal", "packer", "nvim-tree", "telescope", "explorer" },
+      -- day_brightness = 0.3,
+      -- hide_inactive_statusline = false,
+      -- dim_inactive = false,
+      -- lualine_bold = false,
+      -- on_colors = function(c)
+      --   local colors = get_colors()
+      --
+      --   for key, value in pairs(colors) do
+      --     c[key] = value
+      --   end
+      -- end,
+    },
   },
   {
     "EdenEast/nightfox.nvim",
