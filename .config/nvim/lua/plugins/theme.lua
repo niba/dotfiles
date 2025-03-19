@@ -204,6 +204,8 @@ return {
           ["@property"] = { fg = C.text },
           ["@definition"] = { fg = C.maroon },
 
+          LineNr = { fg = C.overlay0 },
+
           ["MiniDiffSignChange"] = { fg = C.yellow },
           ["MiniDiffSignAdd"] = { fg = C.green },
           ["MiniDiffSignDelete"] = { fg = C.maroon },

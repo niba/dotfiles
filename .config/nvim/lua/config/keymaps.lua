@@ -103,6 +103,9 @@ end, { expr = true, desc = "Escape and Clear hlsearch" })
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
+-- disable macros, dont use it at all (use multicursor)
+vim.keymap.set("n", "q", "<Nop>", { noremap = true, silent = true })
+
 vim.keymap.set("n", "gh", function()
   vim.fn.setreg("/", "\\<" .. vim.fn.expand("<cword>") .. "\\>")
   vim.cmd([[normal! gg]])
@@ -198,26 +201,26 @@ vim.api.nvim_set_keymap(
   { desc = "Copy diagnostic", noremap = true, silent = true }
 )
 
-vim.keymap.set("n", "<C-q>", function()
-  -- Check if we're in tmux
-  local in_tmux = os.getenv("TMUX") ~= nil
-
-  if in_tmux then
-    -- Get current tmux session name
-    local current_session = vim.fn.system("tmux display-message -p '#S'"):gsub("\n", "")
-
-    -- Get only the part before whitespace
-    local session_prefix = current_session:match("^(%S+)")
-
-    -- Check if we're in dotfiles session (ignoring any numbers after)
-    if session_prefix == "dotfiles" or session_prefix == "notes" or session_prefix == "NVIM_POPUP" then
-      vim.fn.system("tmux detach-client")
-    else
-      -- Optional: Print message if not in dotfiles session
-      print("Not in dotfiles session")
-    end
-  end
-end, { desc = "Detach from dotfiles tmux session" })
+-- vim.keymap.set("n", "<C-q>", function()
+--   -- Check if we're in tmux
+--   local in_tmux = os.getenv("TMUX") ~= nil
+--
+--   if in_tmux then
+--     -- Get current tmux session name
+--     local current_session = vim.fn.system("tmux display-message -p '#S'"):gsub("\n", "")
+--
+--     -- Get only the part before whitespace
+--     local session_prefix = current_session:match("^(%S+)")
+--
+--     -- Check if we're in dotfiles session (ignoring any numbers after)
+--     if session_prefix == "dotfiles" or session_prefix == "notes" or session_prefix == "NVIM_POPUP" then
+--       vim.fn.system("tmux detach-client")
+--     else
+--       -- Optional: Print message if not in dotfiles session
+--       print("Not in dotfiles session")
+--     end
+--   end
+-- end, { desc = "Detach from dotfiles tmux session" })
 
 local function should_add_to_jumplist()
   local current_bufnr = vim.api.nvim_get_current_buf()
