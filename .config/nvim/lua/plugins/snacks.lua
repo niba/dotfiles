@@ -285,7 +285,7 @@ return {
         function()
           require("workbuffers").list({
             current = false,
-            layout = custom_vscode,
+            -- layout = custom_vscode,
           })
         end,
         desc = "Buffers",
@@ -296,9 +296,31 @@ return {
     "folke/snacks.nvim",
     dev = true,
     opts = {
+      styles = {
+        max_scratch = {
+
+          width = 150,
+          height = 60,
+          bo = { buftype = "", buflisted = false, bufhidden = "hide", swapfile = false },
+          minimal = false,
+          noautocmd = false,
+          -- position = "right",
+          zindex = 20,
+          wo = { winhighlight = "NormalFloat:Normal" },
+          border = "rounded",
+          title_pos = "center",
+          footer_pos = "center",
+        },
+      },
       debug = {
 
         explorer = true, -- show explorer debug info
+      },
+      scratch = {
+
+        win = {
+          style = "max_scratch",
+        },
       },
       scroll = { enabled = false },
       picker = {

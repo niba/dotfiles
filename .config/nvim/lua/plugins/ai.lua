@@ -169,6 +169,9 @@ return {
               extended_thinking = {
                 default = false,
               },
+              -- thinking_budget = {
+              --   default = 1600,
+              -- },
               temperature = {
                 default = 0,
               },

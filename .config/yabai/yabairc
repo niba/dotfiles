@@ -49,7 +49,7 @@ yabai_rule app="xStation5" space=helper
 yabai_rule app="TradingView" space=helper
 yabai_rule app="RedisInsight-v2" space=helper
 yabai_rule app="Postman" space=helper
-
+1
 yabai_rule app="^System Preferences$" manage=off layer=normal
 yabai_rule app="^System Settings$" manage=off layer=normal
 yabai_rule app="^Finder$" manage=off layer=normal
