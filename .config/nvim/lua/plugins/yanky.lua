@@ -1,16 +1,3 @@
-local rtp_string = vim.opt.rtp:get()
-print("package path")
-print(vim.inspect(package.path))
-print("rtp")
-print(vim.inspect(rtp_string))
-
-local buffers = require("core.buffers")
-
-print(vim.inspect(buffers))
-local omg = require("core.yan")
-print(vim.inspect(omg))
-local extras = require("core/plugins_utils/yanky")
-print(vim.inspect(extras))
 local function smart_paste()
   local line = vim.api.nvim_get_current_line()
   if line ~= "" then
