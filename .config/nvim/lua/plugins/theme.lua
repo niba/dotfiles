@@ -60,7 +60,7 @@ return {
           LspReferenceText = { bg = C.surface0 },
           LspReferenceRead = { bg = C.surface0 },
           LspReferenceWrite = { bg = C.surface0 },
-          -- ["@diff.delta"] = { bg = "#5e492f" },
+          ["@diff.delta"] = { bg = "#5e492f" },
           MiniDiffOverChange = { bg = "#5e492f" },
           MiniDiffOverContext = { bg = "#332500" },
           BlinkCmpMenu = { fg = C.text, bg = C.base },

@@ -279,16 +279,30 @@ vim.api.nvim_create_autocmd("InsertEnter", {
   desc = "Add position to jumplist when entering insert based on conditions",
 })
 
--- Create mappings for paste operations that conditionally add to jumplist
-vim.keymap.set("n", "p", function()
-  conditional_add_to_jumplist()
-  return "p"
-end, { expr = true, desc = "Paste and conditionally add to jumplist" })
+vim.keymap.set("n", "<leader>br", function()
+  local plugins = require("lazy").plugins()
+  local plugin_names = {}
+  for _, plugin in ipairs(plugins) do
+    table.insert(plugin_names, plugin.name)
+  end
 
-vim.keymap.set("n", "P", function()
-  conditional_add_to_jumplist()
-  return "P"
-end, { expr = true, desc = "Paste before and conditionally add to jumplist" })
+  vim.ui.select(plugin_names, {
+    title = "Reload plugin",
+  }, function(selected)
+    require("lazy").reload({ plugins = { selected } })
+  end)
+end, { desc = "Reload plugin" })
+
+-- Create mappings for paste operations that conditionally add to jumplist
+-- vim.keymap.set("n", "p", function()
+--   conditional_add_to_jumplist()
+--   return "p"
+-- end, { expr = true, desc = "Paste and conditionally add to jumplist" })
+--
+-- vim.keymap.set("n", "P", function()
+--   conditional_add_to_jumplist()
+--   return "P"
+-- end, { expr = true, desc = "Paste before and conditionally add to jumplist" })
 
 -- TESTING AREA
 -- Window movement

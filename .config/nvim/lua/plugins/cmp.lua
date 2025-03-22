@@ -121,6 +121,7 @@ return {
           },
         },
       },
+      -- signature = { enabled = true, window = { border = "single" } },
       snippets = {
         preset = "luasnip",
         -- This comes from the luasnip extra, if you don't add it, won't be able to

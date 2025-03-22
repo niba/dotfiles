@@ -8,7 +8,6 @@
 vim.opt.hidden = true
 vim.g.maplocalleader = ","
 
-vim.g.material_style = "palenight"
 -- * a function with signature `function(buf) -> string|string[]`
 -- vim.g.root_spec = { { ".git", "lua" }, "lsp", "cwd" }
 

@@ -145,9 +145,6 @@ return {
               hint = LazyVim.config.icons.diagnostics.Hint,
             },
           },
-          {
-            showGrappleTags,
-          },
         },
       },
       winbar = {

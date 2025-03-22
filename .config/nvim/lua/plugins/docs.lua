@@ -1,7 +1,12 @@
+if true then
+  return {}
+end
+
 return {
   {
     "OXY2DEV/helpview.nvim",
     lazy = false, -- Recommended
+    enabled = true,
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },

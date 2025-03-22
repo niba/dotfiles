@@ -103,8 +103,20 @@ return {
       keys[#keys + 1] = { "gI", false }
       keys[#keys + 1] = { "<leader>cr", false }
       keys[#keys + 1] = { "gt", vim.lsp.buf.type_definition, desc = "Goto Type Definition" }
-      keys[#keys + 1] = { "m", vim.lsp.buf.hover, desc = "Hover" }
-      keys[#keys + 1] = { "gm", vim.lsp.buf.hover, desc = "Hover" }
+      keys[#keys + 1] = {
+        "m",
+        function()
+          return vim.lsp.buf.hover()
+        end,
+        desc = "Hover",
+      }
+      keys[#keys + 1] = {
+        "gm",
+        function()
+          return vim.lsp.buf.hover()
+        end,
+        desc = "Hover",
+      }
       keys[#keys + 1] = { "gM", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" }
       keys[#keys + 1] = { "gi", Snacks.picker.lsp_implementations, desc = "Goto Implementation" }
       keys[#keys + 1] = {

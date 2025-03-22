@@ -1,11 +1,17 @@
-return {
+-- if true then
+--   return {}
+-- end
 
+return {
   {
     "folke/noice.nvim",
-    event = "VeryLazy",
-    -- REMOVE THIS once https://github.com/folke/noice.nvim/issues/921#issuecomment-2253363579
-    commit = "d9328ef903168b6f52385a751eb384ae7e906c6f",
+    enabled = true,
+    -- VeryLazy causes rendering issues like empty blank linke on the bottom of code
+    event = "BufEnter",
     opts = {
+      presets = {
+        lsp_doc_border = true,
+      },
       routes = {
         -- REMOVE THIS once this issue is fixed: https://github.com/christoomey/vim-tmux-navigator/issues/396
         {
@@ -22,13 +28,13 @@ return {
           },
           opts = { skip = true },
         },
-        {
-          filter = {
-            event = "msg_show",
-            find = "27:",
-          },
-          opts = { skip = true },
-        },
+        -- {
+        --   filter = {
+        --     event = "msg_show",
+        --     find = "27:",
+        --   },
+        --   opts = { skip = true },
+        -- },
         -- REMOVE THIS once this issue is fixed: https://github.com/yioneko/vtsls/issues/159
         {
           filter = {
@@ -38,13 +44,13 @@ return {
           opts = { skip = true },
         },
       },
-      views = {
-        hover = {
-          border = { style = "rounded" },
-          size = { max_width = 100 },
-          position = { row = 2, col = 2 },
-        },
-      },
+      -- views = {
+      --   hover = {
+      --     border = { style = "rounded" },
+      --     size = { max_width = 100 },
+      --     position = { row = 2, col = 2 },
+      --   },
+      -- },
     },
     keys = {
       {

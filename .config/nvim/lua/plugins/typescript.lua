@@ -36,10 +36,10 @@ return {
             },
           },
           -- fix finding typescript in monorepo
-          -- root_dir = function()
-          --   local lazyvimRoot = require("lazyvim.util.root")
-          --   return lazyvimRoot.git()
-          -- end,
+          root_dir = function()
+            local lazyvimRoot = require("lazyvim.util.root")
+            return lazyvimRoot.git()
+          end,
         },
       },
     },
