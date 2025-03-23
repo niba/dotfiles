@@ -1,0 +1,19 @@
+font-family = "JetBrains Mono"
+font-family = "Symbols Nerd Font Mono"
+font-family-bold = "JetBrains Mono"
+font-family-italic = "JetBrains Mono"
+font-family-bold-italic = "JetBrains Mono"
+font-size = 14
+font-thicken = true
+adjust-underline-position = 4
+
+theme = catppuccin-mocha
+
+
+gtk-single-instance = true
+gtk-tabs-location = bottom
+gtk-wide-tabs = false
+
+copy-on-select = clipboard
+
+macos-option-as-alt = true

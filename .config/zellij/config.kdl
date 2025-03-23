@@ -1,0 +1,32 @@
+ keybinds {
+    normal {
+//      bind "a" {
+//        Run "fzf" {
+//            close-on-exit true
+//            floating true
+//          }
+//      }
+//
+//      bind "b" {
+//        Run "zellij" "run" "--floating" "--close-on-exit" "--" "fzf" {
+//          close_on_exit true
+//        }
+//      }
+//
+//        bind "a" {
+//            Run "_fzf_search_directory" "~/Documents/";
+//        }
+//
+//        bind "b" {
+//            Quit;
+//        }
+//
+//        bind "c" {
+//            Run "ls" "-l" {
+//                floating true
+//              }
+//        }
+    }
+}
+theme "catppuccin-macchiato"
+

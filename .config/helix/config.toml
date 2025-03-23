@@ -1,0 +1,12 @@
+theme = "catppuccin_mocha"
+
+[editor]
+mouse = false
+line-number = "relative"
+rulers = [80]
+auto-save = true
+scrolloff = 8
+
+[keys.insert]
+"C-c" = "normal_mode"
+"C-space" = "completion"
