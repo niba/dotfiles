@@ -1,20 +1,5 @@
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
-
 local tmux = require("core.tmux")
 tmux.init()
-vim.keymap.set({ "n" }, "<F13>=[5~", "<F13>=<c-i>", { desc = "Jump to previous buffer" })
---
--- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
---                        IMPORTANT
---
--- Vim doesn't differentiate <C-I> from <Tab> and <C-M> from <CR>.
--- To have custom bindings for <C-I> and <C-M> we map them to F8 and F7
--- F8 means <C-I>
--- F7 means <C-M>
---
--- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
---
 -- we don't use tabs
 vim.keymap.del("n", "<leader><tab>l")
 vim.keymap.del("n", "<leader><tab>o")

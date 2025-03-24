@@ -1,19 +1,15 @@
 #!/usr/bin/env bash
 
-CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# This is modified session script taken from tmux-fzf
+# sort sessions by date
+# display current git branch
+# display last attached dat
+cd "$HOME/.config/tmux/plugins/tmux-fzf/scripts/" || exit
+
+CURRENT_DIR="$(pwd)"
 source "$CURRENT_DIR/.envs"
 
 current_session=$(tmux display-message -p | sed -e 's/^\[//' -e 's/\].*//')
-# sessions=$(tmux list-sessions -F '#S: [#{window_name}] #{pane_current_command} #{session_last_attached}' | grep -v "^$current_session: " | awk '{print $0 " | " $(NF)}' | sort -t '|' -k2,2nr | while IFS='|' read -r line last_attached; do
-# 	session_info=$(echo $line | awk '{$NF=""; print $0}')
-# 	last_attached_date=$(date -r "$last_attached" "+%Y-%m-%d %H:%M:%S")
-# 	echo "$session_info [$last_attached_date]"
-# done)
-# if [[ -z "$TMUX_FZF_SESSION_FORMAT" ]]; then
-# 	sessions=$(tmux list-sessions | grep -v "^$current_session: ")
-# else
-# 	sessions=$(tmux list-sessions -F "#S: $TMUX_FZF_SESSION_FORMAT" | grep -v "^$current_session: ")
-# fi
 sessions=$(tmux list-sessions -F '#S: [#{window_name}] #{pane_current_command} #{session_last_attached} #{pane_current_path}' | grep -v "^$current_session: " | awk '{print $0 " | " $(NF-1)}' | sort -t '|' -k2,2nr | while IFS='|' read -r line last_attached; do
   session_info=$(echo $line | awk '{$NF=""; print $0}')
   last_attached_date=$(date -r "$last_attached" "+%Y-%m-%d %H:%M:%S")

@@ -57,7 +57,7 @@ return {
         desc = "Skip multicursor down",
       },
       {
-        "<F7>",
+        Utils.special_keys.C_m,
         function()
           local mc = require("multicursor-nvim")
           mc.addCursor("*")
@@ -157,24 +157,6 @@ return {
       vim.api.nvim_set_hl(0, "MultiCursorVisual", { link = "Visual" })
       vim.api.nvim_set_hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
       vim.api.nvim_set_hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
-    end,
-  },
-  {
-    "mg979/vim-visual-multi",
-    -- lazy = false,
-    enabled = false,
-    opts = function()
-      vim.cmd("hi! VM_Mono guibg=Grey60 guifg=Black gui=NONE")
-    end,
-    init = function()
-      vim.g.VM_maps = {
-        ["Find Under"] = "<F7>", -- it is "<C-m>",
-        ["Find Subword Under"] = "<F7>", -- it is "<C-m>",
-        ["Add Cursor Down"] = "<S-Down>",
-        ["Add Cursor Up"] = "<S-Up>",
-        ["Add Cursor At Pos"] = "<S-Right>",
-        -- ["Switch Mode"] = "<S-Left>",
-      }
     end,
   },
 }

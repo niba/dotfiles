@@ -1,117 +1,41 @@
+local create_mapping = function(key, handler)
+  return {
+    key,
+    function()
+      require("smart-splits")[handler]()
+    end,
+    mode = { "n", "v" },
+    desc = "which_key_ignore",
+  }
+end
+
 return {
   {
     "mrjones2014/smart-splits.nvim",
-    enabled = false,
-    keys = {
-      {
-        "<C-n>",
-        function()
-          require("smart-splits").resize_left()
-        end,
-        mode = { "n", "v" },
-        desc = "which_key_ignore",
-      },
-      {
-        "<C-e>",
-        function()
-          require("smart-splits").move_cursor_down()
-        end,
-        mode = { "n", "v" },
-        desc = "which_key_ignore",
-      },
-      {
-        "<F7>",
-        function()
-          require("smart-splits").move_cursor_up()
-        end,
-        mode = { "n", "v" },
-        desc = "which_key_ignore",
-      },
-      {
-        "<C-o>",
-        function()
-          require("smart-splits").move_cursor_right()
-        end,
-        mode = { "n", "v" },
-        desc = "which_key_ignore",
-      },
-      {
-        "<C-Left>",
-        function()
-          require("smart-splits").move_cursor_left()
-        end,
-        mode = { "n", "v" },
-        desc = "which_key_ignore",
-      },
-      {
-        "<C-Down>",
-        function()
-          require("smart-splits").move_cursor_down()
-        end,
-        mode = { "n", "v" },
-        desc = "which_key_ignore",
-      },
-      {
-        "<C-Up>",
-        function()
-          require("smart-splits").move_cursor_up()
-        end,
-        mode = { "n", "v" },
-        desc = "which_key_ignore",
-      },
-      {
-        "<C-Right>",
-        function()
-          require("smart-splits").move_cursor_right()
-        end,
-        mode = { "n", "v" },
-        desc = "which_key_ignore",
-      },
-      {
-        "<leader>ml",
-        function()
-          require("smart-splits").swap_buf_right()
-        end,
-        mode = { "n", "v" },
-        desc = "swap right",
-      },
-      {
-        "<leader>mh",
-        function()
-          require("smart-splits").swap_buf_left()
-        end,
-        mode = { "n", "v" },
-        desc = "swap left",
-      },
-    },
-  },
-  {
-    "christoomey/vim-tmux-navigator",
+    lazy = false,
     enabled = true,
-    event = "BufReadPre",
-    cmd = {
-      "TmuxNavigateLeft",
-      "TmuxNavigateDown",
-      "TmuxNavigateUp",
-      "TmuxNavigateRight",
-      "TmuxNavigatePrevious",
-      "TmuxNavigatorProcessList",
-    },
     keys = {
-      { "<C-n>", "<cmd>TmuxNavigateLeft<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
-      { "<C-e>", "<cmd>TmuxNavigateDown<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
-      { Utils.special_keys.C_i, "<cmd>TmuxNavigateUp<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
-      { "<C-o>", "<cmd>TmuxNavigateRight<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
-      { "<C-Left>", "<cmd>TmuxNavigateLeft<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
-      { "<C-Down>", "<cmd>TmuxNavigateDown<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
-      { "<C-Up>", "<cmd>TmuxNavigateUp<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
-      { "<C-Right>", "<cmd>TmuxNavigateRight<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
-      -- we probably need to create our own custom command
-      -- { "<C-p>", "<cmd>TmuxNavigatePrevious<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
-    },
+      create_mapping("<C-n>", "move_cursor_left"),
+      create_mapping("<C-e>", "move_cursor_down"),
+      create_mapping(Utils.special_keys.C_i, "move_cursor_up"),
+      create_mapping("<C-o>", "move_cursor_right"),
 
-    init = function()
-      vim.g.tmux_navigator_no_wrap = 1
-    end,
+      create_mapping("<C-M-n>", "resize_left"),
+      create_mapping("<C-M-e>", "resize_down"),
+      create_mapping("<C-M-i>", "resize_up"),
+      create_mapping("<C-M-o>", "resize_right"),
+
+      create_mapping("<C-h>", "move_cursor_left"),
+      create_mapping("<C-j>", "move_cursor_down"),
+      create_mapping("<C-k>", "move_cursor_up"),
+      create_mapping("<C-l>", "move_cursor_right"),
+
+      create_mapping("<C-M-h>", "resize_left"),
+      create_mapping("<C-M-j>", "resize_down"),
+      create_mapping("<C-M-k>", "resize_up"),
+      create_mapping("<C-M-l>", "resize_right"),
+
+      create_mapping("<C-p>", "move_cursor_previous"),
+    },
   },
 }
