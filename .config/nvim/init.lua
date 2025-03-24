@@ -1,7 +1,23 @@
+_G.Utils = require("utils")
+
 if vim.env.VSCODE then
   vim.g.vscode = true
 end
+-- vim.cmd("set <C-i>=[105;5u~")
+-- vim.cmd("set <C-i>=[105;5u")
+-- vim.cmd("set <C-i>=[25~")
+-- -- vim.cmd([[set <F13>=^[[105;5u]])
+-- -- vim.cmd([[set <c-i>=[105;5u~]])
+vim.cmd([[
+  " set <F13>=[25~
+  " map <F13>= <c-i>
 
+]])
+-- vim.cmd([[set <F13>=[105~]])
+-- vim.cmd([[map <F13>= <c-i>]])
+
+-- map ctrl+i send_text all \x1b[25~ # F13
+-- map ctrl+m send_text all \x1b[26~ # F14
 _G.dd = function(...)
   require("snacks.debug").inspect(...)
 end

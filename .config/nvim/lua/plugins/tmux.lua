@@ -20,7 +20,7 @@ return {
         desc = "which_key_ignore",
       },
       {
-        "<F8>",
+        "<F7>",
         function()
           require("smart-splits").move_cursor_up()
         end,
@@ -100,7 +100,7 @@ return {
     keys = {
       { "<C-n>", "<cmd>TmuxNavigateLeft<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
       { "<C-e>", "<cmd>TmuxNavigateDown<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
-      { "<F8>", "<cmd>TmuxNavigateUp<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
+      { Utils.special_keys.C_i, "<cmd>TmuxNavigateUp<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
       { "<C-o>", "<cmd>TmuxNavigateRight<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
       { "<C-Left>", "<cmd>TmuxNavigateLeft<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },
       { "<C-Down>", "<cmd>TmuxNavigateDown<cr>", mode = { "n", "v" }, desc = "which_key_ignore" },

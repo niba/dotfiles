@@ -1,6 +1,6 @@
 local extras = require("plugins.extras.oil")
 
-extras.auto_stow()
+-- extras.auto_stow()
 
 -- function OilDir()
 -- return require("oil").get_current_dir()

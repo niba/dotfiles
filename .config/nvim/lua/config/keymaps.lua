@@ -1,6 +1,9 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+local tmux = require("core.tmux")
+tmux.init()
+vim.keymap.set({ "n" }, "<F13>=[5~", "<F13>=<c-i>", { desc = "Jump to previous buffer" })
 --
 -- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 --                        IMPORTANT
