@@ -1,83 +1,24 @@
-local tmux = require("core.tmux")
-tmux.init()
--- we don't use tabs
-vim.keymap.del("n", "<leader><tab>l")
-vim.keymap.del("n", "<leader><tab>o")
-vim.keymap.del("n", "<leader><tab>f")
-vim.keymap.del("n", "<leader><tab><tab>")
-vim.keymap.del("n", "<leader><tab>]")
-vim.keymap.del("n", "<leader><tab>d")
-vim.keymap.del("n", "<leader><tab>[")
+local core = require("core")
 
-local function smart_jumplist_back()
-  local current_pos = vim.fn.getcurpos()
-
-  -- \6 is <c-f>
-  vim.cmd("normal \6")
-  local forward_pos = vim.fn.getcurpos()
-  local at_top_of_stack = (
-    current_pos[1] == forward_pos[1]
-    and current_pos[2] == forward_pos[2]
-    and current_pos[3] == forward_pos[3]
-  )
-
-  if not at_top_of_stack then
-    vim.cmd("normal! \15")
-  end
-
-  if at_top_of_stack then
-    vim.cmd("normal! m'")
-  end
-
-  vim.cmd("normal! \15")
-end
+require("core.reset").reset_keymaps_after_init()
+core.tmux.create_mappings()
+core.windows.create_mappings()
+core.jumplist.create_mappings()
+core.code.create_mappings()
 
 vim.keymap.set({ "n", "i" }, "<C-Tab>", "<cmd>e #<cr>", { desc = "Jump to previous buffer" })
--- Bind Shift+Ctrl+U to scroll one line up
 vim.api.nvim_set_keymap("n", "<S-C-u>", "<C-y>", { noremap = true, silent = true })
--- Bind Shift+Ctrl+D to scroll one line down
 vim.api.nvim_set_keymap("n", "<S-C-d>", "<C-e>", { noremap = true, silent = true })
 
--- Custom jumplist keys
--- Pane / tmux navigation takes c-o and c-i (F8)
--- vim.api.nvim_set_keymap("n", "<C-b>", "<C-o>", { noremap = true, silent = true })
--- vim.api.nvim_set_keymap("n", "<C-f>", "F8", { noremap = true, silent = true })
--- vim.keymap.set("n", "<C-b>", "<C-o>", { silent = true, desc = "Jump backward" })
-vim.keymap.set("n", "<C-b>", smart_jumplist_back, { noremap = true, silent = true })
-vim.keymap.set("n", "<C-f>", "<C-i>", { silent = true, desc = "Jump forward" })
--- add vertical jumps like 10k to jumplist
-vim.keymap.set("n", "j", [[(v:count > 1 ? 'm`' . v:count : 'g') . 'j']], { expr = true })
-vim.keymap.set("n", "<down>", [[(v:count > 1 ? 'm`' . v:count : 'g') . 'j']], { expr = true })
-vim.keymap.set("n", "k", [[(v:count > 1 ? 'm`' . v:count : 'g') . 'k']], { expr = true })
-vim.keymap.set("n", "<up>", [[(v:count > 1 ? 'm`' . v:count : 'g') . 'k']], { expr = true })
-
-vim.keymap.set("n", "<M-h>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
-vim.keymap.set("n", "<M-H>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
-vim.keymap.set("n", "<M-W>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
-vim.keymap.set("n", "<M-w>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
--- fix paste
--- vim.keymap.set("x", "p", "P") <- handled by yanky plugin, it is better to do _dp because P replaces under cursor and not after cursor like p
 vim.keymap.set({ "n", "x" }, "<leader>p", [["0p]], { desc = "Paste from yank register" })
-local function do_action_and_join_registers(action)
-  local register = "*" -- yank plugin uses *
-  local current_content = vim.fn.getreg(register)
-  vim.api.nvim_command("normal! " .. action)
-  local new_content = vim.fn.getreg(register)
-  vim.fn.setreg(register, current_content .. new_content)
-end
-local function delete_and_append()
-  do_action_and_join_registers("d")
-end
 
-local function yank_and_append()
-  do_action_and_join_registers("y")
-end
-vim.keymap.set({ "x" }, "<leader>d", delete_and_append, { desc = "Delete and append to register" })
-vim.keymap.set({ "x" }, "<leader>y", yank_and_append, { desc = "Yank and append to register" })
-
-vim.keymap.set("x", "u", "<nop>")
-vim.keymap.set("n", "Q", "<nop>")
-vim.keymap.set("i", "<C-c>", "<esc>")
+-- TODO: conflict with dap in select mode
+vim.keymap.set({ "x" }, "<leader>d", function()
+  core.registers.do_action_and_join_registers("d")
+end, { desc = "Delete and append to register" })
+vim.keymap.set({ "x" }, "<leader>y", function()
+  core.registers.do_action_and_join_registers("y")
+end, { desc = "Yank and append to register" })
 
 vim.keymap.set({ "n", "s" }, "<C-c>", function()
   vim.cmd("noh")
@@ -85,21 +26,8 @@ vim.keymap.set({ "n", "s" }, "<C-c>", function()
   return "<C-c>"
 end, { expr = true, desc = "Escape and Clear hlsearch" })
 
--- breaks navigation in cmp
--- vim.keymap.set("n", "<C-d>", "<C-d>zz")
--- vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
-
--- disable macros, dont use it at all (use multicursor)
-vim.keymap.set("n", "q", "<Nop>", { noremap = true, silent = true })
-
-vim.keymap.set("n", "gh", function()
-  vim.fn.setreg("/", "\\<" .. vim.fn.expand("<cword>") .. "\\>")
-  vim.cmd([[normal! gg]])
-  vim.cmd("normal! n")
-  vim.cmd("noh")
-end, { noremap = true, silent = true, desc = "Go to import header" })
 
 vim.keymap.set(
   "n",
@@ -107,6 +35,7 @@ vim.keymap.set(
   ':echo fnamemodify(expand("%:h"), ":~:.") . "/" . expand("%:t")<CR>',
   { noremap = true, silent = true, desc = "Show file location" }
 )
+
 vim.keymap.set(
   "n",
   "<Leader>bL",
@@ -139,17 +68,6 @@ vim.keymap.set("n", "i", function()
   end
 end, { expr = true, desc = "Properly indent on empty line when insert" })
 
-vim.keymap.set("n", "<leader>wp", "<C-W>p", { desc = "Other window", remap = true })
-vim.keymap.set("n", "<leader>wh", "<C-W>s", { desc = "Split window horizontaly", remap = true })
-vim.keymap.set("n", "<leader>wv", "<C-W>v", { desc = "Split window verticaly", remap = true })
-vim.keymap.set("n", "<leader>we", "<C-w>=", { desc = "Make splits equal size" })
-vim.keymap.set(
-  "n",
-  "<leader>wt",
-  ":lua CloseOtherWindows()<CR>",
-  { desc = "Close other windows", remap = true, silent = true }
-)
-
 vim.keymap.set("n", "<c-/>", function()
   Snacks.terminal()
 end, { desc = "Terminal" })
@@ -157,115 +75,6 @@ end, { desc = "Terminal" })
 vim.keymap.set("n", "<c-_>", function()
   Snacks.terminal()
 end, { desc = "which_key_ignore" })
-
-function CloseOtherWindows()
-  local current_win = vim.api.nvim_get_current_win()
-  for _, win in pairs(vim.api.nvim_list_wins()) do
-    if win ~= current_win then
-      vim.api.nvim_win_close(win, false)
-    end
-  end
-end
-
-function CopyDiagnosticToClipboard()
-  local line_num = vim.api.nvim_win_get_cursor(0)[1] - 1 -- Get current line number, 0-indexed
-  local diagnostics = vim.diagnostic.get(0, { lnum = line_num }) -- Get diagnostics for the current line
-
-  if #diagnostics == 0 then
-    print("No diagnostics to copy")
-    return
-  end
-
-  local diagnostic_message = diagnostics[1].message -- Get the first diagnostic message
-  print("diagnostic copied: " .. diagnostic_message) -- optional: print the diagnostic message
-
-  -- Copy the diagnostic message to the '+' register (system clipboard)
-  vim.fn.setreg("+", diagnostic_message)
-end
-vim.api.nvim_set_keymap(
-  "n",
-  "<Leader>cD",
-  ":lua CopyDiagnosticToClipboard()<CR>",
-  { desc = "Copy diagnostic", noremap = true, silent = true }
-)
-
--- vim.keymap.set("n", "<C-q>", function()
---   -- Check if we're in tmux
---   local in_tmux = os.getenv("TMUX") ~= nil
---
---   if in_tmux then
---     -- Get current tmux session name
---     local current_session = vim.fn.system("tmux display-message -p '#S'"):gsub("\n", "")
---
---     -- Get only the part before whitespace
---     local session_prefix = current_session:match("^(%S+)")
---
---     -- Check if we're in dotfiles session (ignoring any numbers after)
---     if session_prefix == "dotfiles" or session_prefix == "notes" or session_prefix == "NVIM_POPUP" then
---       vim.fn.system("tmux detach-client")
---     else
---       -- Optional: Print message if not in dotfiles session
---       print("Not in dotfiles session")
---     end
---   end
--- end, { desc = "Detach from dotfiles tmux session" })
-
-local function should_add_to_jumplist()
-  local current_bufnr = vim.api.nvim_get_current_buf()
-  local current_line = vim.fn.line(".")
-  local jumplist = vim.fn.getjumplist()
-  local jumps = jumplist[1]
-  local current_index = jumplist[2]
-
-  -- If jumplist is empty, always add
-  if #jumps == 0 then
-    return true
-  end
-
-  -- Get the most recent jump
-  local last_jump = jumps[current_index]
-  if not last_jump then
-    -- If we can't get the last jump, be safe and add to jumplist
-    return true
-  end
-
-  -- If last jump was in a different buffer, add to jumplist
-  if last_jump.bufnr ~= current_bufnr then
-    return true
-  end
-
-  -- If in the same buffer, check if we've moved more than 10 lines
-  local line_distance = math.abs(current_line - last_jump.lnum)
-  return line_distance > 10
-end
-
--- Function to conditionally add to jumplist
-local function conditional_add_to_jumplist()
-  if should_add_to_jumplist() then
-    pcall(function()
-      vim.cmd("normal! m'")
-    end)
-    return true
-  end
-  return false
-end
-
--- Set up autocommands for the specified operations
-local jumplist_group = vim.api.nvim_create_augroup("JumplistAdditions", { clear = true })
-
--- Add to jumplist when yanking text (if condition met)
-vim.api.nvim_create_autocmd("TextYankPost", {
-  group = jumplist_group,
-  callback = conditional_add_to_jumplist,
-  desc = "Add position to jumplist after yanking based on conditions",
-})
-
--- Add to jumplist when entering insert mode (if condition met)
-vim.api.nvim_create_autocmd("InsertEnter", {
-  group = jumplist_group,
-  callback = conditional_add_to_jumplist,
-  desc = "Add position to jumplist when entering insert based on conditions",
-})
 
 vim.keymap.set("n", "<leader>br", function()
   local plugins = require("lazy").plugins()
@@ -280,42 +89,3 @@ vim.keymap.set("n", "<leader>br", function()
     require("lazy").reload({ plugins = { selected } })
   end)
 end, { desc = "Reload plugin" })
-
--- Create mappings for paste operations that conditionally add to jumplist
--- vim.keymap.set("n", "p", function()
---   conditional_add_to_jumplist()
---   return "p"
--- end, { expr = true, desc = "Paste and conditionally add to jumplist" })
---
--- vim.keymap.set("n", "P", function()
---   conditional_add_to_jumplist()
---   return "P"
--- end, { expr = true, desc = "Paste before and conditionally add to jumplist" })
-
--- TESTING AREA
--- Window movement
-
--- local function new_horizontal_window()
---   vim.cmd("new")
--- end
---
--- local function new_vertical_window()
---   vim.cmd("vnew")
--- end
---
--- local function move_to_window(direction)
---   local key_map = {
---     h = "<Left>",
---     j = "<Down>",
---     k = "<Up>",
---     l = "<Right>",
---   }
---   vim.cmd("wincmd " .. key_map[direction])
--- end
-
--- space+w + hjkl => resize
--- ctrl+w other window
--- space + w + = => equal dimensions
--- split window
--- quit window
--- close others

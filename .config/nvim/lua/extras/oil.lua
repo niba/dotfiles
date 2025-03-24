@@ -19,6 +19,55 @@ local is_dotfiles_url = function(url)
   return path:match("^/Users/niba/dotfiles") ~= nil
 end
 
+M.fuzzy_dir = function()
+  local find_command = {
+    "fd",
+    "--type",
+    "d",
+    "--color",
+    "never",
+  }
+
+  vim.fn.jobstart(find_command, {
+    stdout_buffered = true,
+    on_stdout = function(_, data)
+      if data then
+        local filtered = vim.tbl_filter(function(el)
+          return el ~= ""
+        end, data)
+
+        local items = {}
+        for _, v in ipairs(filtered) do
+          table.insert(items, { text = v })
+        end
+
+        ---@module 'snacks'
+        Snacks.picker.pick({
+          source = "directories",
+          items = items,
+          layout = { preset = "select" },
+          format = "text",
+          confirm = function(picker, item)
+            picker:close()
+            require("oil").open(item.text)
+          end,
+        })
+      end
+    end,
+  })
+end
+
+M.autocmds = function()
+  vim.api.nvim_create_augroup("OilRelPathFix", {})
+  vim.api.nvim_create_autocmd("BufLeave", {
+    group = "OilRelPathFix",
+    pattern = "oil:///*",
+    callback = function()
+      vim.cmd("cd .")
+    end,
+  })
+end
+
 -- when use stow with --no-folding option then you need to sync new / deleted files
 M.auto_stow = function()
   vim.api.nvim_create_autocmd("User", {

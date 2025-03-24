@@ -1,9 +1,13 @@
+local dap_extras = require("extras.dap")
+
 return {
   {
     "mfussenegger/nvim-dap",
     optional = true,
     opts = function()
-      local dap = require("dap")
+      dap_extras.create_autocmds()
+
+      local dap = require("lua.extras.dap")
       if not dap.adapters["chrome"] then
         dap.adapters["chrome"] = {
           type = "server",

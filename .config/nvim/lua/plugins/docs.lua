@@ -1,7 +1,3 @@
-if true then
-  return {}
-end
-
 return {
   {
     "OXY2DEV/helpview.nvim",

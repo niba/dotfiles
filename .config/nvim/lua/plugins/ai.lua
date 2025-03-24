@@ -302,13 +302,33 @@ return {
             },
             close = {
               modes = {
-                n = "<C-x>",
-                i = "<C-x>",
+                n = "<localleader>d",
+                i = "<C-S-x>",
               },
             },
             clear = {
               modes = {
                 n = "<localleader>x",
+              },
+            },
+            yank_code = {
+              modes = {
+                n = "<localleader>y",
+              },
+            },
+            fold_code = {
+              modes = {
+                n = "<localleader>f",
+              },
+            },
+            pin = {
+              modes = {
+                n = "<localleader>p",
+              },
+            },
+            watch = {
+              modes = {
+                n = "<localleader>w",
               },
             },
             codeblock = {
@@ -328,7 +348,7 @@ return {
             },
             debug = {
               modes = {
-                n = "<localleader>d",
+                n = "<localleader>l",
               },
             },
           },

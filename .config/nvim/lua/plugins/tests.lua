@@ -1,3 +1,11 @@
+-- https://github.com/nvim-neotest/neotest/issues/123
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "neotest-output-panel",
+  callback = function()
+    vim.cmd("norm G")
+  end,
+})
+
 return {
   {
     "nvim-neotest/neotest",
@@ -35,8 +43,6 @@ return {
             end
           end,
           filter_dir = function(name, rel_path, root)
-            local timestamp = os.date("%Y-%m-%d %H:%M:%S")
-            vim.print("filtering dir" .. timestamp)
             return name ~= "node_modules" and name ~= "dist" and name ~= "build" and name ~= "legacy"
           end,
           is_test_file = function(file_path)

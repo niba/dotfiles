@@ -1,6 +1,6 @@
 local M = {}
 
-M.init = function()
+M.create_mappings = function()
   vim.keymap.set("n", "<C-q>", function()
     local in_tmux = os.getenv("TMUX") ~= nil
     if in_tmux then
@@ -9,6 +9,7 @@ M.init = function()
 
       if session_name == "dotfiles" or session_name == "notes" or session_name == "NVIM_POPUP" then
         vim.cmd("!~/.config/tmux/close_session.sh")
+        return
       end
     end
 

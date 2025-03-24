@@ -15,7 +15,7 @@ return {
       use_diagnostics = false,
     },
     keys = {
-      { "<leader>ct", "<cmd>TSC<cr>", desc = "Check project" },
+      { "<leader>cp", "<cmd>TSC<cr>", desc = "Check project" },
     },
   },
   {

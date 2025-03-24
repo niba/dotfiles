@@ -1,26 +1,6 @@
-local extras = require("plugins.extras.oil")
+local oil_extras = require("extras.oil")
 
--- extras.auto_stow()
-
--- function OilDir()
--- return require("oil").get_current_dir()
--- end
--- vim.api.nvim_create_autocmd("BufWinEnter", {
---   callback = function(ev)
---     if vim.bo[ev.buf].filetype == "oil" and vim.api.nvim_get_current_buf() == ev.buf then
---       vim.api.nvim_set_option_value("winbar", "%{%v:lua.OilDir()%}", { scope = "local", win = 0 })
---     end
---   end,
--- })
--- oil fix relative path
-vim.api.nvim_create_augroup("OilRelPathFix", {})
-vim.api.nvim_create_autocmd("BufLeave", {
-  group = "OilRelPathFix",
-  pattern = "oil:///*",
-  callback = function()
-    vim.cmd("cd .")
-  end,
-})
+oil_extras.autocmds()
 local detail = false
 
 return {
@@ -55,7 +35,7 @@ return {
           end,
           desc = "oil: Search in directory",
         },
-        ["gd"] = {
+        ["<localleader>i"] = {
           desc = "Toggle file detail view",
           callback = function()
             detail = not detail
@@ -116,6 +96,13 @@ return {
         end,
         desc = "Save file changes",
         -- expr = true,
+      },
+      {
+        "<leader>fo",
+        function()
+          oil_extras.fuzzy_oil()
+        end,
+        desc = "Smart find",
       },
       {
         "<leader>fE",

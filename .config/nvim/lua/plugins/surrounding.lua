@@ -1,9 +1,5 @@
 return {
   {
-    "echasnovski/mini.surround",
-    enabled = false,
-  },
-  {
     "xzbdmw/clasp.nvim",
     config = function()
       require("clasp").setup({
