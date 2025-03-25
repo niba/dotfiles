@@ -37,5 +37,8 @@ return {
 
       create_mapping("<C-p>", "move_cursor_previous"),
     },
+    opts = {
+      at_edge = "stop",
+    },
   },
 }
