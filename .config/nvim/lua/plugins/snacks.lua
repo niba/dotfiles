@@ -39,7 +39,7 @@ return {
         },
       },
       debug = {
-        explorer = true, -- show explorer debug info
+        explorer = true,
       },
       scratch = {
         win = {
@@ -51,35 +51,52 @@ return {
         auto_close = false,
         actions = {
           flash = snacks_extras.flash_on_picker,
+          -- auto truncate length of item
+          calculate_file_truncate_width = function(self)
+            local width = self.list.win:size().width
+            self.opts.formatters.file.truncate = width - 6
+          end,
         },
         sorter = snacks_extras.zf_sorter,
-        grep = {
-          regex = false,
-        },
         formatters = {
           file = {
             filename_first = true,
-            truncate = 100,
           },
         },
         win = {
           input = {
             keys = {
-              ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
-              ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
               ["<a-m>"] = { "toggle_modified", mode = { "i", "n" } },
+              ["<a-r>"] = { "toggle_regex", mode = { "i", "n" } },
             },
           },
           list = {
+            on_buf = function(self)
+              self:execute("calculate_file_truncate_width")
+            end,
             keys = {
-              ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
-              ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
               ["<a-m>"] = { "toggle_modified", mode = { "i", "n" } },
+              -- doesnt work, report a bug
+              ["<a-r>"] = { "toggle_regex", mode = { "i", "n" } },
             },
+          },
+          preview = {
+            on_buf = function(self)
+              self:execute("calculate_file_truncate_width")
+            end,
+            on_close = function(self)
+              self:execute("calculate_file_truncate_width")
+            end,
           },
         },
       },
     },
+    config = function(_, opts)
+      require("snacks").setup(opts)
+
+      -- disabling it from options doesnt work
+      Snacks.picker.sources.grep.regex = false
+    end,
     keys = {
       {
         "<leader><space>",
@@ -98,6 +115,14 @@ return {
       --   end,
       --   desc = "Buffers - auto flash",
       -- },
+      {
+        "<leader>/",
+        function()
+          Snacks.picker.grep_word()
+        end,
+        mode = { "x" },
+        desc = "Grep word",
+      },
       {
         "<leader>r",
         function()
