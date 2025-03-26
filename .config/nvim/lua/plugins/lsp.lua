@@ -82,7 +82,9 @@ return {
           settings = {
             Lua = {
               completion = {
-                callSnippet = "disabled",
+                callSnippet = "Disable",
+                showWord = "Disable",
+                keywordSnippet = "Disable",
               },
             },
           },
