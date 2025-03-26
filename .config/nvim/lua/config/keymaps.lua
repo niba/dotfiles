@@ -76,7 +76,7 @@ vim.keymap.set("n", "<c-_>", function()
   Snacks.terminal()
 end, { desc = "which_key_ignore" })
 
-vim.keymap.set("n", "<leader>br", function()
+vim.keymap.set("n", "<leader>cP", function()
   local plugins = require("lazy").plugins()
   local plugin_names = {}
   for _, plugin in ipairs(plugins) do

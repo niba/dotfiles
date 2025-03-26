@@ -68,6 +68,16 @@ M.autocmds = function()
   })
 end
 
+M.make_executable = function()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  local lnum = cursor[1]
+  local line = vim.api.nvim_buf_get_lines(0, lnum - 1, lnum, true)[1]
+  line = line:gsub(" ([r%-][w%-]).([r%-][w%-]).([r%-][w%-]). ", function(u, g, p)
+    return " " .. u .. "x" .. g .. "x" .. p .. "x "
+  end)
+  vim.api.nvim_buf_set_lines(0, lnum - 1, lnum, true, { line })
+end
+
 -- when use stow with --no-folding option then you need to sync new / deleted files
 M.auto_stow = function()
   vim.api.nvim_create_autocmd("User", {

@@ -14,6 +14,12 @@ return {
         autosave_changes = true,
       },
       keymaps = {
+        ["<localleader>x"] = {
+          desc = "Make executable",
+          callback = function()
+            oil_extras.make_executable()
+          end,
+        },
         ["<localleader>s"] = {
           callback = function()
             local oil = require("oil")
@@ -68,9 +74,24 @@ return {
         ["<C-x>"] = "actions.close",
         ["<C-l>"] = false,
         ["<C-h>"] = false,
-        ["<C-t>"] = "actions.refresh",
+        ["<localleader>r"] = "actions.refresh",
+        ["<C-t>"] = false,
         ["<C-s>"] = false,
-        ["<C-y>"] = "actions.yank_entry",
+        ["<C-y>"] = false,
+
+        ["<localleader>f"] = {
+          desc = "Fuzzy find directory",
+          callback = function()
+            oil_extras.fuzzy_dir()
+          end,
+        },
+        ["<localleader>p"] = "actions.preview",
+        ["<localleader>S"] = { "actions.change_sort", mode = "n" },
+        ["<localleader>o"] = "actions.open_external",
+        ["<localleader>."] = { "actions.toggle_hidden", mode = "n" },
+        ["<localleader>\\"] = { "actions.toggle_trash", mode = "n" },
+
+        ["<localleader>y"] = "actions.yank_entry",
         ["<S-l>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
         ["<C-v>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
       },
@@ -90,12 +111,10 @@ return {
           if vim.bo.filetype == "oil" then
             require("oil").save({ confirm = true })
           else
-            -- return "<c-s>"
             vim.cmd("w")
           end
         end,
         desc = "Save file changes",
-        -- expr = true,
       },
       {
         "<leader>fo",
@@ -112,7 +131,6 @@ return {
         desc = "Open file explorer (cwd)",
       },
       { "<leader>e", "<leader>fe", desc = "Open file explorer", remap = true },
-      -- vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" }),
     },
   },
 }

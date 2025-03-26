@@ -49,7 +49,7 @@ function M.create_mappings()
     vim.fn.setreg("+", diagnostics[1].message)
   end, { desc = "Copy diagnostic", noremap = true, silent = true })
 
-  vim.keymap.set("n", "gh", M.go_to_import_header, { noremap = true, silent = true, desc = "Go to import header" })
+  vim.keymap.set("n", "gj", M.go_to_import_header, { noremap = true, silent = true, desc = "Go to import header" })
 end
 
 return M

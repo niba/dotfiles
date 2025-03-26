@@ -442,6 +442,7 @@ return {
         map("n", "<leader>ghD", function()
           gs.diffthis("~")
         end, "Diff This ~")
+        map("n", "<leader>hi", gs.preview_hunk_inline)
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
       end,
     },

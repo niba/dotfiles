@@ -1,7 +1,3 @@
--- if true then
---   return {}
--- end
-
 return {
   {
     "folke/noice.nvim",
@@ -43,63 +39,6 @@ return {
           },
           opts = { skip = true },
         },
-      },
-      -- views = {
-      --   hover = {
-      --     border = { style = "rounded" },
-      --     size = { max_width = 100 },
-      --     position = { row = 2, col = 2 },
-      --   },
-      -- },
-    },
-    keys = {
-      {
-        "<C-d>",
-        function()
-          if not require("noice.lsp").scroll(4) then
-            return "<C-d>zz"
-          end
-        end,
-        silent = true,
-        expr = true,
-        desc = "Scroll Forward",
-        mode = { "n" },
-      },
-      {
-        "<C-u>",
-        function()
-          if not require("noice.lsp").scroll(-4) then
-            return "<C-u>zz"
-          end
-        end,
-        silent = true,
-        expr = true,
-        desc = "Scroll Backward",
-        mode = { "n" },
-      },
-      {
-        "<C-d>",
-        function()
-          if not require("noice.lsp").scroll(4) then
-            return "<C-d>"
-          end
-        end,
-        silent = true,
-        expr = true,
-        desc = "Scroll Forward",
-        mode = { "i", "s" },
-      },
-      {
-        "<C-u>",
-        function()
-          if not require("noice.lsp").scroll(-4) then
-            return "<C-u>"
-          end
-        end,
-        silent = true,
-        expr = true,
-        desc = "Scroll Backward",
-        mode = { "i", "s" },
       },
     },
   },
