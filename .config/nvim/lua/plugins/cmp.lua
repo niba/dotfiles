@@ -1,14 +1,67 @@
-local snippet_trigger_character = ";"
+local keyword_and_snippets_priority = {
+  snippets = 4,
+  lsp = 3, -- lsp keyword
+  path = 2,
+  buffer = 1,
+}
+
+local lang_patterns = { tsx = { "**/typescript.json", "**/react-ts.json", "**/next-ts.json" } }
 
 return {
-  { "L3MON4D3/LuaSnip", version = "v2.*" },
+  {
+    "echasnovski/mini.snippets",
+    keys = {
+
+      {
+        "<leader>ss",
+        function()
+          require("mini.snippets").expand()
+        end,
+        desc = "Search snippet",
+      },
+    },
+    opts = function(_, opts)
+      local mini_snippets = require("mini.snippets")
+
+      opts.snippets = {
+        mini_snippets.gen_loader.from_file("~/.config/nvim/snippets/global.json"),
+        mini_snippets.gen_loader.from_lang({ lang_patterns = lang_patterns }),
+      }
+
+      opts.mappings = {
+        jump_next = "",
+        jump_prev = "",
+      }
+
+      return opts
+    end,
+  },
   {
     "saghen/blink.cmp",
-    dependencies = { "L3MON4D3/LuaSnip", version = "v2.*" },
     opts = {
       keymap = {
         preset = "super-tab",
         ["<CR>"] = { "accept", "fallback" },
+      },
+      fuzzy = {
+        max_typos = function(keyword)
+          return 0
+        end,
+        sorts = {
+          function(a, b)
+            -- 14 is keyword kind, we want to display snippet result over keyword result for the exact match
+            if a.kind == 14 or b.kind == 14 then
+              local a_priority = keyword_and_snippets_priority[a.source_id]
+              local b_priority = keyword_and_snippets_priority[b.source_id]
+              if a_priority ~= b_priority then
+                return a_priority > b_priority
+              end
+            end
+          end,
+          -- defaults
+          "score",
+          "sort_text",
+        },
       },
       completion = {
         accept = {
@@ -44,7 +97,6 @@ return {
         },
       },
       signature = { window = { border = "single" } },
-      snippets = { preset = "luasnip" },
       sources = {
         per_filetype = {
           codecompanion = { "codecompanion" },
@@ -55,74 +107,18 @@ return {
   {
     "saghen/blink.cmp",
     opts = function(_, opts)
-      -- print(vim.inspect(opts.sources))
       opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
         default = { "lsp", "path", "snippets" },
         providers = {
           lsp = {
             transform_items = function(_, items)
               return vim.tbl_filter(function(item)
-                print(item.kind)
-                return item.kind ~= require("blink.cmp.types").CompletionItemKind.Snippet
+                return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
+                  and item.kind ~= require("blink.cmp.types").CompletionItemKind.Snippet
               end, items)
             end,
           },
           snippets = {
-            --   transform_items = function(a, items)
-            --     local line = vim.api.nvim_get_current_line()
-            --     local col = vim.api.nvim_win_get_cursor(0)[2]
-            --     local before_cursor = line:sub(1, col)
-            --     local start_pos, end_pos =
-            --       before_cursor:find(snippet_trigger_character .. "[^" .. snippet_trigger_character .. "]*$")
-            --     if start_pos then
-            --       for _, item in ipairs(items) do
-            --         if not item.trigger_text_modified then
-            --           ---@diagnostic disable-next-line: inject-field
-            --           item.trigger_text_modified = true
-            --           item.textEdit = {
-            --             newText = item.insertText or item.label,
-            --             range = {
-            --               start = { line = vim.fn.line(".") - 1, character = start_pos - 1 },
-            --               ["end"] = { line = vim.fn.line(".") - 1, character = end_pos },
-            --             },
-            --           }
-            --         end
-            --       end
-            --     end
-            --     return items
-            --
-            --     -- local textEdits = require("blink.cmp.lib.text_edits")
-            --     -- local bounds = a.get_bounds()
-            --     -- print(vim.inspect(bounds))
-            --     -- local line_number = bounds.line_number
-            --     -- local start_col = bounds.start_col
-            --     -- local trigger_col = start_col - 1
-            --     -- -- local line = vim.api.nvim_get_current_line()
-            --     -- -- local col = vim.api.nvim_win_get_cursor(0)[2]
-            --     -- -- local before_cursor = line:sub(1, col)
-            --     -- -- local start_pos, end_pos = before_cursor:find(trigger_text .. "[^" .. trigger_text .. "]*$")
-            --     -- if start_col then
-            --     --   for _, item in ipairs(items) do
-            --     --     if not item.trigger_text_modified then
-            --     --       ---@diagnostic disable-next-line: inject-field
-            --     --       item.trigger_text_modified = true
-            --     --       item.textEdit = textEdits.get_from_item(item)
-            --     --       print("item range character " .. vim.inspect(item.textEdit.range.start.character))
-            --     --       item.textEdit.range.start.character = item.textEdit.range.start.character - 2
-            --     --       item.textEdit.range["end"].character = item.textEdit.range["end"].character - 2
-            --     --       print("item range character after " .. vim.inspect(item.textEdit.range.start.character))
-            --     --       -- item.textEdit = {
-            --     --       --   newText = item.insertText or item.label,
-            --     --       --   range = {
-            --     --       --     start = { line = line_number, character = trigger_col },
-            --     --       --     -- ["end"] = { line = vim.fn.line(".") - 1, character = end_pos },
-            --     --       --   },
-            --     --       -- }
-            --     --     end
-            --     --   end
-            --     -- end
-            --     -- return items
-            --   end,
             should_show_items = function(ctx)
               return ctx.trigger.initial_kind ~= "trigger_character" and not require("blink.cmp").snippet_active()
             end,
@@ -130,10 +126,6 @@ return {
         },
       })
 
-      --
-      -- opts.sources.providers.snippets.override.get_trigger_characters = function(self)
-      --   return { ";" }
-      -- end
       return opts
     end,
   },
