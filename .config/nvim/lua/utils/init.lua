@@ -5,5 +5,9 @@ M.special_keys = {
   C_m = "<F8>",
 }
 
+M.default_actions = {
+  C_d = "<C-d>zz",
+  C_u = "<C-u>zz",
+}
 
 return M

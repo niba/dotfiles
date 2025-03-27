@@ -1,12 +1,17 @@
 local M = {}
 
+-- naive but works
 function M.go_to_import_header()
-  vim.fn.setreg("/", "\\<" .. vim.fn.expand("<cword>") .. "\\>")
-  vim.cmd([[normal! gg]])
-  vim.cmd("normal! n")
-  vim.cmd("noh")
+  local cword = vim.fn.expand("<cword>")
+  if cword ~= "" then
+    vim.fn.setreg("/", "\\<" .. cword .. "\\>")
+    vim.cmd([[normal! gg]])
+    vim.cmd("normal! n")
+    vim.cmd("noh")
+  end
 end
 
+-- naive but works
 function M.get_diagnostics(start_line, end_line, bufnr)
   if end_line == nil then
     end_line = start_line

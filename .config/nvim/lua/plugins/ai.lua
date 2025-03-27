@@ -202,49 +202,49 @@ return {
             --   -- ["http_options"] = '{"api_version" = "v1alpha",}',
             --   -- ["api_version"] = "v1alpha",
             -- },
-            handlers = {
-              form_parameters = function(self, params, messages)
-                if self.schema.model.default == "gemini-2.0-flash-thinking-exp-01-21" then
-                  return vim.tbl_extend("keep", params or {}, {
-                    generationConfig = {
-                      thinkingConfig = {
-                        includeThoughts = true,
-                      },
-                    },
-                    -- generation_config = {
-                    --   thinking_config = {
-                    --     include_thoughts = true,
-                    --   },
-                    -- },
-                  })
-                end
-                print("form_parameters " .. vim.inspect(params))
-                return params
-              end,
-              chat_output = function(self, data)
-                local output = {}
-
-                if data and data ~= "" then
-                  data = data:sub(6)
-                  local ok, json = pcall(vim.json.decode, data, { luanil = { object = true } })
-
-                  if ok and json.candidates and json.candidates[1].content then
-                    output.role = "llm"
-                    output.content = json.candidates[1].content.parts[1].text
-
-                    return {
-                      status = "success",
-                      output = output,
-                    }
-                  end
-                end
-              end,
-            },
+            -- handlers = {
+            --   form_parameters = function(self, params, messages)
+            --     if self.schema.model.default == "gemini-2.0-flash-thinking-exp-01-21" then
+            --       return vim.tbl_extend("keep", params or {}, {
+            --         generationConfig = {
+            --           thinkingConfig = {
+            --             includeThoughts = true,
+            --           },
+            --         },
+            --         -- generation_config = {
+            --         --   thinking_config = {
+            --         --     include_thoughts = true,
+            --         --   },
+            --         -- },
+            --       })
+            --     end
+            --     print("form_parameters " .. vim.inspect(params))
+            --     return params
+            --   end,
+            --   chat_output = function(self, data)
+            --     local output = {}
+            --
+            --     if data and data ~= "" then
+            --       data = data:sub(6)
+            --       local ok, json = pcall(vim.json.decode, data, { luanil = { object = true } })
+            --
+            --       if ok and json.candidates and json.candidates[1].content then
+            --         output.role = "llm"
+            --         output.content = json.candidates[1].content.parts[1].text
+            --
+            --         return {
+            --           status = "success",
+            --           output = output,
+            --         }
+            --       end
+            --     end
+            --   end,
+            -- },
             schema = {
               model = {
                 -- default = "gemini-2.0-flash-exp",
                 -- default = "gemini-2.0-flash-thinking-exp-01-21",
-                default = gemini_pro,
+                default = "gemini-2.5-pro-exp-03-25",
               },
               max_tokens = {
                 default = 8192,

@@ -29,9 +29,36 @@ return {
         },
         vtsls = {
           settings = {
-            typescript = {
-              tsserver = {
-                maxTsServerMemory = 8192,
+            complete_function_calls = false,
+            vtsls = {
+              autoUseWorkspaceTsdk = true,
+              javascript = {
+                updateImportsOnFileMove = { enabled = "always" },
+                suggest = {
+                  completeFunctionCalls = {
+                    enabled = false,
+                  },
+                  classMemberSnippets = {
+                    enabled = false,
+                  },
+                },
+              },
+              typescript = {
+                updateImportsOnFileMove = { enabled = "always" },
+                tsserver = {
+                  maxTsServerMemory = 8192,
+                },
+                suggest = {
+                  classMemberSnippets = {
+                    enabled = false,
+                  },
+                  completeFunctionCalls = {
+                    enabled = false,
+                  },
+                  objectLiteralMethodSnippets = {
+                    enabled = false,
+                  },
+                },
               },
             },
           },

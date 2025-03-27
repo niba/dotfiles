@@ -54,6 +54,32 @@ return {
           -- ["MiniDiffSignAdd"] = { fg = C.green },
           -- ["MiniDiffSignDelete"] = { fg = C.maroon },
           -- ["MiniDiffSignUntracked"] = { fg = C.green },
+          MiniSnippetsFinal = {
+            bg = C.surface1,
+            sp = C.green,
+            underline = true,
+          },
+          MiniSnippetsCurrent = {
+            bg = C.surface1,
+            sp = C.yellow,
+            underline = true,
+          },
+          MiniSnippetsVisited = {
+            bg = C.surface1,
+            sp = C.teal,
+            underline = true,
+          },
+          MiniSnippetsUnvisited = {
+            bg = C.surface1,
+            sp = C.blue,
+            underline = true,
+          },
+          MiniSnippetsCurrentReplace = {
+            bg = C.surface1,
+            sp = C.maroon,
+            underline = true,
+          },
+          NoiceCompletionItemKindSnippet = {},
           GrugFarResultsMatchAdded = { link = "DiffAdd" },
           GrugFarResultsMatchRemoved = { link = "DiffDelete" },
 

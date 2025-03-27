@@ -10,6 +10,7 @@ local lang_patterns = { tsx = { "**/typescript.json", "**/react-ts.json", "**/ne
 return {
   {
     "echasnovski/mini.snippets",
+    enabled = true,
     keys = {
 
       {
@@ -29,6 +30,9 @@ return {
       }
 
       opts.mappings = {
+        -- if you want to go to normal mode during snippets completion then comment stop mapping
+        -- mini snippets allow you to toggle modes during snippet completion
+        stop = "<esc>",
         jump_next = "",
         jump_prev = "",
       }
@@ -42,6 +46,8 @@ return {
       keymap = {
         preset = "super-tab",
         ["<CR>"] = { "accept", "fallback" },
+        ["<C-u>"] = { "scroll_documentation_up", "fallback" },
+        ["<C-d>"] = { "scroll_documentation_down", "fallback" },
       },
       fuzzy = {
         max_typos = function(keyword)
@@ -88,8 +94,8 @@ return {
           winblend = 0,
         },
         documentation = {
-          auto_show_delay_ms = 50,
-          update_delay_ms = 50,
+          auto_show_delay_ms = 100,
+          update_delay_ms = 100,
           window = {
             border = "single",
             winblend = 0,
@@ -108,7 +114,15 @@ return {
     "saghen/blink.cmp",
     opts = function(_, opts)
       opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
-        default = { "lsp", "path", "snippets" },
+        default = function(ctx)
+          local success, node = pcall(vim.treesitter.get_node)
+          if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type()) then
+            return { "lsp" }
+          else
+            return { "lsp", "path", "snippets" }
+          end
+        end,
+        -- default = { "lsp", "path", "snippets" },
         providers = {
           lsp = {
             transform_items = function(_, items)

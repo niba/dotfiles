@@ -50,11 +50,6 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      {
-        "nvim-telescope/telescope.nvim",
-      },
-    },
     opts = {
       diagnostics = {
         --  "rachartier/tiny-inline-diagnostic.nvim" handles virtual text diagnostics
@@ -77,6 +72,15 @@ return {
           --     desc = desc("Fix all"),
           --   },
           -- },
+        },
+        harper_ls = {
+          settings = {
+            ["harper-ls"] = {
+              linters = {
+                SentenceCapitalization = false,
+              },
+            },
+          },
         },
         lua_ls = {
           settings = {
@@ -103,6 +107,7 @@ return {
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
 
       keys[#keys + 1] = { "gI", false }
+      keys[#keys + 1] = { "gy", false }
       keys[#keys + 1] = { "<leader>cr", false }
       keys[#keys + 1] = { "gt", vim.lsp.buf.type_definition, desc = "Goto Type Definition" }
       keys[#keys + 1] = {

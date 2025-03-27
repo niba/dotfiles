@@ -1,24 +1,4 @@
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("my-grug-far-custom-keybinds", { clear = true }),
-  pattern = { "grug-far" },
-  callback = function()
-    vim.keymap.set("n", "<localleader>w", function()
-      local state = unpack(require("grug-far").toggle_flags({ "--fixed-strings" }))
-      vim.notify("grug-far: toggled --fixed-strings " .. (state and "ON" or "OFF"))
-    end, { buffer = true })
-  end,
-})
-
 return {
-  {
-    "MagicDuck/grug-far.nvim",
-    opts = {
-      keymaps = {
-        openNextLocation = { n = "<tab>" },
-        openPrevLocation = { n = "<c-tab>" },
-      },
-    },
-  },
   {
     {
       "echasnovski/mini.move",
@@ -72,46 +52,6 @@ return {
           mode = { "n" },
           desc = "Move line up",
         },
-      },
-    },
-  },
-  {
-    "chrisgrieser/nvim-rip-substitute",
-    cmd = "RipSubstitute",
-    keys = {
-      {
-        "<leader>fs",
-        function()
-          require("rip-substitute").sub()
-        end,
-        mode = { "n", "x" },
-        desc = " rip substitute",
-      },
-    },
-    opts = {
-      keymaps = {
-        toggleFixedStrings = "<a-s>",
-        toggleIgnoreCase = "<A-c>",
-      },
-    },
-  },
-  {
-    "folke/persistence.nvim",
-    enable = false,
-    keys = {
-      {
-        "<leader>ql",
-        function()
-          require("persistence").load()
-        end,
-        desc = "Restore Session",
-      },
-      {
-        "<leader>qr",
-        function()
-          require("persistence").load({ last = true })
-        end,
-        desc = "Restore Last Session",
       },
     },
   },

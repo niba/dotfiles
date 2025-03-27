@@ -66,6 +66,10 @@ return {
         win = {
           input = {
             keys = {
+              ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
+              ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
+              ["<c-b>"] = { "list_scroll_up", mode = { "i", "n" } },
+              ["<c-f>"] = { "list_scroll_down", mode = { "i", "n" } },
               ["<a-m>"] = { "toggle_modified", mode = { "i", "n" } },
               ["<a-r>"] = { "toggle_regex", mode = { "i", "n" } },
             },
@@ -75,6 +79,10 @@ return {
               self:execute("calculate_file_truncate_width")
             end,
             keys = {
+              ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
+              ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
+              ["<c-b>"] = { "list_scroll_up", mode = { "i", "n" } },
+              ["<c-f>"] = { "list_scroll_down", mode = { "i", "n" } },
               ["<a-m>"] = { "toggle_modified", mode = { "i", "n" } },
               -- doesnt work, report a bug
               ["<a-r>"] = { "toggle_regex", mode = { "i", "n" } },

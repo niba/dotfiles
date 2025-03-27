@@ -41,5 +41,55 @@ return {
         },
       },
     },
+    keys = {
+      {
+        "<C-d>",
+        function()
+          if not require("noice.lsp").scroll(4) then
+            return Utils.default_actions.C_d
+          end
+        end,
+        silent = true,
+        expr = true,
+        desc = "Scroll Forward",
+        mode = { "n" },
+      },
+      {
+        "<C-u>",
+        function()
+          if not require("noice.lsp").scroll(-4) then
+            return Utils.default_actions.C_u
+          end
+        end,
+        silent = true,
+        expr = true,
+        desc = "Scroll Backward",
+        mode = { "n" },
+      },
+      {
+        "<C-d>",
+        function()
+          if not require("noice.lsp").scroll(4) then
+            return "<C-d>"
+          end
+        end,
+        silent = true,
+        expr = true,
+        desc = "Scroll Forward",
+        mode = { "i", "s" },
+      },
+      {
+        "<C-u>",
+        function()
+          if not require("noice.lsp").scroll(-4) then
+            return "<C-u>"
+          end
+        end,
+        silent = true,
+        expr = true,
+        desc = "Scroll Backward",
+        mode = { "i", "s" },
+      },
+    },
   },
 }

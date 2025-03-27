@@ -1,3 +1,4 @@
+local core = require("core")
 --autosave command
 vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
   callback = function()
@@ -21,3 +22,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 vim.cmd([[
   autocmd FileType markdown setlocal nospell
 ]])
+
+core.jumplist.create_autocmds()
+core.yank.create_autocmds()

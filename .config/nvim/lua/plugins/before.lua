@@ -18,6 +18,9 @@ return {
         {
           "<C-S-b>",
           function()
+            if before.cursor == 1 and #before.edit_locations > 1 then
+              vim.cmd("normal! m'")
+            end
             before.jump_to_last_edit()
           end,
           desc = "Go to previous edit",
