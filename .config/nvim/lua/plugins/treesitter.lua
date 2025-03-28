@@ -1,4 +1,5 @@
--- Many keybindings are rewritten from the lazy defaults
+-- How to handle circular text objects better like assignment?
+--
 return {
   {
     "nvim-treesitter/nvim-treesitter-context",
@@ -8,94 +9,49 @@ return {
     },
   },
   {
-    "echasnovski/mini.indentscope",
-    opts = {
-      mappings = {
-        -- Textobjects
-        object_scope = "iu",
-        object_scope_with_border = "au",
-
-        -- Motions (jump to respective border line; if not present - body line)
-        goto_top = "[u",
-        goto_bottom = "]u",
-      },
-    },
-  },
-  {
     "echasnovski/mini.ai",
     event = "VeryLazy",
     enabled = true,
     config = function(_, opts)
-      require("mini.ai").setup(opts)
-      -- register all text objects with which-key
-      -- code taken from lazy
-      require("lazyvim.util").on_load("which-key.nvim", function()
-        ---@type table<string, string|table>
-        local objects = {
-          [" "] = "Whitespace",
-          ['"'] = 'Balanced "',
-          ["'"] = "Balanced '",
-          ["`"] = "Balanced `",
-          ["("] = "Balanced (",
-          [")"] = "Balanced ) including white-space",
-          [">"] = "Balanced > including white-space",
-          ["<lt>"] = "Balanced <",
-          ["]"] = "Balanced ] including white-space",
-          ["["] = "Balanced [",
-          ["}"] = "Balanced } including white-space",
-          ["{"] = "Balanced {",
-          ["?"] = "User Prompt",
-          _ = "Underscore",
-          a = "Argument",
-          p = "Parameter (jsx attribute)",
-          b = "Balanced ), ], }",
-          c = "Class",
-          d = "Digit(s)",
-          m = "Word in CamelCase & snake_case",
-          f = "Function",
-          g = "Entire file",
-          i = "Assignment",
-          o = "Block, conditional, loop",
-          q = "Quote `, \", '",
-          s = "Quote `, \", '",
-          t = "Tag",
-          E = "Use/call function & method",
-          e = "Use/call without dot in name",
-          u = "Indent scope",
-          ["Enter"] = "Paragraph",
-        }
-        local ret = { mode = { "o", "x" } }
-        for prefix, name in pairs({
-          i = "inside",
-          a = "around",
-          il = "last",
-          ["in"] = "next",
-          al = "last",
-          an = "next",
-        }) do
-          ret[#ret + 1] = { prefix, group = name }
-          for _, obj in ipairs(objects) do
-            ret[#ret + 1] = { prefix .. obj[1], desc = obj.desc }
-          end
-        end
-        require("which-key").add(ret, { notify = false })
+      local configuration = {
+        { " ", desc = "whitespace" },
+        { '"', desc = '" string' },
+        { "'", desc = "' string" },
+        { "(", desc = "() block" },
+        { ")", desc = "() block with ws" },
+        { "<", desc = "<> block" },
+        { ">", desc = "<> block with ws" },
+        { "?", desc = "user prompt" },
+        { "[", desc = "[] block" },
+        { "]", desc = "[] block with ws" },
+        { "{", desc = "{} block" },
+        { "}", desc = "{} with ws" },
+        { "_", desc = "underscore" },
+        { "`", desc = "` string" },
+        { "CR", desc = "paragraph" },
 
-        -- local a = vim.deepcopy(i)
-        -- for k, v in pairs(a) do
-        --   a[k] = v:gsub(" including.*", "")
-        -- end
-        --
-        -- local ic = vim.deepcopy(i)
-        -- local ac = vim.deepcopy(a)
-        -- for key, name in pairs({ n = "Next", l = "Last" }) do
-        --   i[key] = vim.tbl_extend("force", { name = "Inside " .. name .. " textobject" }, ic)
-        --   a[key] = vim.tbl_extend("force", { name = "Around " .. name .. " textobject" }, ac)
-        -- end
-        -- require("which-key").register({
-        --   mode = { "o", "x" },
-        --   i = i,
-        --   a = a,
-        -- })
+        { "a", desc = "argument" },
+        { "b", desc = ")]} block" },
+        { "c", desc = "class" },
+        { "e", desc = "use/call" },
+        { "E", desc = "use/call without dot" },
+        { "f", desc = "function" },
+        { "g", desc = "entire file" },
+        { "i", desc = "indent" },
+        { "j", desc = "jsx tag" },
+        { "m", desc = "markdown code" },
+        { "o", desc = "block, conditional, loop" },
+        { "p", desc = "assignment" },
+        { "s", desc = "quote `\"'" },
+        { "t", desc = "type" },
+        { "u", desc = "CamelCase / snake_case" },
+      }
+
+      require("mini.ai").setup(opts)
+      LazyVim.on_load("which-key.nvim", function()
+        vim.schedule(function()
+          require("extras.which_key").register_miniai(opts, configuration)
+        end)
       end)
     end,
     opts = function(_, opts)
@@ -116,21 +72,12 @@ return {
       -- sometimes better but we can get into circular navigation
       -- opts.search_method = "cover_or_nearest"
 
-      opts.custom_textobjects = {
-        o = ai.gen_spec.treesitter({
-          a = { "@block.outer", "@conditional.outer", "@loop.outer" },
-          i = { "@block.inner", "@conditional.inner", "@loop.inner" },
-        }, {}),
+      opts.custom_textobjects = vim.tbl_deep_extend("force", opts.custom_textobjects or {}, {
         s = { { "%b''", '%b""', "%b``" }, "^.().*().$" },
-        f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
-        c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
-        p = ai.gen_spec.treesitter({ a = "@parameter.outer", i = "@parameter.inner" }, {}),
-        i = ai.gen_spec.treesitter({ a = "@assignment.lhs", i = "@assignment.rhs" }, {}),
+        p = ai.gen_spec.treesitter({ a = "@assignment.lhs", i = { "@assignment.rhs" } }, {}),
+        j = ai.gen_spec.treesitter({ a = "@jsx_element.outer", i = "@jsx_element.inner" }, {}),
         t = ai.gen_spec.treesitter({ a = "@type.outer", i = "@type.inner" }, {}),
-        -- bult in tag textobject is better
-        -- t = false,
-        d = { "%f[%d]%d+" }, -- digits
-        m = { -- Word with case
+        u = {
           {
             "%u[%l%d]+%f[^%l%d]",
             "%f[%S][%l%d]+%f[^%l%d]",
@@ -139,17 +86,9 @@ return {
           },
           "^().*()$",
         },
-        g = function() -- Whole buffer, similar to `gg` and 'G' motion
-          local from = { line = 1, col = 1 }
-          local to = {
-            line = vim.fn.line("$"),
-            col = math.max(vim.fn.getline("$"):len(), 1),
-          }
-          return { from = from, to = to }
-        end,
-        E = ai.gen_spec.function_call(), -- u for "Usage"
-        e = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
-      }
+        E = ai.gen_spec.function_call(),
+        e = ai.gen_spec.function_call({ name_pattern = "[%w_]" }),
+      })
 
       return opts
     end,
@@ -157,6 +96,24 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
+      textobjects = {
+        move = {
+          enable = true,
+          set_jumps = true,
+          goto_previous_start = {
+            ["[j"] = "@jsx_element.outer",
+            ["[m"] = "@code_block.inner",
+            ["[p"] = "@assignment.rhs",
+            ["[t"] = "@type.inner",
+          },
+          goto_next_start = {
+            ["]j"] = "@jsx_element.outer",
+            ["]m"] = "@code_block.inner",
+            ["]p"] = "@assignment.rhs",
+            ["]t"] = "@type.inner",
+          },
+        },
+      },
       incremental_selection = {
         enable = true,
         keymaps = {

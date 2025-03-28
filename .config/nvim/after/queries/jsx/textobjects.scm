@@ -1,37 +1,25 @@
 ; extends
-  ; (jsx_element) @jsx.outer
-  ; (jsx_element (jsx_opening_element) . (_) @_start (_)? @_end . (jsx_closing_element)) @jsx.inner
-  ; (jsx_self_closing_element) @jsx.outer @jsx.inner
 
-; ; JSX Elements
-; (jsx_element) @jsx.outer
-; (jsx_element 
-;   (jsx_opening_element)
-;   (_)? @jsx.inner
-;   (jsx_closing_element)) 
-;
-; ; JSX Self-closing Elements
-; (jsx_self_closing_element) @jsx.outer
-;
-; ; JSX Expressions
-; (jsx_expression) @jsx.outer
-; (jsx_expression (_) @jsx.inner)
+; Self closing tags
+(jsx_self_closing_element
+  name: (identifier)
+  .
+  (_) @_start
+  (_)* @_end
+  .
+  (#make-range! "jsx_element.inner" @_start @_end)) @jsx_element.outer
 
-; JSX Elements
-; (jsx_element) @jsx.outer
-; (jsx_element
-;   (jsx_opening_element)
-;  ((_) @jsx.inner . )* @jsx.inner
-;   (jsx_closing_element))
-;
-; ; JSX Self-closing Elements (only outer)
-; (jsx_self_closing_element) @jsx.outer
+; Paired tags
+(jsx_element
+  open_tag: (_)
+  .
+  (_) @_start
+  (_)* @_end
+  .
+  close_tag: (_)
+  (#make-range! "jsx_element.inner" @_start @_end)) @jsx_element.outer
 
-; JSX Fragments
-; (jsx_fragment) @jsx.outer
-; (jsx_fragment
-;   (_)+ @_inner) @jsx.inner
+(jsx_attribute
+  (property_identifier) @assignment.lhs
+  (_) @assignment.rhs @assignment.inner) @assignment.outer
 
-; JSX Expressions
-; (jsx_expression) @jsx.outer
-; (jsx_expression (_) @jsx.inner)
