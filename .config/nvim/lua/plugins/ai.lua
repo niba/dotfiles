@@ -269,7 +269,7 @@ return {
           adapter = "anthropic",
         },
         chat = {
-          adapter = "anthropic",
+          adapter = "gemini",
           slash_commands = {
             -- ["help"] = {
             --   callback = "helpers.slash_commands.help",

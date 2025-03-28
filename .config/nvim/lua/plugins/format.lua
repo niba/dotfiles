@@ -24,6 +24,7 @@ return {
   },
   {
     "Wansmer/treesj",
+    enabled = true,
     keys = {
       {
         "<leader>cj",

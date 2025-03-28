@@ -8,7 +8,6 @@ return {
       { "nvim-telescope/telescope.nvim" },
     },
     keys = {
-
       { "<leader>m", "<cmd>BookmarksMark<cr>", desc = "Mark file" },
       { "<leader>fm", "<cmd>BookmarksGoto<cr>", desc = "Marked file" },
       { "<leader>fMc", "<cmd>BookmarksCommands<cr>", desc = "Bookmark commands" },

@@ -21,9 +21,20 @@ return {
     },
   },
   {
+    "otavioschwanck/arrow.nvim",
+    opts = {
+      show_icons = true,
+      leader_key = "<leader>mf", -- Recommended to be a single key
+      buffer_leader_key = "<leader>mm", -- Per Buffer Mappings
+    },
+  },
+  {
     "folke/snacks.nvim",
     dev = true,
     opts = {
+      scope = {
+        enabled = false,
+      },
       styles = {
         max_scratch = {
           width = 150,

@@ -4,8 +4,6 @@ return {
     "folke/flash.nvim",
     event = "VeryLazy",
     opts = {
-      -- qwerty
-      -- labels = "asdfghjklqwertyuiopzxcvbnm",
       -- colemak
       labels = "arstgmneioqwfpbjluyzxcdvkh",
       label = {
@@ -26,9 +24,6 @@ return {
           labels = "arstgmneioqwfpbjluyzxcdvkh",
         },
       },
-      -- jump = {
-      --   autojump = true,
-      -- },
     },
     keys = function()
       return {

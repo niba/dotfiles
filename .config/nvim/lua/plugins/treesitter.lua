@@ -74,7 +74,7 @@ return {
 
       opts.custom_textobjects = vim.tbl_deep_extend("force", opts.custom_textobjects or {}, {
         s = { { "%b''", '%b""', "%b``" }, "^.().*().$" },
-        p = ai.gen_spec.treesitter({ a = "@assignment.lhs", i = { "@assignment.rhs" } }, {}),
+        p = ai.gen_spec.treesitter({ a = "@assignment.lhs", i = "@assignment.rhs" }, {}),
         j = ai.gen_spec.treesitter({ a = "@jsx_element.outer", i = "@jsx_element.inner" }, {}),
         t = ai.gen_spec.treesitter({ a = "@type.outer", i = "@type.inner" }, {}),
         u = {

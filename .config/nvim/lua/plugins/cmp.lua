@@ -115,14 +115,19 @@ return {
     opts = function(_, opts)
       opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
         default = function(ctx)
-          local success, node = pcall(vim.treesitter.get_node)
-          if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type()) then
+          local row, column = unpack(vim.api.nvim_win_get_cursor(0))
+          local success, node =
+            pcall(vim.treesitter.get_node, { ignore_injections = false, pos = { row - 1, math.max(0, column - 1) } })
+          if
+            success
+            and node
+            and vim.tbl_contains({ "comment", "comment_content", "line_comment", "block_comment" }, node:type())
+          then
             return { "lsp" }
           else
             return { "lsp", "path", "snippets" }
           end
         end,
-        -- default = { "lsp", "path", "snippets" },
         providers = {
           lsp = {
             transform_items = function(_, items)
