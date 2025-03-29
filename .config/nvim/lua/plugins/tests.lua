@@ -28,10 +28,6 @@ return {
       output_panel = {
         open = "botright vsplit | vertical resize 80",
       },
-      quickfix = {
-        -- how to toggle opening quickfix?
-        enabled = false,
-      },
       adapters = {
         ["neotest-vitest"] = {
           cwd = function(file_path)

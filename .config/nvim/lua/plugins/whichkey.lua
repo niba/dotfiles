@@ -15,6 +15,8 @@ return {
           { "<leader>gD", group = "diff" },
           { "<leader>gh", group = "hunks" },
           { "<leader>a", "", desc = "ai" },
+          { "<leader>y", "", desc = "yazi" },
+          { "<leader>m", "", desc = "mix" },
           -- { "<leader>ap", "", desc = "prompts" },
         },
       },
