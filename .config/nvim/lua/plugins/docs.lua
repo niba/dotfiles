@@ -1,7 +1,41 @@
 return {
   {
+    "iamcco/markdown-preview.nvim",
+    enabled = vim.fn.executable("npm") == 1,
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && npm install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_auto_close = 0
+      vim.g.mkdp_combine_preview = 1
+
+      local function load_then_exec(cmd)
+        return function()
+          vim.cmd.delcommand(cmd)
+          require("lazy").load({ plugins = { "markdown-preview.nvim" } })
+          vim.api.nvim_exec_autocmds("BufEnter", {}) -- commands appear only after BufEnter
+          vim.cmd(cmd)
+        end
+      end
+
+      ---Fixes "No command :MarkdownPreview"
+      ---https://github.com/iamcco/markdown-preview.nvim/issues/585#issuecomment-1724859362
+      for _, cmd in pairs({ "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" }) do
+        vim.api.nvim_create_user_command(cmd, load_then_exec(cmd), {})
+      end
+    end,
+    keys = {
+      {
+        "<leader>mp",
+        ft = "markdown",
+        "<cmd>MarkdownPreviewToggle<cr>",
+        desc = "Markdown Preview",
+      },
+    },
+  },
+  {
     "OXY2DEV/helpview.nvim",
-    lazy = false, -- Recommended
+    lazy = false,
     enabled = true,
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
@@ -10,30 +44,17 @@ return {
   {
     "wurli/contextindent.nvim",
     enabled = true,
-    -- This is the only config option; you can use it to restrict the files
-    -- which this plugin will affect (see :help autocommand-pattern).
     opts = { pattern = "*" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
   },
   {
-    "epwalsh/obsidian.nvim",
-    version = "*", -- recommended, use latest release instead of latest commit
+    "obsidian-nvim/obsidian.nvim",
+    version = "*",
     lazy = true,
     ft = "markdown",
-    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-    -- event = {
-    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
-    --   "BufReadPre path/to/my-vault/**.md",
-    --   "BufNewFile path/to/my-vault/**.md",
-    -- },
     dependencies = {
-      -- Required.
       "nvim-lua/plenary.nvim",
-      "hrsh7th/nvim-cmp",
-      "nvim-telescope/telescope.nvim",
       "nvim-treesitter",
-      -- see below for full list of optional dependencies 👇
     },
     opts = {
       workspaces = {
@@ -43,15 +64,16 @@ return {
         },
       },
       picker = {
-        -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
-        name = "telescope.nvim",
-        -- Optional, configure key mappings for the picker. These are the defaults.
-        -- Not all pickers support all mappings.
-        mappings = {
-          -- Create a new note from your query.
-          new = "<C-x>",
-          -- Insert a link to the selected note.
-          insert_link = "<C-l>",
+        name = "snacks.pick",
+      },
+      completion = {
+        blink = true,
+        min_chars = 2,
+      },
+      ui = {
+        checkboxes = {
+          [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
+          ["x"] = { char = "", hl_group = "ObsidianDone" },
         },
       },
     },
