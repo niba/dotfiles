@@ -185,6 +185,22 @@ return {
         desc = "Grep word",
       },
       {
+        "<leader>gB",
+        function()
+          Snacks.picker.git_log_line()
+        end,
+        mode = { "n" },
+        desc = "Git Blame Line",
+      },
+      {
+        "<leader>gO",
+        function()
+          Snacks.gitbrowse()
+        end,
+        mode = { "n", "x" },
+        desc = "Git Browse (open)",
+      },
+      {
         "<leader>r",
         function()
           Snacks.picker.resume()
