@@ -5,7 +5,18 @@ return {
     "nvim-treesitter/nvim-treesitter-context",
     event = "VeryLazy",
     opts = {
-      max_lines = 2,
+      max_lines = 3,
+      multiline_threshold = 1,
+      trim_scope = "inner",
+    },
+    keys = {
+      {
+        "gC",
+        function()
+          require("treesitter-context").go_to_context(vim.v.count1)
+        end,
+        desc = "Goto treesitter context",
+      },
     },
   },
   {

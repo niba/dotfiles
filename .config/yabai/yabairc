@@ -49,14 +49,14 @@ yabai_rule app="xStation5" space=helper
 yabai_rule app="TradingView" space=helper
 yabai_rule app="RedisInsight-v2" space=helper
 yabai_rule app="Postman" space=helper
-1
-yabai_rule app="^System Preferences$" manage=off layer=normal
-yabai_rule app="^System Settings$" manage=off layer=normal
-yabai_rule app="^Finder$" manage=off layer=normal
-yabai_rule app="Activity Monitor" manage=off layer=normal
-yabai_rule app="^Raycast$" manage=off layer=normal
-yabai_rule app="Calendar&" manage=off layer=normal
-yabai_rule app="Calculator$" manage=off layer=normal
-yabai_rule app="Notes$" manage=off layer=normal
-yabai_rule app="League of Legends$" manage=off layer=normal
-yabai_rule app="Steam Helper" manage=off layer=normal
+
+yabai_rule app="^System Preferences$" manage=off sub-layer=normal
+yabai_rule app="^System Settings$" manage=off sub-layer=normal
+yabai_rule app="^Finder$" manage=off sub-layer=normal
+yabai_rule app="Activity Monitor" manage=off sub-layer=normal
+yabai_rule app="^Raycast$" manage=off sub-layer=normal
+yabai_rule app="Calendar&" manage=off sub-layer=normal
+yabai_rule app="Calculator$" manage=off sub-layer=normal
+yabai_rule app="Notes$" manage=off sub-layer=normal
+yabai_rule app="League of Legends$" manage=off sub-layer=normal
+yabai_rule app="Steam Helper" manage=off sub-layer=normal

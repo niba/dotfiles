@@ -2,37 +2,24 @@ return {
   {
     "xzbdmw/clasp.nvim",
     config = function()
-      require("clasp").setup()
-      -- jumping from smallest region to largest region
-      vim.keymap.set({ "n" }, "<s-l>", function()
+      require("clasp").setup({
+        pairs = { ["{"] = "}", ['"'] = '"', ["'"] = "'", ["("] = ")", ["["] = "]", ["<"] = ">" },
+        keep_insert_mode = true,
+      })
+      vim.keymap.set({ "n", "i" }, "<m-o>", function()
         require("clasp").wrap("next")
       end)
 
-      -- jumping from largest region to smallest region
-      vim.keymap.set({ "n" }, "<s-h>", function()
+      vim.keymap.set({ "n", "i" }, "<m-n>", function()
         require("clasp").wrap("prev")
       end)
     end,
   },
   {
     "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     enabled = true,
     opts = {
-      -- old keymaps
-      -- keymaps = {
-      --   normal = "gsa",
-      --   normal_cur = "gsas",
-      --   normal_line = "gsA",
-      --   normal_cur_line = "gsAs",
-      --   visual = "gsa",
-      --   visual_line = "gsA",
-      --   delete = "gsd",
-      --   change = "gsr",
-      --   change_line = "gsR",
-      -- },
-
       keymaps = {
         insert = false,
         insert_line = false,

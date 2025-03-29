@@ -19,6 +19,12 @@ function M.create_mappings()
   vim.keymap.set("n", "<leader>wt", function()
     close_other_windows()
   end, { desc = "Close other windows", remap = true, silent = true })
+  vim.keymap.set("n", "<leader>wp", function()
+    local window = Snacks.picker.util.pick_win()
+    if window ~= nil then
+      vim.api.nvim_set_current_win(window)
+    end
+  end, { desc = "Pick window", silent = true })
 end
 
 return M

@@ -8,7 +8,6 @@ local function is_tail_jumplist()
 
   local lines = vim.split(jumps_output, "\n")
 
-  print(lines[#lines])
   return lines[#lines]:match("%s0%s") ~= nil
 end
 
@@ -57,11 +56,6 @@ local function smart_jumplist_back()
   local current_index = jumplist[2]
 
   local total_jumps = #jumps
-
-  local last_jump = jumps[#jumps]
-  local index_jump = jumps[current_index]
-  print(string.format("last jump: %s, index jump: %s", vim.inspect(last_jump), vim.inspect(index_jump)))
-  print(string.format("current index: %d, all jumpst: %d", current_index, #jumps))
 
   if total_jumps < 2 then
     vim.cmd("normal! \15")

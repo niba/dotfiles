@@ -37,6 +37,7 @@ return {
     opts = {
       use_default_keymaps = false,
       max_join_length = 80,
+      check_syntax_error = false,
     },
     config = function(_, opts)
       require("treesj").setup(opts)

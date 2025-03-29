@@ -24,7 +24,6 @@ M.layouts = {
   },
 }
 
-
 function M.flash(picker)
   require("flash").jump({
     pattern = "^",
@@ -87,8 +86,6 @@ function M.zf_sorter(picker, fields)
       end
 
       av, bv = a.text, b.text
-
-      -- av, bv = a.file and #(vim.fn.fnamemodify(av, ":t")) or #av, b.file and #(vim.fn.fnamemodify(bv, ":t")) or #bv
       av, bv = a.filename and #a.filename or #av, b.filename and #b.filename or bv
 
       if av ~= bv then

@@ -60,6 +60,28 @@ return {
       scroll = { enabled = false },
       picker = {
         auto_close = false,
+        layouts = {
+          vscode = {
+            layout = {
+              backdrop = false,
+              row = 1,
+              width = 0.4,
+              min_width = 80,
+              height = 0.4,
+              border = "rounded",
+              box = "vertical",
+              {
+                win = "input",
+                height = 1,
+                border = "bottom",
+                title = "{title} {live} {flags}",
+                title_pos = "center",
+              },
+              { win = "list", border = "hpad" },
+              { win = "preview", title = "{preview}", border = "rounded" },
+            },
+          },
+        },
         actions = {
           flash = snacks_extras.flash_on_picker,
           -- auto truncate length of item
@@ -67,11 +89,27 @@ return {
             local width = self.list.win:size().width
             self.opts.formatters.file.truncate = width - 6
           end,
+          toggle_live_insert = function(picker)
+            picker:action("toggle_live")
+            picker:focus("input")
+          end,
         },
         sorter = snacks_extras.zf_sorter,
         formatters = {
           file = {
             filename_first = true,
+          },
+        },
+        sources = {
+          files = {
+            exclude = { ".git", "node_modules" },
+            ignored = true,
+            hidden = true,
+          },
+          grep = {
+            exclude = { ".git", "node_modules" },
+            ignored = true,
+            hidden = true,
           },
         },
         win = {
@@ -81,6 +119,7 @@ return {
               ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
               ["<c-b>"] = { "list_scroll_up", mode = { "i", "n" } },
               ["<c-f>"] = { "list_scroll_down", mode = { "i", "n" } },
+              ["<c-g>"] = { "toggle_live_insert", mode = { "i", "n" } },
               ["<a-m>"] = { "toggle_modified", mode = { "i", "n" } },
               ["<a-r>"] = { "toggle_regex", mode = { "i", "n" } },
             },
@@ -94,6 +133,7 @@ return {
               ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
               ["<c-b>"] = { "list_scroll_up", mode = { "i", "n" } },
               ["<c-f>"] = { "list_scroll_down", mode = { "i", "n" } },
+              ["<c-g>"] = { "toggle_live_insert", mode = { "i", "n" } },
               ["<a-m>"] = { "toggle_modified", mode = { "i", "n" } },
               -- doesnt work, report a bug
               ["<a-r>"] = { "toggle_regex", mode = { "i", "n" } },
@@ -137,7 +177,9 @@ return {
       {
         "<leader>/",
         function()
-          Snacks.picker.grep_word()
+          Snacks.picker.grep_word({
+            exclude = { "*.md" },
+          })
         end,
         mode = { "x" },
         desc = "Grep word",
