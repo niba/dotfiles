@@ -20,6 +20,70 @@ return {
     },
   },
   {
+    "aaronik/treewalker.nvim",
+    event = "VeryLazy",
+    opts = {
+      highlight = true,
+      highlight_duration = 250,
+      highlight_group = "CursorLine",
+    },
+    keys = {
+      {
+        "<M-up>",
+        function()
+          require("treewalker").move_up()
+        end,
+        mode = { "n", "v" },
+      },
+      {
+        "<M-down>",
+        function()
+          require("treewalker").move_down()
+        end,
+        mode = { "n", "v" },
+      },
+      {
+        "<M-left>",
+        function()
+          require("treewalker").move_out()
+        end,
+        mode = { "n", "v" },
+      },
+      {
+        "<M-right>",
+        function()
+          require("treewalker").move_in()
+        end,
+        mode = { "n", "v" },
+      },
+
+      {
+        "<M-S-up>",
+        function()
+          require("treewalker").swap_up()
+        end,
+      },
+      {
+        "<M-S-down>",
+        function()
+          require("treewalker").swap_down()
+        end,
+      },
+      {
+        "<M-S-left>",
+        function()
+          require("treewalker").swap_left()
+        end,
+      },
+      {
+        "<M-S-right>",
+        function()
+          require("treewalker").swap_right()
+        end,
+      },
+    },
+  },
+  {
     "echasnovski/mini.ai",
     event = "VeryLazy",
     enabled = true,
@@ -139,18 +203,8 @@ return {
   {
     "ColinKennedy/cursor-text-objects.nvim",
     config = function()
-      vim.keymap.set(
-        { "o", "x" },
-        "[",
-        "<Plug>(cursor-text-objects-up)",
-        { desc = "Run from your current cursor to the end of the text-object." }
-      )
-      vim.keymap.set(
-        { "o", "x" },
-        "]",
-        "<Plug>(cursor-text-objects-down)",
-        { desc = "Run from your current cursor to the end of the text-object." }
-      )
+      vim.keymap.set({ "o", "x" }, "[", "<Plug>(cursor-text-objects-up)", { desc = "Run from your current cursor to the end of the text-object." })
+      vim.keymap.set({ "o", "x" }, "]", "<Plug>(cursor-text-objects-down)", { desc = "Run from your current cursor to the end of the text-object." })
     end,
     version = "v1.*",
   },

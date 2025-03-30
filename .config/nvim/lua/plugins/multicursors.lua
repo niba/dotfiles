@@ -22,7 +22,7 @@ return {
         desc = "Add multicursor down",
       },
       {
-        "<c-s-up>",
+        "<s-left>",
         function()
           local mc = require("multicursor-nvim")
           mc.lineSkipCursor(-1)
@@ -31,7 +31,7 @@ return {
         desc = "Skip multicursor up",
       },
       {
-        "<c-s-down>",
+        "<s-right>",
         function()
           local mc = require("multicursor-nvim")
           mc.lineSkipCursor(1)

@@ -4,15 +4,15 @@ return {
     event = "VeryLazy",
     opts = {
       mappings = {
-        left = "<M-left>",
-        right = "<M-right>",
-        down = "<M-down>",
-        up = "<M-up>",
+        left = "<C-S-left>",
+        right = "<C-S-right>",
+        down = "<C-S-down>",
+        up = "<C-S-up>",
 
-        line_left = "<M-left>",
-        line_right = "<M-right>",
-        line_down = "<M-down>",
-        line_up = "<M-up>",
+        line_left = "<C-S-left>",
+        line_right = "<C-S-right>",
+        line_down = "<C-S-down>",
+        line_up = "<C-S-up>",
       },
     },
   },

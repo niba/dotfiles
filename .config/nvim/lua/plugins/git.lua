@@ -51,6 +51,7 @@ return {
       reviews = {
         auto_show_threads = false,
       },
+      picker = "snacks",
     },
   },
   {
