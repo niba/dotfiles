@@ -43,25 +43,10 @@
     autoupdate = true
 
 [diff]
-    ; algorithm = histogram
+    algorithm = histogram
     colorMoved = plain
     mnemonicPrefix = true
     renames = true
-    ; external = difft
-    ; tool = difftastic
-    ; external = difft
-; [diff]
-;     tool = nvimdiff
-; [difftool "nvimdiff"]
-;     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
-; [pager]
-;     difftool = true
-;
-; [difftool "difftastic"]
-;     cmd = difft "$LOCAL" "$REMOTE"
-;
-; [difftool]
-;     prompt = false
 
 [alias]
     out = "log @{u}.."
