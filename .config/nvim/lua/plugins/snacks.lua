@@ -102,12 +102,12 @@ return {
         },
         sources = {
           files = {
-            exclude = { ".git", "node_modules" },
+            exclude = { ".git", "node_modules", "dist", "build" },
             ignored = true,
             hidden = true,
           },
           grep = {
-            exclude = { ".git", "node_modules" },
+            exclude = { ".git", "node_modules", "dist", "build" },
             ignored = true,
             hidden = true,
           },

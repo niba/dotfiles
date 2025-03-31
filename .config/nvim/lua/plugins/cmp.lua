@@ -1,6 +1,6 @@
-local keyword_and_snippets_priority = {
+local snippets_win = {
   snippets = 4,
-  lsp = 3, -- lsp keyword
+  lsp = 3,
   path = 2,
   buffer = 1,
 }
@@ -10,9 +10,9 @@ local lang_patterns = { tsx = { "**/typescript.json", "**/react-ts.json", "**/ne
 return {
   {
     "echasnovski/mini.snippets",
-    enabled = true,
+    -- use luasnip, better snippet engine
+    enabled = false,
     keys = {
-
       {
         "<leader>ss",
         function()
@@ -30,8 +30,8 @@ return {
       }
 
       opts.mappings = {
-        -- if you want to go to normal mode during snippets completion then comment stop mapping
         -- mini snippets allow you to toggle modes during snippet completion
+        -- if you want to go to normal mode during snippets completion then comment stop mapping
         stop = "<esc>",
         jump_next = "",
         jump_prev = "",
@@ -55,12 +55,14 @@ return {
         end,
         sorts = {
           function(a, b)
-            -- 14 is keyword kind, we want to display snippet result over keyword result for the exact match
-            if a.kind == 14 or b.kind == 14 then
-              local a_priority = keyword_and_snippets_priority[a.source_id]
-              local b_priority = keyword_and_snippets_priority[b.source_id]
-              if a_priority ~= b_priority then
-                return a_priority > b_priority
+            if a.exact and b.exact then
+              -- 14 is keyword kind, we want to display snippet result over keyword result for the exact match
+              if a.kind == 14 or b.kind == 14 then
+                local a_priority = snippets_win[a.source_id]
+                local b_priority = snippets_win[b.source_id]
+                if a_priority ~= b_priority then
+                  return a_priority > b_priority
+                end
               end
             end
           end,
@@ -116,13 +118,8 @@ return {
       opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
         default = function(ctx)
           local row, column = unpack(vim.api.nvim_win_get_cursor(0))
-          local success, node =
-            pcall(vim.treesitter.get_node, { ignore_injections = false, pos = { row - 1, math.max(0, column - 1) } })
-          if
-            success
-            and node
-            and vim.tbl_contains({ "comment", "comment_content", "line_comment", "block_comment" }, node:type())
-          then
+          local success, node = pcall(vim.treesitter.get_node, { ignore_injections = false, pos = { row - 1, math.max(0, column - 1) } })
+          if success and node and vim.tbl_contains({ "comment", "comment_content", "line_comment", "block_comment" }, node:type()) then
             return { "lsp" }
           else
             return { "lsp", "path", "snippets" }

@@ -57,7 +57,7 @@ return {
   {
     "sindrets/diffview.nvim",
     dependencies = {
-      "nvim-tree/nvim-web-devicons", -- optional
+      "nvim-tree/nvim-web-devicons",
     },
     keys = {
       {

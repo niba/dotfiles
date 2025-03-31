@@ -60,3 +60,4 @@ yabai_rule app="Calculator$" manage=off sub-layer=normal
 yabai_rule app="Notes$" manage=off sub-layer=normal
 yabai_rule app="League of Legends$" manage=off sub-layer=normal
 yabai_rule app="Steam Helper" manage=off sub-layer=normal
+yabai_rule app="1Password" manage=off sub-layer=normal

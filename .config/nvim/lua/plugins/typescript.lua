@@ -22,7 +22,6 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       inlay_hints = { enabled = false },
-
       servers = {
         ts_ls = {
           enabled = false,
@@ -30,35 +29,29 @@ return {
         vtsls = {
           settings = {
             complete_function_calls = false,
-            vtsls = {
-              autoUseWorkspaceTsdk = true,
-              javascript = {
-                updateImportsOnFileMove = { enabled = "always" },
-                suggest = {
-                  completeFunctionCalls = {
-                    enabled = false,
-                  },
-                  classMemberSnippets = {
-                    enabled = false,
-                  },
+            autoUseWorkspaceTsdk = true,
+            javascript = {
+              updateImportsOnFileMove = { enabled = "always" },
+              suggest = {
+                completeFunctionCalls = false,
+                classMemberSnippets = {
+                  enabled = false,
                 },
               },
-              typescript = {
-                updateImportsOnFileMove = { enabled = "always" },
-                tsserver = {
-                  maxTsServerMemory = 8192,
+            },
+            typescript = {
+              updateImportsOnFileMove = { enabled = "always" },
+              tsserver = {
+                maxTsServerMemory = 8192,
+              },
+              suggest = {
+                objectLiteralMethodSnippets = {
+                  enabled = false,
                 },
-                suggest = {
-                  classMemberSnippets = {
-                    enabled = false,
-                  },
-                  completeFunctionCalls = {
-                    enabled = false,
-                  },
-                  objectLiteralMethodSnippets = {
-                    enabled = false,
-                  },
+                classMemberSnippets = {
+                  enabled = false,
                 },
+                completeFunctionCalls = false,
               },
             },
           },
