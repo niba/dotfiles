@@ -8,6 +8,7 @@ return {
   {
     "continuum",
     -- enabled = testing,
+    enabled = true,
     dev = true,
     lazy = false,
     config = true,
@@ -43,8 +44,17 @@ return {
     },
   },
   {
-    "rmagatti/auto-session",
-    lazy = true,
+    "folke/persistence.nvim",
     enabled = false,
+  },
+  {
+    "rmagatti/auto-session",
+    lazy = false,
+    enabled = false,
+    opts = {
+      auto_save = true,
+      auto_restore = true,
+      lsp_stop_on_restore = true,
+    },
   },
 }

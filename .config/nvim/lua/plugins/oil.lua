@@ -88,7 +88,7 @@ return {
         ["<localleader>p"] = "actions.preview",
         ["<localleader>S"] = { "actions.change_sort", mode = "n" },
         ["<localleader>o"] = "actions.open_external",
-        ["<localleader>."] = { "actions.toggle_hidden", mode = "n" },
+        ["<localleader>,"] = { "actions.toggle_hidden", mode = "n" },
         ["<localleader>\\"] = { "actions.toggle_trash", mode = "n" },
 
         ["<localleader>y"] = "actions.yank_entry",

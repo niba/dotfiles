@@ -2,7 +2,7 @@ vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("grug_far_keybindings", { clear = true }),
   pattern = { "grug-far" },
   callback = function()
-    vim.keymap.set("n", "<localleader>w", function()
+    vim.keymap.set("n", "<localleader>m", function()
       local state = unpack(require("grug-far").toggle_flags({ "--fixed-strings" }))
       vim.notify("grug-far: toggled --fixed-strings " .. (state and "ON" or "OFF"))
     end, { buffer = true, desc = "Toggle fixed string" })
@@ -13,9 +13,33 @@ return {
   {
     "MagicDuck/grug-far.nvim",
     opts = {
+      openTargetWindow = {
+        preferredLocation = "prev",
+      },
       keymaps = {
-        openNextLocation = { n = "<tab>" },
-        openPrevLocation = { n = "<c-tab>" },
+        qflist = { n = "<c-q>" },
+        syncLocations = { n = "<c-s>" },
+        historyOpen = { n = "<localleader>ho" },
+        historyAdd = { n = "<localleader>ha" },
+
+        replace = { n = "<localleader>r" },
+        refresh = { n = "<localleader>n" },
+
+        openLocation = { n = "<localleader>p" },
+        openNextLocation = { n = "<c-n>" },
+        openPrevLocation = { n = "<c-p>" },
+        abort = { n = "<localleader>x" },
+
+        toggleShowCommand = { n = "<localleader>i" },
+        applyNext = { n = "<localleader>," },
+
+        syncLine = { n = "<localleader>s" },
+        syncFile = { n = "<localleader>f" },
+
+        previewLocation = false,
+        applyPrev = false,
+        syncNext = false,
+        syncPrev = false,
       },
     },
   },

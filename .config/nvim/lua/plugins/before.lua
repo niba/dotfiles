@@ -1,9 +1,6 @@
 return {
   {
     "bloznelis/before.nvim",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
 
     keys = function()
       local before = require("before")

@@ -116,38 +116,4 @@ function M.zf_sorter(picker, fields)
   end
 end
 
-function M.create_autocmd()
-  -- Snacks picker line highlighting doesn't work when cursorlineopt is number, this swaps the option when picker is open
-  local function update_cursorlineopt(value)
-    local windows = vim.api.nvim_list_wins()
-    for _, win_id in ipairs(windows) do
-      vim.api.nvim_set_option_value("cursorlineopt", value, { win = win_id })
-    end
-  end
-
-  vim.api.nvim_create_autocmd({ "WinNew", "BufWinEnter", "FileType" }, {
-    callback = function(ev)
-      local win_id = vim.api.nvim_get_current_win()
-      local buf_id = vim.api.nvim_win_get_buf(win_id)
-      local filetype = vim.bo[buf_id].filetype
-
-      if filetype == "snacks_layout_box" then
-        update_cursorlineopt("both")
-      end
-    end,
-  })
-
-  vim.api.nvim_create_autocmd("WinClosed", {
-    callback = function(ev)
-      local win_id = tonumber(ev.match)
-      local buf_id = vim.api.nvim_win_get_buf(win_id)
-      local filetype = vim.bo[buf_id].filetype
-
-      if filetype == "snacks_layout_box" then
-        update_cursorlineopt("number")
-      end
-    end,
-  })
-end
-
 return M

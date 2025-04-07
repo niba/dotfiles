@@ -8,7 +8,7 @@ local disabled_lsp_format = {
   -- "vue",
 }
 
-vim.g.lazyvim_prettier_needs_config = true
+-- vim.g.lazyvim_prettier_needs_config = true
 
 return {
   {

@@ -35,3 +35,43 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 core.jumplist.create_autocmds()
 core.yank.create_autocmds()
+
+local function create_cursor_line_opt_toggle()
+  local filetypes = { "snacks_picker_input", "grug-far", "trouble" }
+
+  local function update_cursorlineopt(value)
+    local windows = vim.api.nvim_list_wins()
+    for _, win_id in ipairs(windows) do
+      vim.api.nvim_set_option_value("cursorlineopt", value, { win = win_id })
+    end
+  end
+
+  local filetypes_lookup = {}
+  for _, ft in ipairs(filetypes) do
+    filetypes_lookup[ft] = true
+  end
+
+  vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
+    callback = function(ev)
+      local buf_id = ev.buf
+      local filetype = vim.bo[buf_id].filetype
+
+      if filetypes_lookup[filetype] then
+        update_cursorlineopt("both")
+      end
+    end,
+  })
+
+  vim.api.nvim_create_autocmd("BufLeave", {
+    callback = function(ev)
+      local buf_id = ev.buf
+      local filetype = vim.bo[buf_id].filetype
+
+      if filetypes_lookup[filetype] then
+        update_cursorlineopt("number")
+      end
+    end,
+  })
+end
+
+create_cursor_line_opt_toggle()
