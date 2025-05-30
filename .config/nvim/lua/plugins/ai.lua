@@ -14,7 +14,7 @@ return {
         extensions = {
           codecompanion = {
             -- Show the mcp tool result in the chat buffer
-            show_result_in_chat = true,
+            show_result_in_chat = false,
             -- Make chat #variables from MCP server resources
             make_vars = true,
           },
@@ -196,7 +196,7 @@ return {
               },
             },
           },
-          adapter = "gemini",
+          adapter = "anthropic",
           keymaps = {
             completion = {
               modes = {

@@ -6,7 +6,7 @@ end
 
 return {
   {
-    "continuum",
+    "continue",
     -- enabled = testing,
     enabled = true,
     dev = true,
@@ -16,29 +16,40 @@ return {
       {
         "<leader>ml",
         function()
-          require("continuum").search()
+          require("continue").search()
         end,
         desc = "List sessions",
       },
       {
         "<leader>ms",
         function()
-          require("continuum").save()
+          require("continue").save()
         end,
         desc = "Save session",
       },
       {
         "<leader>mj",
         function()
-          require("continuum").jumplist()
+          require("continue").jumplist()
         end,
         desc = "Save session",
       },
     },
     opts = {
+      -- hooks = {
+      --   post_restore = function()
+      --     vim.cmd([[Neotree filesystem show]])
+      --   end,
+      -- },
       custom = {
         workbuffers = function()
-          return require("workbuffers.continuum")
+          return require("workbuffers.continue")
+        end,
+        qf = function()
+          return require("continue.sessions.custom.quickfix")
+        end,
+        codecompanion = function()
+          return require("continue.sessions.custom.codecompanion")
         end,
       },
     },

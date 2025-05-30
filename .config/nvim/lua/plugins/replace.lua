@@ -14,6 +14,7 @@ return {
     "MagicDuck/grug-far.nvim",
     opts = {
       openTargetWindow = {
+        useScratchBuffer = true,
         preferredLocation = "prev",
       },
       keymaps = {
@@ -26,8 +27,8 @@ return {
         refresh = { n = "<localleader>n" },
 
         openLocation = { n = "<localleader>p" },
-        openNextLocation = { n = "<c-n>" },
-        openPrevLocation = { n = "<c-p>" },
+        openNextLocation = { n = "<c-f>" },
+        openPrevLocation = { n = "<c-b>" },
         abort = { n = "<localleader>x" },
 
         toggleShowCommand = { n = "<localleader>i" },

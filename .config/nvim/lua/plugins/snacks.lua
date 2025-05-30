@@ -4,6 +4,7 @@ return {
   {
     "workbuffers.nvim",
     -- enabled = testing,
+    enabled = false,
     dev = true,
     lazy = false,
     config = true,

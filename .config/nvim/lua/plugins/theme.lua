@@ -82,6 +82,7 @@ return {
           NoiceCompletionItemKindSnippet = {},
           GrugFarResultsMatchAdded = { link = "DiffAdd" },
           GrugFarResultsMatchRemoved = { link = "DiffDelete" },
+          TreesitterContextBottom = { style = { "underline", "bold" }, sp = C.mauve },
 
           LspReferenceText = { bg = C.surface0 },
           LspReferenceRead = { bg = C.surface0 },

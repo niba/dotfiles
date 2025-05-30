@@ -19,7 +19,7 @@ local dprint_supported = {
 
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = { ensure_installed = { "eslint_d" } },
   },
   {

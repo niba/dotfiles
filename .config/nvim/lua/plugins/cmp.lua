@@ -51,7 +51,7 @@ return {
       },
       fuzzy = {
         max_typos = function(keyword)
-          return 0
+          return 1
         end,
         sorts = {
           function(a, b)
@@ -133,6 +133,7 @@ return {
                   and item.kind ~= require("blink.cmp.types").CompletionItemKind.Snippet
               end, items)
             end,
+            fallbacks = { "path" },
           },
           snippets = {
             should_show_items = function(ctx)

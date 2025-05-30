@@ -39,6 +39,12 @@ return {
           end,
           set = function(state)
             require("gitsigns").toggle_current_line_blame(state)
+
+            if state then
+              require("tiny-inline-diagnostic").disable()
+            else
+              require("tiny-inline-diagnostic").enable()
+            end
           end,
         }):map("<leader>gb")
       end)
@@ -60,6 +66,7 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     keys = {
+      -- DiffViewOpen origin/master...HEAD --imply-local
       {
         "<leader>gd",
         function()

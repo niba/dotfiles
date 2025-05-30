@@ -18,6 +18,5 @@ return {
   },
   { "echasnovski/mini.pairs", enabled = false },
   -- dont remove lazy = false
-  { "echasnovski/mini.diff", enabled = true, lazy = false },
   { "echasnovski/mini.test", version = false },
 }

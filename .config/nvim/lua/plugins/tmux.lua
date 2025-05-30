@@ -4,7 +4,7 @@ local create_mapping = function(key, handler)
     function()
       require("smart-splits")[handler]()
     end,
-    mode = { "n", "v" },
+    mode = { "n", "v", "t" },
     desc = "which_key_ignore",
   }
 end

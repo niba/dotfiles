@@ -1,0 +1,35 @@
+{
+  "Data Tagged Error": {
+    "prefix": "dte",
+    "body": [
+      "export class ${1:ErrorName} extends Data.TaggedError(\"${1:ErrorName}\")<{",
+      "\t${2}",
+      "}> {}"
+    ],
+    "description": "Generates a Data.TaggedError class structure."
+  },
+  "Schema Tagged Error": {
+    "prefix": "ste",
+    "body": [
+      "export class ${1:ErrorName} extends Schema.TaggedError<${1:ErrorName}>()(",
+      "\t\"${1:ErrorName}\",",
+      "\t{",
+      "\t\t${2}",
+      "\t}",
+      "){}"
+    ],
+    "description": "Generates a Schema.TaggedError class structure."
+  },
+  "Schema Tagged Class": {
+    "prefix": "stc",
+    "body": [
+      "export class ${1:ClassName} extends Schema.TaggedClass<${1:ClassName}>()(",
+      "\t\"${1:ClassName}\",",
+      "\t{",
+      "\t\t${2}",
+      "\t}",
+      "){}"
+    ],
+    "description": "Generates a Schema.TaggedClass class structure."
+  }
+}
