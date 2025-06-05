@@ -3,3 +3,8 @@
 .config/op
 .config/fish/fish_variables
 .config/karabiner/automatic_backups
+.config/zed/prompts
+.config/zed/conversations
+
+.DS_Store
+**/.DS_Store
