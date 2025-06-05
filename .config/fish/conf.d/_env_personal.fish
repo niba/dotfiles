@@ -6,6 +6,7 @@ end
 set -gx EDITOR nvim
 set -gx PAGER less
 set -gx MANPAGER "nvim +Man!"
+set -gx MISE_TRUSTED_CONFIG_PATHS "~/.config/:~/dotfiles/"
 set -gx JJ_CONFIG "$XDG_CONFIG_HOME/jj/config.toml"
 
 set -q MANPATH || set -gx MANPATH ''

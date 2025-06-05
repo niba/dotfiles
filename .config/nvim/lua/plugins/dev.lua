@@ -35,21 +35,20 @@ return {
         desc = "Save session",
       },
     },
+    ---@module "continue"
+    ---@type Continue.Config
     opts = {
+
       -- hooks = {
       --   post_restore = function()
       --     vim.cmd([[Neotree filesystem show]])
       --   end,
       -- },
-      custom = {
-        workbuffers = function()
-          return require("workbuffers.continue")
-        end,
-        qf = function()
-          return require("continue.sessions.custom.quickfix")
-        end,
-        codecompanion = function()
-          return require("continue.sessions.custom.codecompanion")
+      extensions = {
+        "workbuffers.continue",
+        "continue.sessions.extensions.quickfix",
+        function()
+          return require("continue.sessions.extensions.codecompanion")
         end,
       },
     },
