@@ -2,21 +2,15 @@
   "mcpServers": {
     "context7": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@upstash/context7-mcp"
-      ]
+      "disabled": false,
+      "args": ["-y", "@upstash/context7-mcp"]
     },
-    "qdrant": {
-      "command": "uvx",
-      "args": [
-        "mcp-server-qdrant"
-      ],
-      "env": {
-        "QDRANT_URL": "http://localhost:6333",
-        "COLLECTION_NAME": "docs",
-        "EMBEDDING_MODEL": "sentence-transformers/all-MiniLM-L6-v2"
-      }
+    "effect-docs": {
+      "command": "docker",
+      "disabled": false,
+      "args": ["run", "--rm", "-i", "timsmart/effect-mcp"]
     }
-  }
+  },
+  "nativeMCPServers": []
 }
+

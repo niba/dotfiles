@@ -149,9 +149,12 @@ return {
 
       opts.custom_textobjects = vim.tbl_deep_extend("force", opts.custom_textobjects or {}, {
         s = { { "%b''", '%b""', "%b``" }, "^.().*().$" },
-        p = ai.gen_spec.treesitter({ a = "@assignment.lhs", i = "@assignment.rhs" }, {}),
-        j = ai.gen_spec.treesitter({ a = "@jsx_element.outer", i = "@jsx_element.inner" }, {}),
-        t = ai.gen_spec.treesitter({ a = "@type.outer", i = "@type.inner" }, {}),
+        p = ai.gen_spec.treesitter({ a = "@assignment.lhs", i = "@assignment.rhs" }, { use_nvim_treesitter = true }),
+        j = ai.gen_spec.treesitter({ a = "@jsx_element.outer", i = "@jsx_element.inner" }, { use_nvim_treesitter = true }),
+        t = ai.gen_spec.treesitter(
+          { a = { "@type.outer", "@attribute.outer" }, i = { "@type.inner", "@attribute.inner" } },
+          { use_nvim_treesitter = true }
+        ),
         u = {
           {
             "%u[%l%d]+%f[^%l%d]",
@@ -163,6 +166,14 @@ return {
         },
         E = ai.gen_spec.function_call(),
         e = ai.gen_spec.function_call({ name_pattern = "[%w_]" }),
+
+        -- remove after fixing use_nvim_treesitter default value
+        o = ai.gen_spec.treesitter({ -- code block
+          a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+          i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+        }, { use_nvim_treesitter = true }),
+        f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, { use_nvim_treesitter = true }), -- function
+        c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, { use_nvim_treesitter = true }), -- class
       })
 
       return opts

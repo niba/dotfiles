@@ -75,9 +75,7 @@ return {
         function()
           require("live-rename").rename({ insert = true })
         end,
-        {
-          desc = "Rename",
-        },
+        desc = "Rename",
       },
     },
   },

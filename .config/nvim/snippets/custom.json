@@ -31,5 +31,10 @@
       "){}"
     ],
     "description": "Generates a Schema.TaggedClass class structure."
+  },
+  "better jsx element": {
+    "prefix": "j",
+    "body": "<${1:elementName} ${2}>\n\t$0\n</${1}>",
+    "description": "an element"
   }
 }

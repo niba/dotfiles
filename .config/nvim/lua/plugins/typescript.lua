@@ -43,6 +43,7 @@ return {
               updateImportsOnFileMove = { enabled = "always" },
               tsserver = {
                 maxTsServerMemory = 8192,
+                pluginPaths = { "./node_modules", "../../node_modules" },
               },
               suggest = {
                 objectLiteralMethodSnippets = {
@@ -56,10 +57,11 @@ return {
             },
           },
           -- fix finding typescript in monorepo
-          root_dir = function()
-            local lazyvimRoot = require("lazyvim.util.root")
-            return lazyvimRoot.git()
-          end,
+          -- breaks snacks root dir
+          -- root_dir = function()
+          --   local lazyvimRoot = require("lazyvim.util.root")
+          --   return lazyvimRoot.git()
+          -- end,
         },
       },
     },

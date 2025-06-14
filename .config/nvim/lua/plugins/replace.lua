@@ -12,11 +12,50 @@ vim.api.nvim_create_autocmd("FileType", {
 return {
   {
     "MagicDuck/grug-far.nvim",
+    cmd = { "GrugFar", "GrugFarWithin" },
+    keys = {
+      {
+        "<leader>sr",
+        function()
+          local mode_info = vim.api.nvim_get_mode()
+          local grug = require("grug-far")
+          if mode_info.mode == "v" then
+            vim.cmd('normal! "vy')
+            local yanked_text = vim.fn.getreg("v")
+            yanked_text = yanked_text:gsub("\n", "")
+            yanked_text = yanked_text:match("^%s*(.-)%s*$")
+
+            require("grug-far").open({
+              transient = true,
+              prefills = { paths = vim.fn.expand("%"), search = yanked_text },
+            })
+          elseif mode_info.mode == "V" then
+            require("grug-far").open({ transient = true, prefills = { paths = vim.fn.expand("%") }, visualSelectionUsage = "operate-within-range" })
+          else
+            local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+            grug.open({
+              transient = true,
+              prefills = {
+                filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+              },
+            })
+          end
+        end,
+        mode = { "n", "v" },
+        desc = "Search and replace",
+      },
+    },
     opts = {
       openTargetWindow = {
         useScratchBuffer = true,
         preferredLocation = "prev",
       },
+      helpLine = {
+        enabled = false,
+      },
+      showCompactInputs = true,
+      showInputsTopPadding = false,
+      showInputsBottomPadding = false,
       keymaps = {
         qflist = { n = "<c-q>" },
         syncLocations = { n = "<c-s>" },

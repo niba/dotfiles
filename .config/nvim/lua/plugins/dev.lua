@@ -6,6 +6,7 @@ end
 
 return {
   {
+    -- "niba/continue.nvim",
     "continue",
     -- enabled = testing,
     enabled = true,
@@ -39,6 +40,7 @@ return {
     ---@type Continue.Config
     opts = {
 
+      log_level = vim.log.levels.DEBUG,
       -- hooks = {
       --   post_restore = function()
       --     vim.cmd([[Neotree filesystem show]])
@@ -47,9 +49,9 @@ return {
       extensions = {
         "workbuffers.continue",
         "continue.sessions.extensions.quickfix",
-        function()
-          return require("continue.sessions.extensions.codecompanion")
-        end,
+        -- function()
+        --   return require("continue.sessions.extensions.codecompanion")
+        -- end,
       },
     },
   },

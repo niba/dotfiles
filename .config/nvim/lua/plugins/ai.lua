@@ -1,4 +1,14 @@
+vim.g.copilot_enabled = false
+
 return {
+  {
+    "github/copilot.vim",
+  },
+  {
+    "greggh/claude-code.nvim",
+    enabled = false,
+    config = true,
+  },
   {
     "ravitemer/mcphub.nvim",
     dependencies = {
@@ -11,12 +21,15 @@ return {
     -- build = "bundled_build.lua",  -- Use this and set use_bundled_binary = true in opts  (see Advanced configuration)
     config = function()
       require("mcphub").setup({
+        auto_approve = true,
         extensions = {
-          codecompanion = {
-            -- Show the mcp tool result in the chat buffer
-            show_result_in_chat = false,
-            -- Make chat #variables from MCP server resources
-            make_vars = true,
+          mcphub = {
+            callback = "mcphub.extensions.codecompanion",
+            opts = {
+              show_result_in_chat = true, -- Show mcp tool results in chat
+              make_vars = true, -- Convert resources to #variables
+              make_slash_commands = true, -- Add prompts as /slash commands
+            },
           },
         },
       })
@@ -38,7 +51,7 @@ return {
         mode = { "n", "v" },
       },
       {
-        "<leader>ao",
+        "<leader>ab",
         "<cmd>CodeCompanionActions<cr>",
         desc = "Options",
         mode = { "n", "v" },
@@ -98,11 +111,27 @@ return {
         mode = { "n", "v" },
       },
       {
-        "<leader>ap",
+        "<leader>ag",
+        function()
+          require("codecompanion").prompt("et")
+        end,
+        desc = "Edit and Test Workflow",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>ao",
         function()
           vim.cmd(":CodeCompanionChat")
         end,
         desc = "New Chat",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>ap",
+        function()
+          require("codecompanion").prompt("jarvis")
+        end,
+        desc = "Jarvis",
         mode = { "n", "v" },
       },
     },
@@ -177,6 +206,16 @@ return {
           show_settings = false,
         },
       },
+      extensions = {
+        mcphub = {
+          callback = "mcphub.extensions.codecompanion",
+          opts = {
+            show_result_in_chat = true, -- Show mcp tool results in chat
+            make_vars = true, -- Convert resources to #variables
+            make_slash_commands = true, -- Add prompts as /slash commands
+          },
+        },
+      },
       strategies = {
         agent = {
           adapter = "anthropic",
@@ -185,18 +224,11 @@ return {
           adapter = "anthropic",
         },
         chat = {
-          tools = {
-            ["mcp"] = {
-              callback = function()
-                return require("mcphub.extensions.codecompanion")
-              end,
-              description = "Call tools and resources from the MCP Servers",
-              opts = {
-                requires_approval = true,
-              },
-            },
+          -- adapter = "anthropic",
+          adapter = {
+            name = "copilot",
+            model = "claude-sonnet-4",
           },
-          adapter = "anthropic",
           keymaps = {
             completion = {
               modes = {
@@ -253,6 +285,45 @@ return {
               modes = {
                 n = "<localleader>l",
               },
+            },
+          },
+        },
+      },
+      prompt_library = {
+        ["Jarvis"] = {
+          strategy = "chat",
+          description = "Prompt the LLM from Neovim",
+          opts = {
+            index = 12,
+            is_slash_cmd = false,
+            short_name = "jarvis",
+          },
+          prompts = {
+            {
+              role = "system",
+              content = function(context)
+                vim.g.codecompanion_auto_tool_mode = true
+
+                return string.format([[Use @mcp for context7 searches based on these keywords:
+
+                  - "effect" → search context7 "Effect (llmstxt)" library
+                  - "jj" → search context7 "jj" library  
+                  - "cloudflare workers" → search context7 "cloudflare workers" library
+                  - "tanstack router" -> search context7 "tanstack router" library
+                  - "tanstack form" -> search context7 "tanstack form" library
+                  - "tanstack query" -> search context7 "tanstack query" library
+
+                ]])
+              end,
+              opts = {
+                visible = false,
+              },
+            },
+            {
+              role = "user",
+              content = function(context)
+                return ""
+              end,
             },
           },
         },
