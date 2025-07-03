@@ -1,4 +1,25 @@
 local Util = require("lazyvim.util")
+local theme = require("lualine.themes.catppuccin")
+
+local function swap_section_colors(lualine_theme, section, custom_bg)
+  -- Define all modes to process
+  local modes = { "normal", "insert", "visual", "replace", "command", "inactive" }
+
+  for _, mode in ipairs(modes) do
+    if lualine_theme[mode] and lualine_theme[mode][section] then
+      -- Swap bg to fg and set custom bg
+      lualine_theme[mode][section].fg = lualine_theme[mode][section].bg
+      lualine_theme[mode][section].bg = custom_bg
+    end
+  end
+
+  return lualine_theme
+end
+
+theme = swap_section_colors(theme, "a", "#151925")
+theme.normal.a.fg = "#73a8f2"
+theme.normal.b.fg = "#73a8f2"
+-- theme.normal.z.fg = "#73a8f2"
 
 local function getPath(self)
   local current_file = Util.lualine.pretty_path({
@@ -67,7 +88,10 @@ return {
     "nvim-lualine/lualine.nvim",
     opts = {
       options = {
+        theme = theme,
         globalstatus = true,
+        section_separators = { left = " ", right = "" },
+        component_separators = { left = " ", right = "" },
         disabled_filetypes = {
           statusline = { "dashboard", "lazy", "alpha", "starter", "Trouble", "CodeCompanion", "snacks_layout_box" },
 
@@ -94,11 +118,18 @@ return {
         },
       },
       sections = {
-        lualine_a = { "mode" },
-        lualine_b = { "branch" },
+        lualine_a = {
+          {
+            "mode",
+            fmt = function(str)
+              return str:sub(1, 1)
+            end,
+            separator = { left = " ", right = "" },
+          },
+        },
+        lualine_b = { { "branch", separator = { left = " ", right = "" } } },
 
         lualine_c = {
-          LazyVim.lualine.root_dir(),
           {
             "diagnostics",
             symbols = {
@@ -108,6 +139,26 @@ return {
               hint = LazyVim.config.icons.diagnostics.Hint,
             },
           },
+        },
+        lualine_x = {},
+        lualine_y = {
+          { "progress", separator = { left = " ", right = "" } },
+          { "location" },
+        },
+        lualine_z = {
+          {
+            function()
+              return "󱉭 " .. vim.fs.basename(vim.uv.cwd())
+            end,
+            separator = { left = "", right = " " },
+          },
+          -- LazyVim.lualine.root_dir({ cwd = true }),
+          -- function()
+          --   local data = LazyVim.lualine.root_dir({ cwd = true })
+          --   -- data.separator = { left = " ", right = "" }
+          --   print(vim.inspect(data))
+          --   return data
+          -- end,
         },
       },
       winbar = {

@@ -5,9 +5,24 @@ return {
     "github/copilot.vim",
   },
   {
-    "greggh/claude-code.nvim",
-    enabled = false,
+    -- dir = "/Users/niba/Documents/Projects/open_source/claudecode.nvim",
+    "coder/claudecode.nvim",
+    enabled = true,
     config = true,
+    keys = {
+      { "<leader>aca", nil, desc = "AI/Claude Code" },
+      { "<leader>acc", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+      { "<leader>acf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+      { "<leader>acr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+      { "<leader>acC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+      { "<leader>acs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+    },
+    opts = {
+      diff_opts = {
+        open_in_current_tab = false,
+        use_dedicated_tab = true,
+      },
+    },
   },
   {
     "ravitemer/mcphub.nvim",
@@ -302,16 +317,27 @@ return {
             {
               role = "system",
               content = function(context)
-                vim.g.codecompanion_auto_tool_mode = true
+                -- vim.g.codecompanion_auto_tool_mode = true
 
+                -- return string.format([[Use @mcp for context7 searches based on these keywords:
+                --
+                --   - "effect" → search context7 "Effect (llmstxt)" library
+                --   - "jj" → search context7 "jj" library
+                --   - "cloudflare workers" → search context7 "cloudflare workers" library
+                --   - "tanstack router" -> search context7 "tanstack router" library
+                --   - "tanstack form" -> search context7 "tanstack form" library
+                --   - "tanstack query" -> search context7 "tanstack query" library
+                --
+                -- ]])
                 return string.format([[Use @mcp for context7 searches based on these keywords:
 
-                  - "effect" → search context7 "Effect (llmstxt)" library
                   - "jj" → search context7 "jj" library  
                   - "cloudflare workers" → search context7 "cloudflare workers" library
                   - "tanstack router" -> search context7 "tanstack router" library
                   - "tanstack form" -> search context7 "tanstack form" library
                   - "tanstack query" -> search context7 "tanstack query" library
+
+                  for any question related to effect try to use effect-docs tool and search context7 "Effect (llmstxt)" library 
 
                 ]])
               end,

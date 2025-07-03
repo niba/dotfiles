@@ -84,6 +84,12 @@ return {
           GrugFarResultsMatchRemoved = { link = "DiffDelete" },
           TreesitterContextBottom = { style = { "underline", "bold" }, sp = C.mauve },
 
+          ["normal.c"] = { bg = C.green },
+          ["visual.c"] = { bg = C.green },
+          ["inactive.c"] = { bg = C.green },
+          ["insert.c"] = { bg = C.green },
+          c = { bg = C.green },
+
           LspReferenceText = { bg = C.surface0 },
           LspReferenceRead = { bg = C.surface0 },
           LspReferenceWrite = { bg = C.surface0 },

@@ -9,10 +9,10 @@ fish_add_path $PYENV_ROOT/bin
 
 status --is-interactive; and pyenv init --path | source
 
-
 starship init fish | source
 zoxide init fish | source
 jj util completion fish | source
+mise activate fish | source
 
 ## BINDINGS
 fish_default_key_bindings -M insert

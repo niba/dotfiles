@@ -1,0 +1,125 @@
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+after-startup-command = ["workspace Dev"]
+start-at-login = true
+
+automatically-unhide-macos-hidden-apps = false
+
+# Mouse follows focus when focused monitor changes
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+default-root-container-layout = "accordion"
+accordion-padding = 0
+
+# exec-on-workspace-change = [
+#   '/bin/bash',
+#   '-c',
+#   'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+# ]
+# [key-mapping]
+# preset = 'colemak'
+
+[mode.main.binding]
+# ctrl-alt-cmd-n = 'focus-monitor left'
+# ctrl-alt-cmd-o = 'focus-monitor right'
+# alt-ctrl-cmd-n = 'focus --boundaries-action wrap-around-the-workspace left'
+# alt-ctrl-cmd-o = 'focus --boundaries-action wrap-around-the-workspace right'
+# alt-ctrl-cmd-n = 'focus --boundaries all-monitors-outer-frame left'
+# alt-ctrl-cmd-o = 'focus --boundaries all-monitors-outer-frame right'
+# alt-ctrl-cmd-n = ["focus-monitor left", 'focus left']
+# alt-ctrl-cmd-o = ["focus-monitor right", 'focus right']'
+alt-ctrl-cmd-shift-n = 'move left'
+alt-ctrl-cmd-shift-o = 'move right'
+# alt-ctrl-cmd-p = "focus-back-and-forth || aerospace workspace-back-and-forth"
+
+# alt-ctrl-cmd-f = 'fullscreen'
+alt-ctrl-cmd-shift-f = 'fullscreen'
+alt-ctrl-cmd-x = "close --quit-if-last-window"
+alt-ctrl-cmd-q = "enable toggle"
+
+alt-ctrl-cmd-p = "exec-and-forget aerospace focus-back-and-forth || aerospace workspace-back-and-forth"
+alt-ctrl-cmd-o = "exec-and-forget test \"$(aerospace list-monitors | wc -l)\" -gt 1 && aerospace focus-monitor right || aerospace focus right"
+alt-ctrl-cmd-n = "exec-and-forget test \"$(aerospace list-monitors | wc -l)\" -gt 1 && aerospace focus-monitor left || aerospace focus left"
+alt-ctrl-cmd-right = "focus right"
+alt-ctrl-cmd-left = "focus left"
+alt-ctrl-cmd-up = "focus up"
+alt-ctrl-cmd-down = "focus down"
+alt-ctrl-cmd-shift-x = "close-all-windows-but-current --quit-if-last-window"
+
+# general
+alt-ctrl-cmd-g = 'workspace General'
+# dev
+alt-ctrl-cmd-d = 'workspace Dev'
+# misc
+alt-ctrl-cmd-m = 'workspace Chats'
+# other
+alt-ctrl-cmd-k = 'workspace Other'
+
+# general
+alt-ctrl-cmd-shift-g = 'move-node-to-workspace General'
+# dev
+alt-ctrl-cmd-shift-d = 'move-node-to-workspace Dev'
+# misc
+alt-ctrl-cmd-shift-m = 'move-node-to-workspace Chats'
+# other
+alt-ctrl-cmd-shift-k = 'move-node-to-workspace Other'
+
+
+[[on-window-detected]]
+if.app-id = 'net.kovidgoyal.kitty'
+run = 'move-node-to-workspace Dev'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
+run = 'move-node-to-workspace Dev'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Cursor'
+run = 'move-node-to-workspace Dev'
+
+[[on-window-detected]]
+if.app-name-regex-substring = '^Arc'
+run = 'move-node-to-workspace General'
+
+[[on-window-detected]]
+if.app-name-regex-substring = '^system settings$'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'raycast'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'calendar'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.1password.1password'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run = 'move-node-to-workspace Chats'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.teams2'
+run = 'move-node-to-workspace Chats'
+
+[[on-window-detected]]
+if.app-id = 'com.facebook.archon'
+run = 'move-node-to-workspace Chats'
+
+[[on-window-detected]]
+if.app-name-regex-substring = '.*'
+run = 'move-node-to-workspace Other'
+
+[workspace-to-monitor-force-assignment]
+'General' = 3
+'Dev' = 2
+'Chats' = 1
+'Other' = 1

@@ -6,11 +6,10 @@
       "args": ["-y", "@upstash/context7-mcp"]
     },
     "effect-docs": {
-      "command": "docker",
+      "command": "npx",
       "disabled": false,
-      "args": ["run", "--rm", "-i", "timsmart/effect-mcp"]
+      "args": ["-y", "effect-mcp"]
     }
   },
   "nativeMCPServers": []
 }
-
