@@ -1,5 +1,9 @@
 local dap_extras = require("extras.dap")
 
+if true then
+  return {}
+end
+
 return {
   {
     "mfussenegger/nvim-dap",
@@ -16,8 +20,7 @@ return {
           executable = {
             command = "node",
             args = {
-              require("mason-registry").get_package("js-debug-adapter"):get_install_path()
-                .. "/js-debug/src/dapDebugServer.js",
+              require("mason-registry").get_package("js-debug-adapter"):get_install_path() .. "/js-debug/src/dapDebugServer.js",
               "${port}",
             },
           },
@@ -32,8 +35,7 @@ return {
           executable = {
             command = "node",
             args = {
-              require("mason-registry").get_package("js-debug-adapter"):get_install_path()
-                .. "/js-debug/src/dapDebugServer.js",
+              require("mason-registry").get_package("js-debug-adapter"):get_install_path() .. "/js-debug/src/dapDebugServer.js",
               "${port}",
             },
           },

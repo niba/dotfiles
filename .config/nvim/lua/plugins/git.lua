@@ -114,16 +114,16 @@ return {
             layout = "diff4_mixed",
           },
         },
-        hooks = {
-          diff_buf_win_enter = function()
-            vim.opt_local.foldenable = false
-            vim.opt_local.relativenumber = false
-            vim.opt_local.number = true
-          end,
-          diff_buf_read = function()
-            vim.api.nvim_input("gg]czz")
-          end,
-        },
+        -- hooks = {
+        --   diff_buf_win_enter = function()
+        --     vim.opt_local.foldenable = false
+        --     vim.opt_local.relativenumber = false
+        --     vim.opt_local.number = true
+        --   end,
+        --   diff_buf_read = function()
+        --     vim.api.nvim_input("gg]czz")
+        --   end,
+        -- },
         keymaps = {
           disable_defaults = true,
           view = {

@@ -14,6 +14,11 @@ zoxide init fish | source
 jj util completion fish | source
 mise activate fish | source
 
+# test -f ~/.inshellisense/fish/init.fish && source ~/.inshellisense/fish/init.fish
+# set -Ux CARAPACE_BRIDGES 'fish,inshellisense'
+# set -Ux CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense' # optional
+# carapace _carapace | source
+
 ## BINDINGS
 fish_default_key_bindings -M insert
 

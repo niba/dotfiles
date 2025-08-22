@@ -5,6 +5,16 @@ return {
     "github/copilot.vim",
   },
   {
+    "franco-ruggeri/codecompanion-spinner.nvim",
+    dependencies = {
+      "olimorris/codecompanion.nvim",
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {
+      -- log_level = "debug",
+    },
+  },
+  {
     -- dir = "/Users/niba/Documents/Projects/open_source/claudecode.nvim",
     "coder/claudecode.nvim",
     enabled = true,

@@ -12,7 +12,7 @@ return {
     },
     keys = {
       {
-        "<leader>ss",
+        "<leader>cz",
         function()
           require("aerial").snacks_picker({
             layout = { preset = "sidebar", preview = "main", layout = { position = "right" } },

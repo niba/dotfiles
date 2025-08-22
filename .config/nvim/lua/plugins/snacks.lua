@@ -115,15 +115,19 @@ return {
           },
         },
         sources = {
+          smart = {
+            ignored = true,
+            hidden = false,
+          },
           files = {
             exclude = { ".git", "node_modules", "dist", "build" },
             ignored = true,
-            hidden = true,
+            hidden = false,
           },
           grep = {
             exclude = { ".git", "node_modules", "dist", "build" },
             ignored = true,
-            hidden = true,
+            hidden = false,
           },
         },
         win = {
@@ -177,6 +181,10 @@ return {
           Snacks.picker.smart()
         end,
         desc = "Smart find",
+      },
+      {
+        "<leader>gd",
+        false,
       },
       -- {
       --   "<leader>,",

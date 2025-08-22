@@ -1,12 +1,19 @@
 local M = {}
 
--- naive but works
+-- naive but works - find first occurency of word in a file
 function M.go_to_import_header()
   local cword = vim.fn.expand("<cword>")
   if cword ~= "" then
-    vim.fn.setreg("/", "\\<" .. cword .. "\\>")
-    vim.cmd([[normal! gg]])
-    vim.cmd("normal! n")
+    local pos = vim.api.nvim_win_get_cursor(0)
+
+    vim.api.nvim_win_set_cursor(0, { 1, 0 })
+    local pattern = "\\<" .. vim.fn.escape(cword, "/\\") .. "\\>"
+    local found = vim.fn.search(pattern, "W")
+
+    if found == 0 then
+      vim.api.nvim_win_set_cursor(0, pos)
+    end
+
     vim.cmd("noh")
   end
 end
