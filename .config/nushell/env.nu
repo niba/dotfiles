@@ -82,4 +82,4 @@ $env.config.menus ++= [{
   }]
 $env.config.completions.use_ls_colors = false
 $env.config.use_kitty_protocol = true
-if ( '~/.inshellisense/nu/init.nu' | path exists ) { source ~/.inshellisense/nu/init.nu }
+# if ( '~/.inshellisense/nu/init.nu' | path exists ) { source ~/.inshellisense/nu/init.nu }

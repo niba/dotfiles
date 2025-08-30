@@ -76,3 +76,17 @@ vim.keymap.set("n", "<leader>cP", function()
     require("lazy").reload({ plugins = { selected } })
   end)
 end, { desc = "Reload plugin" })
+
+vim.keymap.set("n", "<leader>mn", function()
+  require("lspconfig").nushell.setup({
+    cmd = { "nu", "--no-config-file", "--lsp" },
+    filetypes = { "nu" },
+    root_dir = function()
+      local lazyvimRoot = require("lazyvim.util.root")
+      return lazyvimRoot.git()
+    end,
+    single_file_support = true,
+  })
+
+  vim.lsp.enable("nushell")
+end, { desc = "activate nushell lsp" })

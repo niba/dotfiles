@@ -2,7 +2,7 @@ enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
 after-startup-command = ["workspace Dev"]
-start-at-login = true
+start-at-login = false
 
 automatically-unhide-macos-hidden-apps = false
 

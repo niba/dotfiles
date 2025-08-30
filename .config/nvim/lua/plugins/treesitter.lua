@@ -182,6 +182,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
+      ensure_installed = { "nu" },
       textobjects = {
         move = {
           enable = true,

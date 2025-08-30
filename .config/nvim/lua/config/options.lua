@@ -37,9 +37,9 @@ vim.opt.diffopt = {
   "closeoff",
   "context:12",
   "algorithm:histogram",
-  "linematch:200",
+  "linematch:40",
   "indent-heuristic",
-  -- "iwhite"
+  -- "iwhite",
 }
 
 vim.g.neovide_cursor_trail_size = 0

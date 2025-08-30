@@ -9,11 +9,6 @@ return {
     end,
   },
   {
-    "LhKipp/nvim-nu",
-    build = ":TSInstall nu",
-    opts = {},
-  },
-  {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
@@ -85,6 +80,20 @@ return {
       },
     },
   },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   config = function()
+  --     require("lspconfig").nushell.setup({
+  --       cmd = { "nu", "--lsp" },
+  --       filetypes = { "nu" },
+  --       root_dir = function()
+  --         local lazyvimRoot = require("lazyvim.util.root")
+  --         return lazyvimRoot.git()
+  --       end,
+  --       single_file_support = true,
+  --     })
+  --   end,
+  -- },
   {
     "neovim/nvim-lspconfig",
     opts = {
