@@ -3,6 +3,10 @@
 use ~/.config/yabai/config.nu *
 let config = (get-config)
 
+
+# move all windows not defined in config
+yabai -m rule --add app="^.*$" space=trash
+
 # Helper function to build yabai rule command
 def build_yabai_rule [rule_spec, space = null] {
    mut rule_args = []
@@ -52,3 +56,8 @@ for app in $config.unmanaged_apps {
         build_yabai_rule $rule_spec
     }
 }
+
+for app in $config.rules {
+  build_yabai_rule $app
+}
+

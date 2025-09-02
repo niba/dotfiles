@@ -1,63 +1,91 @@
-# I - browser
-# E - editor (cursor)
-# T - terminal
-# F - messenger
-# W - teams
-#
 .define yabai_focus : yabai -m window --focus {{1}} || yabai -m display --focus {{1}}
 .define yabai_swap : yabai -m window --swap {{1}} || (yabai -m window --display {{1}} && yabai -m display --focus {{1}})
 .define toggle_app : open -a "{{1}}" || osascript -e 'tell app "{{1}}" to quit'
 .define toggle_space_layout: yabai -m space --layout $([ "$(yabai -m query --spaces --space | jq -r '.type')" = "stack" ] && echo "bsp" || echo "stack")
 .define resize_window : yabai -m window --resize {{1}}:{{2}}:{{3}}
 .define toggle_scratchpad : yabai -m window --toggle {{1}} || open -a "{{2}}"
-.define focus_app: test -n "$(yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}").id' | head -1)" && yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}").id' | head -1 | xargs -I {} yabai -m window --focus {} || open -a "{{1}}"
+.define focus_app : nu "~/.config/yabai/focus_app_command.nu" "{{1}}"
+.define toggle_pip_visibility : yabai -m query --windows --window | jq -r '.id' | xargs -I {} sh -c 'yabai -m window --toggle videos && yabai -m window --focus {}'
+.define send_key_to_app : yabai -m window --focus (yabai -m query --windows | jq -r '.[] | select(.app == "{{1}}") | .id') && skhd --key "{{2}}" && yabai -m window --focus recent
 
-# cursor, kitty, messenger, teams, arc, passwords, task, pdf, next pip window
-#
-# 
-
-cmd + ctrl + alt - h : skhd -k "cmd - h"
-cmd + ctrl + alt - x : shortcuts run "PlayPause"
-
-# cmd + ctrl + alt - z : @toggle_scratchpad("notes", "Notes")
-# cmd + ctrl + alt - z : yabai -m window --toggle videos
-cmd + ctrl + alt - z : yabai -m query --windows --window | jq -r '.id' | xargs -I {} sh -c 'yabai -m window --toggle videos && yabai -m window --focus {}'
-# cmd + ctrl + alt - s : @focus_app("Safari")
-cmd + ctrl + alt - t : @focus_app("kitty")
-cmd + ctrl + alt - s : nu ~/.config/yabai/focus_app_command.nu "Safari"
 cmd + ctrl + alt - g : nu ~/.config/yabai/toggle_dev_command.nu
-cmd + ctrl + alt - u : @toggle_space_layout()
-cmd + ctrl + alt - v : yabai -m window --toggle float || yabai -m window --grid 12:12:2:2:8:8
-# cmd + ctrl + alt - h : osascript -e "tell application \"System Events\" to set visible of first application process whose frontmost is true to false"
-# minimize
-# cmd + ctrl + alt - v : yabai -m window --minimize
-# deminimize
-# cmd + ctrl + alt + shift - v : yabai -m window --deminimize "$(yabai -m query --windows | jq '[.[] | select(."is-minimized" == true) | .id] | last // -1')"
-# .load "~/.config/skhd/windows.skhdrc"
+
+# cmd + ctrl + alt - s : show passwords (defined in 1password)
+# cmd + ctrl + alt - y : show clipboard history (defined in raycast)
+# cmd + ctrl + alt - enter : add task (defined in ticktick)
+cmd + ctrl + alt - b : @focus_app("Readest")
+cmd + ctrl + alt - t : @focus_app("kitty")
+cmd + ctrl + alt - e : @focus_app("Cursor")
+cmd + ctrl + alt - i : @focus_app("Arc")
+cmd + ctrl + alt - c : @focus_app("Microsoft Teams")
+cmd + ctrl + alt - d : @focus_app("Discord")
+
+cmd + ctrl + alt - j : @focus_app("Messenger")
+
+cmd + ctrl + alt - u : shortcuts run "PlayPause"
+cmd + ctrl + alt - m : @toggle_scratchpad("music", "Spotify")
+# '
+cmd + ctrl + alt - 0x27 : @send_key_to_app("Readest", "right")
+# "
+cmd + ctrl + alt + shift - 0x27 : @send_key_to_app("Readest", "left")
+
+cmd + ctrl + alt - v : @toggle_pip_visibility()
+
+# move to window mode?
+cmd + ctrl + alt - q : yabai --restart-service || yabai --start-service
+cmd + ctrl + alt + shift - q : yabai --stop-service
+
+# how to deminimize sometimes not visible windows?
+
+cmd + ctrl + alt - p : @yabai_focus("recent")
+cmd + ctrl + alt - n : @yabai_focus("west")
+cmd + ctrl + alt - o : @yabai_focus("east")
+# support qwerty
+cmd + ctrl + alt - h : @yabai_focus("west")
+cmd + ctrl + alt - l : @yabai_focus("east")
+
+# ,
+cmd + ctrl + alt - 0x2B : yabai -m window --focus stack.next || yabai -m window --focus stack.first  # Navigate stack next
+# .
+cmd + ctrl + alt - 0x2F : yabai -m window --focus stack.prev || yabai -m window --focus stack.last  # Navigate stack prev
+
+# r and f are free bindings
+# maybe r can raise a layer
+# cmd + ctrl + alt - f : yabai -m window --toggle zoom-fullscreen
+
+# WINDOW MANAGEMENT
 :: winmode @ : echo -n "red" | nc -4u -w0 localhost 1738
 :: default : echo -n "hollow" | nc -4u -w0 localhost 1738
 
 cmd + ctrl + alt - w ; winmode
+
 winmode < escape ; default
 winmode < cmd + ctrl + alt - w ; default
+
+# make fullscreen
+# yabai -m window --toggle zoom-fullscreen
+
+winmode < m : @toggle_space_layout()
+winmode < f : yabai -m window --toggle zoom-fullscreen
+winmode < d : yabai -m window --deminimize
 
 winmode < n : yabai -m window --focus west || yabai -m display --focus west
 winmode < e : yabai -m window --focus south || yabai -m display --focus south
 winmode < i : yabai -m window --focus north || yabai -m display --focus north
 winmode < o : yabai -m window --focus east || yabai -m display --focus east
 
-winmode < shift - n : yabai -m window --display west --focus
-winmode < shift - o : yabai -m window --display east --focus
-# winmode < shift - e : yabai -m window --move rel:0:80
-# winmode < shift - n : yabai -m window --move rel:-80:0
-# winmode < shift - e : yabai -m window --move rel:0:80
-# winmode < shift - i : yabai -m window --move rel:0:-80
-# winmode < shift - o : yabai -m window --move rel:80:0
+winmode < ctrl + alt - n : yabai -m window --resize left:-20:0
+winmode < ctrl + alt - e : yabai -m window --resize bottom:0:20
+winmode < ctrl + alt - i : yabai -m window --resize top:0:-20
+winmode < ctrl + alt - o : yabai -m window --resize right:20:0
 
-winmode < alt + shift - n : yabai -m window --warp west
-winmode < alt + shift - e : yabai -m window --warp south
-winmode < alt + shift - i : yabai -m window --warp north
-winmode < alt + shift - o : yabai -m window --warp east
+winmode < cmd + ctrl + alt - n : yabai -m window --display west --focus
+winmode < cmd + ctrl + alt - o : yabai -m window --display east --focus
+
+winmode < shift - n : yabai -m window --warp west
+winmode < shift - e : yabai -m window --warp south
+winmode < shift - i : yabai -m window --warp north
+winmode < shift - o : yabai -m window --warp east
 
 winmode < ctrl + shift - n : yabai -m window --stack west
 winmode < ctrl + shift - e : yabai -m window --stack south
@@ -66,77 +94,17 @@ winmode < ctrl + shift - o : yabai -m window --stack east
 
 winmode < s : yabai -m window --insert stack  # Toggle stack mode
 winmode < u : yabai -m window --toggle float; yabai -m window --toggle float  # Unstack window
-winmode < b : yabai -m window --focus stack.next  # Navigate stack next
-winmode < f : yabai -m window --focus stack.prev  # Navigate stack prev
 
-winmode < r ; resize
-:: resize @ : echo -n "orange" | nc -4u -w0 localhost 1738
-resize < n : yabai -m window --resize left:-20:0
-resize < e : yabai -m window --resize bottom:0:20
-resize < i : yabai -m window --resize top:0:-20
-resize < o : yabai -m window --resize right:20:0
-resize < escape ; winmode
+# ,
+winmode < 0x2B : yabai -m window --focus stack.next || yabai -m window --focus stack.first
+# .
+winmode < 0x2F : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
-cmd + ctrl + alt - p : @yabai_focus("recent")
-cmd + ctrl + alt - n : @yabai_focus("west")
-cmd + ctrl + alt - o : @yabai_focus("east")
-cmd + ctrl + alt - 0x2B : yabai -m window --focus stack.next || yabai -m window --focus stack.first  # Navigate stack next
-cmd + ctrl + alt - 0x2F : yabai -m window --focus stack.prev || yabai -m window --focus stack.last  # Navigate stack prev
+# winmode < r ; resize
+# :: resize @ : echo -n "orange" | nc -4u -w0 localhost 1738
+# resize < ctrl + alt - n : yabai -m window --resize left:-20:0
+# resize < ctrl + alt - e : yabai -m window --resize bottom:0:20
+# resize < ctrl + alt - i : yabai -m window --resize top:0:-20
+# resize < ctrl + alt - o : yabai -m window --resize right:20:0
+# resize < escape ; winmode
 
-cmd + ctrl + alt - q : osascript -e 'display notification "Wiaaaaaaawqeqndow mode active zzoasooa aasts" with title "skhd"'
-
-# cmd - 1 : yabai -m space --focus code
-# cmd - 2 : yabai -m space --focus terminal
-# cmd - 3 : yabai -m space --focus browser
-# cmd - 4 : yabai -m space --focus helper
-# cmd - 5 : yabai -m space --focus productivity
-# cmd - 6 : yabai -m space --focus 6
-# cmd - 7 : yabai -m space --focus 7
-# cmd - 8 : yabai -m space --focus 8
-# cmd - 9 : yabai -m space --focus no_idea
-# cmd - 0 : yabai -m space --focus other
-# 
-# cmd + ctrl - 1 : yabai -m window --space code
-# cmd + ctrl - 2 : yabai -m window --space terminal
-# cmd + ctrl - 3 : yabai -m window --space browser
-# cmd + ctrl - 4 : yabai -m window --space helper
-# cmd + ctrl - 5 : yabai -m window --space productivity
-# cmd + ctrl - 0 : yabai -m window --space other
-# 
-# cmd + ctrl - right : if [ (yabai -m query --spaces --display | jq '.[-1]."has-focus"') = "false" ]; yabai -m space --focus next; end
-# cmd + ctrl - left : if [ (yabai -m query --spaces --display | jq '.[0]."has-focus"') = "false" ]; yabai -m space --focus prev; end
-# 
-# cmd + ctrl - o : yabai -m display --focus east
-# cmd + ctrl - n : yabai -m display --focus west
-# cmd + ctrl - r : yabai -m window --display 2; yabai -m display --focus 2
-# cmd + ctrl - s : yabai -m window --display 1; yabai -m display --focus 1
-# cmd + ctrl - t : yabai -m window --display 3; yabai -m display --focus 3
-# 
-# cmd + shift - f : yabai -m window --toggle zoom-fullscreen
-# cmd + shift + ctrl - r : yabai --restart-service
-# 
-# rcmd - a: yabai -m query --windows id,app,title | jq '.[] | select(.app == "Google Chrome").id' | xargs -I {} yabai -m window --focus {}
-# rcmd - i: yabai -m query --windows id,app,title | jq '.[] | select(.app == "Arc").id' | xargs -I {} yabai -m window --focus {}
-# rcmd - e: yabai -m query --windows id,app,title | jq '.[] | select(.app == "Code").id' | xargs -I {} yabai -m window --focus {}
-# rcmd - t: yabai -m query --windows id,app,title | jq '.[] | select(.app == "kitty").id' | xargs -I {} yabai -m window --focus {}
-# rcmd - r: yabai -m query --windows id,app,title | jq '.[] | select(.app == "Notes").id' | xargs -I {} yabai -m window --focus {}
-# rcmd - d: yabai -m query --windows id,app,title | jq '.[] | select(.app == "Figma").id' | xargs -I {} yabai -m window --focus {}
-# rcmd - s: yabai -m query --windows id,app,title | jq '.[] | select(.app == "Microsoft Teams").id' | xargs -I {} yabai -m window --focus {}
-# 
-# rcmd - o : yabai -m display --focus east
-# rcmd - n : yabai -m display --focus west
-# rcmd - l : yabai -m display --focus east
-# rcmd - h : yabai -m display --focus west
-# rcmd - 2 : yabai -m display --focus 2
-# rcmd - 1 : yabai -m display --focus 1
-# rcmd - 3 : yabai -m display --focus 3
-# rcmd - z: yabai -m window --toggle native-fullscreen
-
-# cmd + ctrl - o : sh ~/scripts/next_pdf_page.sh
-# cmd + ctrl + alt - o: sh ~/scripts/next_pdf_page.sh
-# cmd + ctrl + alt - m: sh ~/scripts/prev_pdf_page.sh
-
-
-# alt + ctrl + cmd - p: aerospace focus-back-and-forth || aerospace workspace-back-and-forth
-# alt + ctrl + cmd - o: [ "$(aerospace list-monitors | wc -l)" -gt 1 ] && aerospace focus-monitor right || aerospace focus right
-# alt + ctrl + cmd - n: [ "$(aerospace list-monitors | wc -l)" -gt 1 ] && aerospace focus-monitor right || aerospace focus right

@@ -22,6 +22,7 @@ def get-multi-display-config [] {
     dev_personal_main: "dev_personal_main",
     dev_personal_helper: "dev_personal_helper",
     other: "other",
+    trash: "trash",
   }
 
   let displays = {
@@ -38,21 +39,27 @@ def get-multi-display-config [] {
     ],
     spaces: {
       ($displays.main): [$spaces.dev_job_main, $spaces.dev_personal_main, $spaces.other],
-      ($displays.mac): [$spaces.mac],
+      # we need at least two spaces on each display to make scratchpad windows work without moving relocating the window
+      ($displays.mac): [$spaces.mac, $spaces.trash],
       ($displays.small): [$spaces.dev_job_helper, $spaces.dev_personal_helper],
     },
     apps: {
-      ($spaces.mac): ["Microsoft Teams", "Discord", { app: "Zen", title: "Picture-in-Picture", grid: "6:6:4:0:2:2" scratchpad: "videos" } ]
-      ($spaces.dev_job_main): [{ app: "kitty", title: "work"}, "Code", "Chrome$"]
+      ($spaces.mac): ["Microsoft Teams", "Discord", { app: "Zen", title: "Picture-in-Picture", grid: "4:4:2:0:2:2" scratchpad: "videos" } ]
+      ($spaces.dev_job_main): [{ app: "kitty", title: "job"}, "Code", "Chrome$", "Cursor"]
       ($spaces.dev_job_helper): ["Arc$", { app: "Zen", title: "Work$" }]
-      ($spaces.dev_personal_main): [{ app: "kitty", title: "private" }]
-      ($spaces.dev_personal_helper): [{ app: "Zen", title: "Personal$" }]
-      ($spaces.other): ["Notion$", "Obsidian"]
-      ($spaces.trash): []
+      ($spaces.dev_personal_main): [{ app: "kitty", title: "personal" }]
+      ($spaces.dev_personal_helper): [{ app: "Zen", title: "Personal$" }, { app: "Readest", grid: "1:5:0:0:2:1", manage: "off" } ]
+      ($spaces.other): ["Notion$", "Obsidian", "TradingView", "xStation5", "pgAdmin 4", "Postman", "Docker Desktop", "TickTick"]
     },
+    rules: [
+      { app: "Spotify", scratchpad: "music", grid: "10:10:1:1:8:8" }
+      { app: "Notes", scratchpad: "notes", grid: "10:10:1:1:8:8" }
+      { app: "TickTick", scratchpad: "tasks", grid: "10:10:1:1:8:8" }
+    ],
     unmanaged_apps: [
       "^System Preferences$",
       "^System Settings$", 
+      "Shortcuts",
       "^Finder$",
       "Activity Monitor",
       "^Raycast$",

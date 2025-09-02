@@ -5,74 +5,78 @@ use ~/.config/yabai/config.nu *
 def main [app_name: string] {
     let config = (get-config)
 
-   # Debug: Print the config structure
-   print $"Config devs structure: ($config.devs)"
-   print $"All spaces in config: ($config.devs | flatten)"
+    print $"Looking for app: ($app_name)"
+    # print $"Config devs structure: ($config.devs)"
+    # print $"All spaces in config: ($config.devs | flatten)"
 
-    # Get current focused space (replace with actual command for your system)
     let current_space_info = (yabai -m query --spaces --space | from json)
     let current_space = $current_space_info.label
 
-    print $"Looking for app: ($app_name)"
+    let spaces = yabai -m query --spaces index,label,is-visible | from json
+    let windows = yabai -m query --windows app,id,title,space | from json
 
-    # Find which group contains the current space
-    let matching_groups = ($config.devs | enumerate | where {|group| 
-        $current_space in $group.item
-    })
-    print $"Matching space: ($matching_groups)"
-    let current_group = if ($matching_groups | length) > 0 {
-        $matching_groups | get item | first
-    } else {
-        []
+    let space_lookup = $spaces | reduce -f {} {|space, acc| 
+      $acc | insert ($space.index | into string) {index: $space.index, label: $space.label}
     }
 
-    print $"Current space: ($current_group)"
-    # Function to search for app in given spaces
-    def search_app_in_spaces [spaces: list, app: string] {
-        let results = ($spaces | each {|space|
-            # Query windows in this space (adjust command for your system)
-            let windows = (yabai -m query --windows --space $space | from json)
-            let found_window = ($windows | where {|w| ($w.app | str contains $app)})
-            if ($found_window | length) > 0 {
-                {space: $space, window: ($found_window | first)}
-            } else {
-                null
-            }
-        } | where {|result| $result != null})
-                print $"Current space: ($results)"
-        if ($results | length) > 0 {
-            $results | first
-        } else {
-            null
+    let enriched_windows = $windows | each {|window|
+      let space_record = $space_lookup | get ($window.space | into string)
+      $window | update space $space_record
+    }
+
+    def find_window [
+      app_pattern: string,
+      --title: string,
+      --spaces: list<string>
+    ] {
+      $enriched_windows | where {|window|
+        let app_matches = ($window.app =~ $app_pattern)
+
+        let title_matches = if ($title | is-empty) { 
+          true 
+        } else { 
+          ($window.title =~ $title) 
         }
+
+        let space_matches = if ($spaces | is-empty) { 
+          true 
+        } else { 
+          ($window.space.label in $spaces) 
+        }
+
+        $app_matches and $title_matches and $space_matches
+      } | get 0?
     }
 
-    # Try to find app in current group first
-    let app_location = if ($current_group | length) > 0 {
-        print $"Searching in current group: ($current_group)"
-        search_app_in_spaces $current_group $app_name
-    } else {
-       print "Current space not found in any group"
-        null
+    def find_visible_group_and_space [] {
+      let group_with_visible = $config.devs | enumerate | where {|group_item|
+          let group_labels = $group_item.item
+          $spaces | any {|space| 
+              ($space.label in $group_labels) and $space.is-visible
+          }
+      } | first
+      
+      if ($group_with_visible | is-empty) {
+          null
+      } else {
+          $config.devs | get $group_with_visible.index
+      }
     }
 
-    # If not found in group, search all spaces
-    let final_location = if ($app_location == null) {
-        print "App not found in current group, searching all spaces..."
-        let all_spaces = ($config.devs | flatten)
-        search_app_in_spaces $all_spaces $app_name
-    } else {
-        $app_location
+    print $"Windows for app: ($enriched_windows)"
+    let dev_spaces = find_visible_group_and_space
+    let matching_window = find_window $app_name --spaces $dev_spaces
+
+    if ($matching_window | is-not-empty) {
+      yabai -m window --focus $matching_window.id
+      return
     }
 
-    # Switch to the app if found
-    if ($final_location != null) {
-        print $"Found ($app_name) in space ($final_location.space)"
-        # Switch to the space and focus the window
-        yabai -m space --focus $final_location.space
-        yabai -m window --focus $final_location.window.id
-        print $"Switched to ($app_name)"
-    } else {
-        print $"App ($app_name) not found in any space"
+    let matching_windows = find_window $app_name --spaces $dev_spaces
+    if ($matching_window | is-not-empty) {
+      yabai -m window --focus $matching_window.id
+      return
     }
+
+    ^open -a $"($app_name)"
 }
