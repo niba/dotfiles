@@ -88,7 +88,7 @@ $config_items
 
 
 mut iteration_count = 0
-let max_iterations = 20  # Safety limit
+let max_iterations = 20 
 
 # space can change index after removing other space so we need to query before each operation
 loop {

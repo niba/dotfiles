@@ -68,13 +68,17 @@ def main [app_name: string] {
     let matching_window = find_window $app_name --spaces $dev_spaces
 
     if ($matching_window | is-not-empty) {
+      yabai -m config mouse_follows_focus on
       yabai -m window --focus $matching_window.id
+      yabai -m config mouse_follows_focus off
       return
     }
 
     let matching_windows = find_window $app_name --spaces $dev_spaces
     if ($matching_window | is-not-empty) {
+      yabai -m config mouse_follows_focus on
       yabai -m window --focus $matching_window.id
+      yabai -m config mouse_follows_focus off
       return
     }
 

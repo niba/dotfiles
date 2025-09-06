@@ -13,7 +13,7 @@ vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
 vim.opt.jumpoptions = "stack,view"
 vim.opt.timeoutlen = 400
-vim.opt.scrolloff = 6
+vim.opt.scrolloff = 12
 
 vim.diagnostic.config({
   float = { border = "rounded" },

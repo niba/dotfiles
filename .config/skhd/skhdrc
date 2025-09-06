@@ -1,4 +1,4 @@
-.define yabai_focus : yabai -m window --focus {{1}} || yabai -m display --focus {{1}}
+.define yabai_focus : yabai -m config mouse_follows_focus on && yabai -m window --focus {{1}} || yabai -m display --focus {{1}} && yabai -m config mouse_follows_focus off
 .define yabai_swap : yabai -m window --swap {{1}} || (yabai -m window --display {{1}} && yabai -m display --focus {{1}})
 .define toggle_app : open -a "{{1}}" || osascript -e 'tell app "{{1}}" to quit'
 .define toggle_space_layout: yabai -m space --layout $([ "$(yabai -m query --spaces --space | jq -r '.type')" = "stack" ] && echo "bsp" || echo "stack")
@@ -24,6 +24,7 @@ cmd + ctrl + alt - j : @focus_app("Messenger")
 
 cmd + ctrl + alt - u : shortcuts run "PlayPause"
 cmd + ctrl + alt - m : @toggle_scratchpad("music", "Spotify")
+cmd + ctrl + alt - space : nu "~/.config/yabai/fix_raycast.nu" 
 # '
 cmd + ctrl + alt - 0x27 : @send_key_to_app("Readest", "right")
 # "

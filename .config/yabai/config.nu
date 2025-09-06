@@ -44,17 +44,20 @@ def get-multi-display-config [] {
       ($displays.small): [$spaces.dev_job_helper, $spaces.dev_personal_helper],
     },
     apps: {
-      ($spaces.mac): ["Microsoft Teams", "Discord", { app: "Zen", title: "Picture-in-Picture", grid: "4:4:2:0:2:2" scratchpad: "videos" } ]
-      ($spaces.dev_job_main): [{ app: "kitty", title: "job"}, "Code", "Chrome$", "Cursor"]
-      ($spaces.dev_job_helper): ["Arc$", { app: "Zen", title: "Work$" }]
-      ($spaces.dev_personal_main): [{ app: "kitty", title: "personal" }]
+      ($spaces.mac): ["Microsoft Teams", "Discord", 
+        { app: "Zen", title: "Picture-in-Picture", grid: "4:4:2:0:2:2" scratchpad: "videos" }, 
+        # { app: "Arc", subrole:"AXSystemDialog", grid: "4:4:2:0:2:2" scratchpad: "videos"} 
+      ]
+      ($spaces.dev_job_main): [{ app: "kitty", title: "job"}, "Code", "Chrome$", { app: "Cursor", title: ".*xplus.*" }]
+      ($spaces.dev_job_helper): [{ app: "Zen", title: "Work$" }] # "Arc$", 
+      ($spaces.dev_personal_main): [{ app: "kitty", title: "personal" }, { app: "Cursor" }]
       ($spaces.dev_personal_helper): [{ app: "Zen", title: "Personal$" }, { app: "Readest", grid: "1:5:0:0:2:1", manage: "off" } ]
       ($spaces.other): ["Notion$", "Obsidian", "TradingView", "xStation5", "pgAdmin 4", "Postman", "Docker Desktop", "TickTick"]
     },
     rules: [
       { app: "Spotify", scratchpad: "music", grid: "10:10:1:1:8:8" }
       { app: "Notes", scratchpad: "notes", grid: "10:10:1:1:8:8" }
-      { app: "TickTick", scratchpad: "tasks", grid: "10:10:1:1:8:8" }
+      # { app: "Raycast", title: "AI Chat", scratchpad: "ai", grid: "10:10:1:1:8:8" }
     ],
     unmanaged_apps: [
       "^System Preferences$",
@@ -69,6 +72,7 @@ def get-multi-display-config [] {
       "League of Legends$",
       "Steam Helper",
       "1Password",
+      # { app: "^(Arc)$" subrole: "^AXSystemDialog$" }
     ],
     layouts: {
       # default is stack
