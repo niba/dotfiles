@@ -1,8 +1,5 @@
 #!/usr/bin/env nu
 
-
-
-
 use ~/.config/yabai/config.nu *
 use ~/.config/yabai/utils.nu *
 
@@ -15,8 +12,8 @@ def main [] {
 
   let current_window = $windows | where id == $current_window_id
   if ($current_window | is-empty) {
-      print $"window resized empty"
-      return
+    print $"window resized empty"
+    return
   }
 
   let current_window = $current_window | first
@@ -26,9 +23,8 @@ def main [] {
     return
   }
 
-  let params = (build_params $config.special.arc_pip "window") 
-  yabai -m window $current_window.id ...$params 
-
+  let params = (build_params $config.special.arc_pip "window")
+  yabai -m window $current_window.id ...$params
 
   # let pip_windows = $windows | where app == $current_window.app and subrole == "AXSystemDialog" and scratchpad == ""
   #
@@ -36,6 +32,4 @@ def main [] {
   #   # todo: take from config
   #   yabai -m window $window.id --scratchpad videos --grid "4:4:2:0:2:2" --space mac
   # }
-
 }
-
