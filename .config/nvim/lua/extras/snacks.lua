@@ -24,6 +24,16 @@ M.layouts = {
   },
 }
 
+function M.hidden()
+  local cwd = vim.fn.getcwd()
+
+  if string.find(cwd:lower(), "dotfiles") then
+    return true
+  else
+    return false
+  end
+end
+
 function M.flash(picker)
   require("flash").jump({
     pattern = "^",

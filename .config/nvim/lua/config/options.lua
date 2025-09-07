@@ -38,6 +38,7 @@ vim.opt.diffopt = {
   "context:12",
   "algorithm:histogram",
   "linematch:40",
+  "followwrap",
   "indent-heuristic",
   -- "iwhite",
 }

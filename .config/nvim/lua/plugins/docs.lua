@@ -48,6 +48,13 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter" },
   },
   {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+  },
+  {
     "obsidian-nvim/obsidian.nvim",
     version = "*",
     lazy = true,
@@ -70,11 +77,8 @@ return {
         blink = true,
         min_chars = 2,
       },
-      ui = {
-        checkboxes = {
-          [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-          ["x"] = { char = "", hl_group = "ObsidianDone" },
-        },
+      checkbox = {
+        order = { " ", "x" },
       },
     },
   },
