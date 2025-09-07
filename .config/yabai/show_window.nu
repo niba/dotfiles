@@ -7,6 +7,7 @@
 
 def main [] {
     let windows = yabai -m query --windows app,id,title,space,is-floating,sub-layer,scratchpad,pid,has-focus | from json
+    let window_id = $env.YABAI_WINDOW_ID
 
     let above_windows = $windows | where sub-layer == "above" and scratchpad == ""
 
@@ -16,6 +17,12 @@ def main [] {
         } else {
             yabai -m window $window.id --sub-layer below
         }
+    }
+
+    let normal_windows = $windows | where sub-layer == "normal" and scratchpad == ""
+
+    for window in $normal_windows {
+        yabai -m window $window.id --sub-layer below
     }
 
     def focus_all_app_windows [] {
@@ -36,7 +43,6 @@ def main [] {
       }
     }
 
-    let window_id = $env.YABAI_WINDOW_ID
-    yabai -m window $window_id --sub-layer above
+    yabai -m window $window_id --sub-layer normal
 }
 

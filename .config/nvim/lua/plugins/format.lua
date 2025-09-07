@@ -16,7 +16,6 @@ local dprint_supported = {
   "typescript",
   "javascript",
 }
-
 return {
   {
     "mason-org/mason.nvim",
@@ -26,6 +25,13 @@ return {
     "stevearc/conform.nvim",
     opts = function(_, opts)
       opts.formatters_by_ft = opts.formatters_by_ft or {}
+      opts.formatters = opts.formatters or {}
+
+      opts.formatters_by_ft["nu"] = { "topiary_nu" }
+      opts.formatters["topiary_nu"] = {
+        command = "topiary",
+        args = { "format", "--language", "nu" },
+      }
 
       for _, ft in ipairs(dprint_supported) do
         opts.formatters_by_ft[ft] = opts.formatters_by_ft[ft] or {}
@@ -37,7 +43,6 @@ return {
         opts.formatters_by_ft[ft] = opts.formatters_by_ft[ft] or {}
         opts.formatters_by_ft[ft].lsp_format = "never"
       end
-      opts.formatters = opts.formatters or {}
       opts.formatters.eslint_d = {
         require_cwd = true,
         condition = function(_, ctx)

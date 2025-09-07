@@ -3,14 +3,79 @@ export const MASTER_APPS = [
   "Code"
 ]
 
+const unmanaged_apps = [
+  "^System Preferences$",
+  "^System Settings$", 
+  "Shortcuts",
+  "^Finder$",
+  "Activity Monitor",
+  "^Raycast$",
+  "Calendar",
+  "Calculator$",
+  "Mouseless$",
+  "League of Legends$",
+  "Steam Helper",
+  "1Password",
+]
+
 # only for lsp autocompletion
 # let displays = {}
 # let spaces = {}
 
 def get-single-display-config [] {
+  let spaces = {
+    utils: "utils",
+    dev_job: "dev_job",
+    dev_personal: "dev_personal",
+    other: "other"
+  }
+
+  let displays = {
+    mac: "mac",
+  }
+
   {
-
-
+    displays: [$displays.mac],
+    devs: [
+      [$spaces.dev_job],
+      [$spaces.dev_personal]
+    ],
+    spaces: {
+      ($displays.mac): [$spaces.dev_job, $spaces.dev_personal, $spaces.utils, $spaces.other],
+    },
+    apps: {
+      ($spaces.utils): [
+        "Microsoft Teams", "Discord", "Messenger"
+      ]
+      ($spaces.dev_job): [{ app: "kitty", title: "job" }, "Code", "Chrome$", { app: "Cursor", title: ".*xplus.*" }, { app: "Zen", title: "Work$" }]
+      ($spaces.dev_personal): [{ app: "kitty", title: "personal" }, { app: "Cursor" }, { app: "Zen", title: "Personal$" }, { app: "Readest", grid: "1:5:0:0:2:1", manage: "off" }]
+      ($spaces.other): ["Notion$", "Obsidian", "TradingView", "xStation5", "pgAdmin 4", "Postman", "Docker Desktop", "TickTick"]
+    },
+    special: {
+      arc_windows: [$spaces.dev_job, $spaces.dev_personal],
+      arc_pip: {
+        grid: "5:5:4:0:1:1"
+        scratchpad: "videos"
+      }
+    },
+    rules: [
+      { app: "Zen", title: "Picture-in-Picture", grid: "5:5:4:0:1:1", scratchpad: "videos" } 
+      { app: "Spotify", scratchpad: "music", grid: "10:10:1:1:8:8" }
+      { app: "Notes", scratchpad: "notes", grid: "10:10:1:1:8:8" }
+    ],
+    unmanaged_apps: $unmanaged_apps,
+    layouts: {
+      # default is stack
+      smart: { 
+        ($spaces.dev_job): {
+          masters: ["kitty", "code"]
+        }, 
+        ($spaces.dev_personal): {
+          masters: []
+        } 
+      },
+      bsp: [],
+    },
   }
 }
 
@@ -45,7 +110,7 @@ def get-multi-display-config [] {
     },
     apps: {
       ($spaces.mac): ["Microsoft Teams", "Discord", 
-        { app: "Zen", title: "Picture-in-Picture", grid: "4:4:2:0:2:2" scratchpad: "videos" }, 
+        { app: "Zen", title: "Picture-in-Picture", grid: "4:4:2:0:2:2", scratchpad: "videos" } 
         # { app: "Arc", subrole:"AXSystemDialog", grid: "4:4:2:0:2:2" scratchpad: "videos"} 
       ]
       ($spaces.dev_job_main): [{ app: "kitty", title: "job"}, "Code", "Chrome$", { app: "Cursor", title: ".*xplus.*" }]
@@ -54,26 +119,19 @@ def get-multi-display-config [] {
       ($spaces.dev_personal_helper): [{ app: "Zen", title: "Personal$" }, { app: "Readest", grid: "1:5:0:0:2:1", manage: "off" } ]
       ($spaces.other): ["Notion$", "Obsidian", "TradingView", "xStation5", "pgAdmin 4", "Postman", "Docker Desktop", "TickTick"]
     },
+    special: {
+      arc_windows: [$spaces.dev_job_helper, $spaces.dev_personal_helper],
+      arc_pip: {
+        grid: "4:4:2:0:2:2", 
+        scratchpad: "videos"
+        space: $spaces.mac
+      }
+    },
     rules: [
       { app: "Spotify", scratchpad: "music", grid: "10:10:1:1:8:8" }
       { app: "Notes", scratchpad: "notes", grid: "10:10:1:1:8:8" }
-      # { app: "Raycast", title: "AI Chat", scratchpad: "ai", grid: "10:10:1:1:8:8" }
     ],
-    unmanaged_apps: [
-      "^System Preferences$",
-      "^System Settings$", 
-      "Shortcuts",
-      "^Finder$",
-      "Activity Monitor",
-      "^Raycast$",
-      "Calendar",
-      "Calculator$",
-      "Mouseless$",
-      "League of Legends$",
-      "Steam Helper",
-      "1Password",
-      # { app: "^(Arc)$" subrole: "^AXSystemDialog$" }
-    ],
+    unmanaged_apps: $unmanaged_apps,
     layouts: {
       # default is stack
       smart: { 

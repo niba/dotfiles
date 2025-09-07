@@ -4,6 +4,7 @@ use ~/.config/yabai/config.nu *
 
 def main [] {
     let config = (get-config)
+    let all_spaces_info = (yabai -m query --spaces | from json | select label display)
     let visible_spaces = (yabai -m query --spaces | from json | where is-visible == true | get label)
     let focused_app = (yabai -m query --windows --window | from json | get app)
 
@@ -19,8 +20,16 @@ def main [] {
         $config.devs | get 0 
     }
     
-    $target_config | each {|space| try { yabai -m space --focus $space }}
+    $target_config | each {|space| 
+        let space_display = ($all_spaces_info | where label == $space | get display | get 0)
+        try { yabai -m display $space_display --space $space }
+    }
     print $"Switched to: ($target_config)"
 
-    nu ~/.config/yabai/focus_app_command.nu $focused_app
+    # uncomment if we want to focus the same app
+    # nu ~/.config/yabai/focus_app_command.nu $focused_app
 }
+
+
+
+

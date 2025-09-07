@@ -1,6 +1,10 @@
 #!/usr/bin/env nu
 
+use ~/.config/yabai/config.nu *
+
 def main [] {
+    let config = (get-config)
+
     let arc_windows = yabai -m query --windows | from json 
         | where app == "Arc" 
         | where is-floating == false 
@@ -30,10 +34,8 @@ def main [] {
         return
     }
     
-    let spaces = ["dev_job_helper", "dev_personal_helper"]
-
     $arc_windows | take 2 | enumerate | each {|item|
-        let space = ($spaces | get $item.index)
+        let space = ($config.special.arc_windows | get $item.index)
         print $"Moving ($item) to space ($space)"
         yabai -m window $item.item.id --space ($space)
     }

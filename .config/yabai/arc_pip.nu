@@ -1,7 +1,13 @@
 #!/usr/bin/env nu
 
 
+
+
+use ~/.config/yabai/config.nu *
+use ~/.config/yabai/utils.nu *
+
 def main [] {
+  let config = (get-config)
 
   let current_window_id = $env.YABAI_WINDOW_ID | into int
 
@@ -20,8 +26,9 @@ def main [] {
     return
   }
 
-  # todo: take from config
-  yabai -m window $current_window.id --scratchpad videos --grid "4:4:2:0:2:2" --space mac
+  let params = (build_params $config.special.arc_pip "window") 
+  yabai -m window $current_window.id ...$params 
+
 
   # let pip_windows = $windows | where app == $current_window.app and subrole == "AXSystemDialog" and scratchpad == ""
   #
@@ -31,3 +38,4 @@ def main [] {
   # }
 
 }
+

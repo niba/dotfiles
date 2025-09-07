@@ -24,7 +24,7 @@ cmd + ctrl + alt - j : @focus_app("Messenger")
 
 cmd + ctrl + alt - u : shortcuts run "PlayPause"
 cmd + ctrl + alt - m : @toggle_scratchpad("music", "Spotify")
-cmd + ctrl + alt - space : nu "~/.config/yabai/fix_raycast.nu" 
+cmd + ctrl + alt - space : nu "~/.config/yabai/fix_raycast.nu" || skhd --key "cmd + ctrl + alt + shift - space" 
 # '
 cmd + ctrl + alt - 0x27 : @send_key_to_app("Readest", "right")
 # "

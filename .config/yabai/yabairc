@@ -51,7 +51,6 @@ yabai -m signal --add event=window_focused action="nu ~/.config/yabai/show_windo
 yabai -m signal --add event=window_created action="nu ~/.config/yabai/new_window.nu"
 yabai -m signal --add event=window_created action="nu ~/.config/yabai/arc_windows.nu"
 yabai -m signal --add event=window_resized action="nu ~/.config/yabai/arc_pip.nu"
-# yabai -m signal --add event=window_created app="^Arc$" action="~/.config/yabai/yabai_arc_rules.sh"
 
 yabai -m rule --apply
 ~/.config/yabai/arc_windows.nu
