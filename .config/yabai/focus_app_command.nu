@@ -63,7 +63,6 @@ def main [app_name: string] {
     }
   }
 
-  print $"Windows for app: ($enriched_windows)"
   let dev_spaces = find_visible_group_and_space
   let matching_window = find_window $app_name --spaces $dev_spaces
 
@@ -74,7 +73,7 @@ def main [app_name: string] {
     return
   }
 
-  let matching_windows = find_window $app_name --spaces $dev_spaces
+  let matching_window = find_window $app_name
   if ($matching_window | is-not-empty) {
     yabai -m config mouse_follows_focus on
     yabai -m window --focus $matching_window.id
