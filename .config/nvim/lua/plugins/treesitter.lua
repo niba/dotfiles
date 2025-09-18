@@ -84,7 +84,7 @@ return {
     },
   },
   {
-    "echasnovski/mini.ai",
+    "nvim-mini/mini.ai",
     event = "VeryLazy",
     enabled = true,
     config = function(_, opts)
@@ -172,7 +172,7 @@ return {
           a = { "@block.outer", "@conditional.outer", "@loop.outer" },
           i = { "@block.inner", "@conditional.inner", "@loop.inner" },
         }, { use_nvim_treesitter = true }),
-        f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, { use_nvim_treesitter = true }), -- function
+        f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
         c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, { use_nvim_treesitter = true }), -- class
       })
 
@@ -180,34 +180,29 @@ return {
     end,
   },
   {
-    "nvim-treesitter/nvim-treesitter",
+    "acarapetis/nvim-treesitter-jjconfig",
+    enabled = false,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    lazy = false,
+    opts = { ensure_installed = true },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
     opts = {
-      ensure_installed = { "nu" },
-      textobjects = {
-        move = {
-          enable = true,
-          set_jumps = true,
-          goto_previous_start = {
-            ["[j"] = "@jsx_element.outer",
-            ["[m"] = "@code_block.inner",
-            ["[p"] = "@assignment.rhs",
-            ["[t"] = "@type.inner",
-          },
-          goto_next_start = {
-            ["]j"] = "@jsx_element.outer",
-            ["]m"] = "@code_block.inner",
-            ["]p"] = "@assignment.rhs",
-            ["]t"] = "@type.inner",
-          },
-        },
-      },
-      incremental_selection = {
+      move = {
         enable = true,
-        keymaps = {
-          init_selection = "<C-CR>",
-          node_incremental = "<C-CR>",
-          scope_incremental = false,
-          node_decremental = "<C-bs>",
+        set_jumps = true,
+        goto_previous_start = {
+          ["[j"] = "@jsx_element.outer",
+          ["[m"] = "@code_block.inner",
+          ["[p"] = "@assignment.rhs",
+          ["[t"] = "@type.inner",
+        },
+        goto_next_start = {
+          ["]j"] = "@jsx_element.outer",
+          ["]m"] = "@code_block.inner",
+          ["]p"] = "@assignment.rhs",
+          ["]t"] = "@type.inner",
         },
       },
     },

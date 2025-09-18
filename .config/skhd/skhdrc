@@ -13,7 +13,8 @@ cmd + ctrl + alt - g : nu ~/.config/yabai/toggle_dev_command.nu
 # cmd + ctrl + alt - s : show passwords (defined in 1password)
 # cmd + ctrl + alt - y : show clipboard history (defined in raycast)
 # cmd + ctrl + alt - enter : add task (defined in ticktick)
-cmd + ctrl + alt - b : @focus_app("Readest")
+cmd + ctrl + alt - b : @focus_app("Reader")
+
 cmd + ctrl + alt - t : @focus_app("kitty")
 cmd + ctrl + alt - e : @focus_app("Cursor")
 cmd + ctrl + alt - i : @focus_app("Arc")
@@ -26,9 +27,9 @@ cmd + ctrl + alt - u : shortcuts run "PlayPause"
 cmd + ctrl + alt - m : @toggle_scratchpad("music", "Spotify")
 cmd + ctrl + alt - space : nu "~/.config/yabai/fix_raycast.nu" || skhd --key "cmd + ctrl + alt + shift - space" 
 # '
-cmd + ctrl + alt - 0x27 : @send_key_to_app("Readest", "right")
+cmd + ctrl + alt - 0x27 : @send_key_to_app("Reader", "pagedown")
 # "
-cmd + ctrl + alt + shift - 0x27 : @send_key_to_app("Readest", "left")
+cmd + ctrl + alt + shift - 0x27 : @send_key_to_app("Reader", "pageup")
 
 cmd + ctrl + alt - v : @toggle_pip_visibility()
 

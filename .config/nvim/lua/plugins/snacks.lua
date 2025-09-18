@@ -116,18 +116,18 @@ return {
         },
         sources = {
           smart = {
-            ignored = true,
-            hidden = snacks_extras.hidden(),
+            ignored = false,
+            hidden = true,
           },
           files = {
             exclude = { ".git", "node_modules", "dist", "build" },
-            ignored = true,
-            hidden = snacks_extras.hidden(),
+            ignored = false,
+            hidden = true,
           },
           grep = {
             exclude = { ".git", "node_modules", "dist", "build" },
-            ignored = true,
-            hidden = snacks_extras.hidden(),
+            ignored = false,
+            hidden = true,
           },
         },
         win = {

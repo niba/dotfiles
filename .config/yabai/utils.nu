@@ -1,4 +1,5 @@
-const default_string_keys = ["app" "title" "grid"]
+# we dont need stringify, i dont know why
+const default_string_keys = []
 
 const yabai_commands_desc = {
   rule: {
@@ -6,7 +7,7 @@ const yabai_commands_desc = {
     arguments: []
   }
   window: {
-    string_keys: $default_string_keys
+    string_keys: []
     arguments: ["grid" "space" "scratchpad"]
   }
 }

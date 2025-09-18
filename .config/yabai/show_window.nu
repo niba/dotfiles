@@ -13,16 +13,16 @@ def main [] {
 
   for window in $above_windows {
     if $window.is-floating {
-      yabai -m window $window.id --sub-layer normal
+      try { yabai -m window $window.id --sub-layer normal }
     } else {
-      yabai -m window $window.id --sub-layer below
+      try { yabai -m window $window.id --sub-layer below }
     }
   }
 
-  let normal_windows = $windows | where sub-layer == "normal" and scratchpad == ""
+  let normal_windows = $windows | where sub-layer == "normal" and scratchpad == "" and is-floating == false
 
   for window in $normal_windows {
-    yabai -m window $window.id --sub-layer below
+    try { yabai -m window $window.id --sub-layer below }
   }
 
   def focus_all_app_windows [] {
@@ -30,7 +30,9 @@ def main [] {
     let target_windows = $windows | where pid == ($target_pid | into int)
 
     for window in $target_windows {
-      yabai -m window $window.id --sub-layer above
+      try {
+        yabai -m window $window.id --sub-layer above
+      }
     }
   }
 
@@ -39,7 +41,9 @@ def main [] {
     let target_window = $windows | where pid == ($target_pid | into int) and has-focus == true | first
 
     if ($target_window | is-not-empty) {
-      yabai -m window $target_window.id --sub-layer above
+      try {
+        yabai -m window $target_window.id --sub-layer above
+      }
     }
   }
 

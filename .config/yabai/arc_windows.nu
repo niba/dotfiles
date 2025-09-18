@@ -35,7 +35,6 @@ def main [] {
 
   $arc_windows | take 2 | enumerate | each {|item|
     let space = ($config.special.arc_windows | get $item.index)
-    print $"Moving ($item) to space ($space)"
     yabai -m window $item.item.id --space ($space)
   }
 }

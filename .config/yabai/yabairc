@@ -55,4 +55,4 @@ yabai -m signal --add event=window_resized action="nu ~/.config/yabai/arc_pip.nu
 yabai -m rule --apply
 ~/.config/yabai/arc_windows.nu
 
-borders active_color=0xff775759 inactive_color=0xff555555 width=5.0 &
+borders active_color=0xff775759 inactive_color=0x00000000 width=5.0 &

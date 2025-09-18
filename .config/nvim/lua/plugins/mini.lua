@@ -1,6 +1,6 @@
 return {
   {
-    "echasnovski/mini.move",
+    "nvim-mini/mini.move",
     event = "VeryLazy",
     opts = {
       mappings = {
@@ -16,7 +16,7 @@ return {
       },
     },
   },
-  { "echasnovski/mini.pairs", enabled = false },
+  { "nvim-mini/mini.pairs", enabled = false },
   -- dont remove lazy = false
-  { "echasnovski/mini.test", version = false },
+  { "nvim-mini/mini.test", version = false },
 }

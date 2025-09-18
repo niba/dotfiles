@@ -49,14 +49,15 @@ def get-single-display-config [] {
         "Discord"
         "Messenger"
       ]
-      ($spaces.dev_job): [{app: "kitty" title: "job"} "Code" "Chrome$" {app: "Cursor" title: ".*xplus.*"} {app: "Zen" title: "Work$"}]
-      ($spaces.dev_personal): [{app: "kitty" title: "personal"} {app: "Cursor"} {app: "Zen" title: "Personal$"} {app: "Readest" grid: "1:5:0:0:2:1" manage: "off"}]
+
+      ($spaces.dev_job): [{app: "kitty" title: "job"} "Chrome$" {app: "Cursor" title: ".*xplus.*"} {app: "Code" title: ".*xplus.*"} {app: "Zen" title: "Work$"}]
+      ($spaces.dev_personal): [{app: "kitty" title: "personal"} {app: "Cursor" "title!": ".*xplus.*"} {app: "Code" "title!": ".*xplus.*"} {app: "Zen" title: "Personal$"} {app: "Readest" grid: "1:5:0:0:2:1" manage: "off"} {app: "Reader" grid: "1:5:0:0:2:1" manage: "off"}]
       ($spaces.other): ["Notion$" "Obsidian" "TradingView" "xStation5" "pgAdmin 4" "Postman" "Docker Desktop" "TickTick"]
     }
     special: {
       arc_windows: [$spaces.dev_job $spaces.dev_personal]
       arc_pip: {
-        grid: "5:5:4:0:1:1"
+        grid: "6:6:4:1:1:1"
         scratchpad: "videos"
       }
     }
@@ -114,19 +115,22 @@ def get-multi-display-config [] {
       ($spaces.mac): [
         "Microsoft Teams"
         "Discord"
-        {app: "Zen" title: "Picture-in-Picture" grid: "4:4:2:0:2:2" scratchpad: "videos"}
-        # { app: "Arc", subrole:"AXSystemDialog", grid: "4:4:2:0:2:2" scratchpad: "videos"} 
+        {app: "Zen" title: "Picture-in-Picture" grid: "6:6:2:0:2:2" scratchpad: "videos"}
       ]
-      ($spaces.dev_job_main): [{app: "kitty" title: "job"} "Code" "Chrome$" {app: "Cursor" title: ".*xplus.*"}]
+      ($spaces.dev_job_main): [{app: "kitty" title: "job"} {app: "Code" title: ".*xplus.*"} "Chrome$" {app: "Cursor" title: ".*xplus.*"}]
       ($spaces.dev_job_helper): [{app: "Zen" title: "Work$"}] # "Arc$", 
-      ($spaces.dev_personal_main): [{app: "kitty" title: "personal"} {app: "Cursor"}]
-      ($spaces.dev_personal_helper): [{app: "Zen" title: "Personal$"} {app: "Readest" grid: "1:5:0:0:2:1" manage: "off"}]
+      ($spaces.dev_personal_main): [{app: "kitty" title: "personal"} {app: "Cursor" "title!": ".*xplus.*"} {app: "Code" "title!": ".*xplus.*"}]
+      ($spaces.dev_personal_helper): [
+        {app: "Zen" title: "Personal$"}
+        {app: "Readest" grid: "1:5:0:0:2:1" manage: "off"}
+        {app: "Reader" grid: "1:5:0:0:2:1" manage: "off"}
+      ]
       ($spaces.other): ["Notion$" "Obsidian" "TradingView" "xStation5" "pgAdmin 4" "Postman" "Docker Desktop" "TickTick"]
     }
     special: {
       arc_windows: [$spaces.dev_job_helper $spaces.dev_personal_helper]
       arc_pip: {
-        grid: "4:4:2:0:2:2"
+        grid: "6:6:2:0:2:2"
         scratchpad: "videos"
         space: $spaces.mac
       }

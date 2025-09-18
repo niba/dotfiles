@@ -55,10 +55,15 @@ return {
     opts = {
       use_local_fs = true,
       reviews = {
-        auto_show_threads = false,
+        auto_show_threads = true,
       },
       picker = "snacks",
     },
+    config = function(_, opts)
+      require("octo").setup(opts)
+
+      vim.treesitter.language.register("markdown", "octo")
+    end,
   },
   {
     "sindrets/diffview.nvim",
@@ -111,19 +116,38 @@ return {
         },
         view = {
           merge_tool = {
-            layout = "diff4_mixed",
+            layout = "diff2_vertical",
           },
         },
-        -- hooks = {
-        --   diff_buf_win_enter = function()
-        --     vim.opt_local.foldenable = false
-        --     vim.opt_local.relativenumber = false
-        --     vim.opt_local.number = true
-        --   end,
-        --   diff_buf_read = function()
-        --     vim.api.nvim_input("gg]czz")
-        --   end,
-        -- },
+        hooks = {
+          diff_buf_win_enter = function(bufnr, winid, ctx)
+            -- vim.opt_local.foldenable = false
+            vim.opt_local.relativenumber = false
+            vim.opt_local.number = true
+
+            -- Highlight 'DiffChange' as 'DiffDelete' on the left, and 'DiffAdd' on
+            -- the right.
+            -- if ctx.layout_name:match("^diff2") then
+            --   if ctx.symbol == "a" then
+            --     vim.opt_local.winhl = table.concat({
+            --       "DiffAdd:DiffviewDiffAddAsDelete",
+            --       "DiffDelete:DiffviewDiffDelete",
+            --       "DiffChange:DiffAddAsDelete",
+            --       "DiffText:DiffDeleteText",
+            --     }, ",")
+            --   elseif ctx.symbol == "b" then
+            --     vim.opt_local.winhl = table.concat({
+            --       "DiffDelete:DiffviewDiffDelete",
+            --       "DiffChange:DiffAdd",
+            --       "DiffText:DiffAddText",
+            --     }, ",")
+            --   end
+            -- end
+          end,
+          diff_buf_read = function()
+            vim.api.nvim_input("gg]czz")
+          end,
+        },
         keymaps = {
           disable_defaults = true,
           view = {

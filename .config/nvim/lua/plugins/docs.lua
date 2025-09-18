@@ -43,7 +43,7 @@ return {
   },
   {
     "wurli/contextindent.nvim",
-    enabled = true,
+    enabled = false,
     opts = { pattern = "*" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
   },

@@ -35,7 +35,6 @@ def main [] {
   }
 
   let raycast_space = $raycast_spaces | first
-  print $" ($raycast_window)"
 
   # if not $raycast_space.is-visible {
   if not $raycast_space.has-focus {

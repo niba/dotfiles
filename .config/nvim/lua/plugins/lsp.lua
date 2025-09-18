@@ -120,7 +120,7 @@ return {
           -- },
         },
         harper_ls = {
-          enabled = false,
+          enabled = true,
           settings = {
             ["harper-ls"] = {
               linters = {

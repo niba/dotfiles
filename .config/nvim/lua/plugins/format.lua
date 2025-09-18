@@ -18,10 +18,6 @@ local dprint_supported = {
 }
 return {
   {
-    "mason-org/mason.nvim",
-    opts = { ensure_installed = { "eslint_d" } },
-  },
-  {
     "stevearc/conform.nvim",
     opts = function(_, opts)
       opts.formatters_by_ft = opts.formatters_by_ft or {}

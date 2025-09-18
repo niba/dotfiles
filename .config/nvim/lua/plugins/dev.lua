@@ -6,6 +6,14 @@ end
 
 return {
   {
+
+    "review.nvim",
+    enabled = false,
+    dev = true,
+    lazy = false,
+    config = true,
+  },
+  {
     -- "niba/continue.nvim",
     "continue",
     -- enabled = testing,

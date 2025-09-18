@@ -1,6 +1,8 @@
 #!/usr/bin/env nu
 
 use ~/.config/yabai/config.nu *
+use ~/.config/yabai/utils.nu *
+
 let config = (get-config)
 
 # move all windows not defined in config
@@ -9,32 +11,20 @@ let config = (get-config)
 
 def build_yabai_rule [rule_spec space = null] {
   mut rule_args = []
-  let stringify_keys = ["app" "title" "role" "subrole"]
+  let params = (build_params $rule_spec "rule")
 
-  if ($rule_spec | describe) == "string" {
-    $rule_args = $rule_args ++ [$"app=($rule_spec)"]
-  } else {
-    for key in ($rule_spec | columns) {
-      let value = $rule_spec | get $key
-      if $key in $stringify_keys {
-        $rule_args = $rule_args ++ [$"($key)=($value)"]
-      } else {
-        $rule_args = $rule_args ++ [$"($key)=($value)"]
-      }
-    }
-  }
-
-  if $space != null {
-    $rule_args = $rule_args ++ [$"space=($space)"]
-  }
-
-  print $"rule: ($rule_args | str join ' ')"
-  try { yabai -m rule --add ...$rule_args }
+  print $"rule: ($params | str join ' ')"
+  try { yabai -m rule --add ...$params }
 }
 
 for space in ($config.apps | transpose key value) {
   for app in $space.value {
-    build_yabai_rule $app $space.key
+    mut rule_spec = $app
+    if ($app | describe) == "string" {
+      $rule_spec = {app: $app}
+    }
+    $rule_spec = $rule_spec | insert space $space.key
+    build_yabai_rule $rule_spec
   }
 }
 

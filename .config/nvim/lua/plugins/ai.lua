@@ -6,6 +6,7 @@ return {
   -- },
   {
     "NickvanDyke/opencode.nvim",
+    enabled = false,
     dependencies = {
       -- Recommended for better prompt input, and required to use `opencode.nvim`'s embedded terminal — otherwise optional
       { "folke/snacks.nvim", opts = { input = { enabled = true } } },
@@ -66,7 +67,7 @@ return {
   {
     -- dir = "/Users/niba/Documents/Projects/open_source/claudecode.nvim",
     "coder/claudecode.nvim",
-    enabled = true,
+    enabled = false,
     config = true,
     keys = {
       { "<leader>aca", nil, desc = "AI/Claude Code" },
@@ -112,7 +113,7 @@ return {
   {
     "olimorris/codecompanion.nvim",
     dev = false,
-    enabled = false,
+    enabled = true,
     event = "BufEnter",
     dependencies = {
       "nvim-lua/plenary.nvim",

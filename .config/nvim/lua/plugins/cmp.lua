@@ -9,7 +9,7 @@ local lang_patterns = { tsx = { "**/typescript.json", "**/react-ts.json", "**/ne
 
 return {
   {
-    "echasnovski/mini.snippets",
+    "nvim-mini/mini.snippets",
     -- use luasnip, better snippet engine
     enabled = false,
     keys = {
@@ -43,6 +43,13 @@ return {
   {
     "saghen/blink.cmp",
     opts = {
+      cmdline = {
+        keymap = {
+          preset = "cmdline",
+          ["<Down>"] = { "select_next", "fallback" },
+          ["<Up>"] = { "select_prev", "fallback" },
+        },
+      },
       keymap = {
         preset = "super-tab",
         ["<CR>"] = { "accept", "fallback" },
