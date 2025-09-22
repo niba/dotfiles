@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 while true
-    if yabai -m config focus_follows_mouse off
+    if yabai -m config focus_follows_mouse autofocus
         echo "yabai command successful"
         sleep 60
     else

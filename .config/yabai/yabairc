@@ -19,7 +19,7 @@ yabai -m config \
   window_animation_duration 0.0 \
   window_animation_easing ease_out_circ \
   window_opacity_duration 0.0 \
-  active_window_opacity 1.0 \
+  active_window_opacity 0.9 \
   normal_window_opacity 0.9 \
   window_opacity off \
   insert_feedback_color 0xffd75f5f \
@@ -47,7 +47,7 @@ yabai -m signal --add event=window_destroyed active=yes action="yabai -m query -
 yabai -m signal --add event=window_minimized active=yes action="if \$(yabai -m query --windows --window \$YABAI_WINDOW_ID | jq -r '.\"is-floating\"'); then yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse &> /dev/null || yabai -m window --focus \$(yabai -m query --windows id,scratchpad,is-minimized --space | jq -re 'map(select(.scratchpad == \"\" and .\"is-minimized\" == false))' | jq -r '.[0].id') &> /dev/null; fi"
 
 # yabai -m signal --add event=window_focused action="nu ~/.config/yabai/smart_stack.nu"
-yabai -m signal --add event=window_focused action="nu ~/.config/yabai/show_window.nu"
+# yabai -m signal --add event=window_focused action="nu ~/.config/yabai/show_window.nu"
 yabai -m signal --add event=window_created action="nu ~/.config/yabai/new_window.nu"
 yabai -m signal --add event=window_created action="nu ~/.config/yabai/arc_windows.nu"
 yabai -m signal --add event=window_resized action="nu ~/.config/yabai/arc_pip.nu"
@@ -55,4 +55,5 @@ yabai -m signal --add event=window_resized action="nu ~/.config/yabai/arc_pip.nu
 yabai -m rule --apply
 ~/.config/yabai/arc_windows.nu
 
-borders active_color=0xff775759 inactive_color=0x00000000 width=5.0 &
+# enable only for bsp?
+# borders active_color=0xff0077bc inactive_color=0x00000000 width=2.0 &

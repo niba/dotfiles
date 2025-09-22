@@ -55,9 +55,46 @@ return {
     opts = {
       use_local_fs = true,
       reviews = {
-        auto_show_threads = true,
+        auto_show_threads = false,
       },
       picker = "snacks",
+      mappings = {
+        pull_request = {
+          review_start_or_resume = { lhs = "<localleader>s", desc = "review" },
+        },
+        review_diff = {
+          show_review_thread = { lhs = "<localleader>,", desc = "show review thread" },
+          select_next_entry = { lhs = "<tab>", desc = "move to next changed file" },
+          select_prev_entry = { lhs = "<s-tab>", desc = "move to previous changed file" },
+          close_review_tab = { lhs = "<C-x>", desc = "close review tab" },
+        },
+        file_panel = {
+
+          select_next_entry = { lhs = "<tab>", desc = "move to next changed file" },
+          select_prev_entry = { lhs = "<s-tab>", desc = "move to previous changed file" },
+          close_review_tab = { lhs = "<C-x>", desc = "close review tab" },
+        },
+        review_thread = {
+
+          select_next_entry = { lhs = "<tab>", desc = "move to next changed file" },
+          select_prev_entry = { lhs = "<s-tab>", desc = "move to previous changed file" },
+          close_review_tab = { lhs = "<C-x>", desc = "close review tab" },
+        },
+      },
+    },
+    keys = {
+      -- {
+      --   "<localleader>,",
+      --   function()
+      --     require("octo.reviews.thread-panel").show_review_threads(true)
+      --   end,
+      -- },
+      -- {
+      --   "<localleader>r",
+      --   function()
+      --     reviews.start_review()
+      --   end,
+      -- },
     },
     config = function(_, opts)
       require("octo").setup(opts)

@@ -9,7 +9,7 @@ def main [] {
   let current_window_id = $env.YABAI_WINDOW_ID | into int
 
   let windows = yabai -m query --windows app,id,title,subrole,scratchpad,space,is-floating,sub-layer,scratchpad,pid | from json
-  
+
   let current_window = $windows | where id == $current_window_id
   if ($current_window | is-empty) {
     return

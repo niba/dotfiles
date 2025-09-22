@@ -172,7 +172,7 @@ return {
           a = { "@block.outer", "@conditional.outer", "@loop.outer" },
           i = { "@block.inner", "@conditional.inner", "@loop.inner" },
         }, { use_nvim_treesitter = true }),
-        f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
+        f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, { use_nvim_treesitter = true }), -- function
         c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, { use_nvim_treesitter = true }), -- class
       })
 

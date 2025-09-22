@@ -13,7 +13,8 @@ cmd + ctrl + alt - g : nu ~/.config/yabai/toggle_dev_command.nu
 # cmd + ctrl + alt - s : show passwords (defined in 1password)
 # cmd + ctrl + alt - y : show clipboard history (defined in raycast)
 # cmd + ctrl + alt - enter : add task (defined in ticktick)
-cmd + ctrl + alt - b : @focus_app("Reader")
+# cmd + ctrl + alt - b : @focus_app("Reader")
+cmd + ctrl + alt - b : @focus_app("Readest")
 
 cmd + ctrl + alt - t : @focus_app("kitty")
 cmd + ctrl + alt - e : @focus_app("Cursor")
@@ -27,9 +28,11 @@ cmd + ctrl + alt - u : shortcuts run "PlayPause"
 cmd + ctrl + alt - m : @toggle_scratchpad("music", "Spotify")
 cmd + ctrl + alt - space : nu "~/.config/yabai/fix_raycast.nu" || skhd --key "cmd + ctrl + alt + shift - space" 
 # '
-cmd + ctrl + alt - 0x27 : @send_key_to_app("Reader", "pagedown")
+# cmd + ctrl + alt - 0x27 : @send_key_to_app("Reader", "pagedown")
+cmd + ctrl + alt - 0x27 : @send_key_to_app("Readest", "pagedown")
 # "
-cmd + ctrl + alt + shift - 0x27 : @send_key_to_app("Reader", "pageup")
+# cmd + ctrl + alt + shift - 0x27 : @send_key_to_app("Reader", "pageup")
+cmd + ctrl + alt + shift - 0x27 : @send_key_to_app("Readest", "pageup")
 
 cmd + ctrl + alt - v : @toggle_pip_visibility()
 
@@ -40,6 +43,8 @@ cmd + ctrl + alt + shift - q : yabai --stop-service
 # how to deminimize sometimes not visible windows?
 
 cmd + ctrl + alt - p : @yabai_focus("recent")
+# cmd + ctrl + alt + shift - p : yabai -m window --toggle pip && yabai -m window --resize abs:640:360
+cmd + ctrl + alt + shift - p : yabai -m window --toggle sticky && yabai -m window --grid 4:1:4:4:0:0 &&  yabai -m window --sub-layer above
 cmd + ctrl + alt - n : @yabai_focus("west")
 cmd + ctrl + alt - o : @yabai_focus("east")
 # support qwerty

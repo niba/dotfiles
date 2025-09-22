@@ -51,10 +51,10 @@ return {
           ["@definition"] = { fg = C.maroon },
 
           Folded = { fg = C.blue, bg = C.surface0 },
-          -- DiffAdd = { bg = darken(C.green, 0.24, C.base) },
-          -- DiffDelete = { bg = darken(C.red, 0.24, C.base) },
+          DiffAdd = { bg = darken(C.green, 0.15, C.base) },
+          DiffDelete = { bg = darken(C.red, 0.10, C.base) },
           DiffChange = { bg = darken(C.blue, 0.15, C.base) },
-          -- DiffText = { bg = darken(C.blue, 0.30, C.base) },
+          DiffText = { bg = darken(C.blue, 0.15, C.base) },
 
           LineNr = { fg = C.overlay0 },
 

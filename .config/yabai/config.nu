@@ -16,6 +16,7 @@ const unmanaged_apps = [
   "League of Legends$"
   "Steam Helper"
   "1Password"
+  {app: "Arc" title: ""}
 ]
 
 # only for lsp autocompletion
