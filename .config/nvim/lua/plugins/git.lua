@@ -69,32 +69,22 @@ return {
           close_review_tab = { lhs = "<C-x>", desc = "close review tab" },
         },
         file_panel = {
-
           select_next_entry = { lhs = "<tab>", desc = "move to next changed file" },
           select_prev_entry = { lhs = "<s-tab>", desc = "move to previous changed file" },
           close_review_tab = { lhs = "<C-x>", desc = "close review tab" },
         },
         review_thread = {
-
           select_next_entry = { lhs = "<tab>", desc = "move to next changed file" },
           select_prev_entry = { lhs = "<s-tab>", desc = "move to previous changed file" },
           close_review_tab = { lhs = "<C-x>", desc = "close review tab" },
         },
+        submit_win = {
+          approve_review = { lhs = "<localleader>a", desc = "approve review" },
+          comment_review = { lhs = "<localleader>c", desc = "comment review" },
+          request_changes = { lhs = "<localleader>r", desc = "request changes review" },
+          close_review_tab = { lhs = "<C-x>", desc = "close review tab", mode = { "n", "i" } },
+        },
       },
-    },
-    keys = {
-      -- {
-      --   "<localleader>,",
-      --   function()
-      --     require("octo.reviews.thread-panel").show_review_threads(true)
-      --   end,
-      -- },
-      -- {
-      --   "<localleader>r",
-      --   function()
-      --     reviews.start_review()
-      --   end,
-      -- },
     },
     config = function(_, opts)
       require("octo").setup(opts)
