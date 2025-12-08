@@ -77,45 +77,6 @@ vim.keymap.set("n", "<leader>cP", function()
   end)
 end, { desc = "Reload plugin" })
 
-vim.keymap.set("n", "<leader>mn", function()
-  require("lspconfig").nushell.setup({
-    cmd = { "nu", "--no-config-file", "--lsp" },
-    filetypes = { "nu" },
-    root_dir = function()
-      local lazyvimRoot = require("lazyvim.util.root")
-      return lazyvimRoot.git()
-    end,
-    single_file_support = true,
-  })
-
-  vim.lsp.enable("nushell")
-end, { desc = "activate nushell lsp" })
-
-local function cycle_diff_algorithm()
-  local algorithms = { "myers", "minimal", "patience", "histogram" }
-
-  local function index_of(list, value)
-    for i, v in ipairs(list) do
-      if v == value then
-        return i
-      end
-    end
-    return nil -- not found
-  end
-
-  local algo_index = index_of(algorithms, vim.o.diffopt:match("algorithm:([^,]+)"))
-
-  if not algo_index then
-    vim.notify("Can't find current algorithm in vim.o.diffopt")
-    return
-  end
-
-  local new_algo = algorithms[(algo_index % #algorithms) + 1]
-  vim.opt.diffopt:remove("algorithm:" .. algorithms[algo_index])
-  vim.opt.diffopt:append("algorithm:" .. new_algo)
-  vim.notify("Algorithm set too: " .. new_algo)
-end
-
-vim.keymap.set("n", "<leader>md", cycle_diff_algorithm, {
-  desc = "Cycle diffopt algorithm (myers/minimal/patience/histogram)",
+vim.keymap.set("n", "gsd", core.code.split_go_to_defintion, {
+  desc = "[Split] Go to definition",
 })

@@ -52,6 +52,7 @@ return {
   },
   {
     "pwntester/octo.nvim",
+    branch = "all_threads",
     opts = {
       use_local_fs = true,
       reviews = {

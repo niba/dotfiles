@@ -64,4 +64,18 @@ function M.create_mappings()
   vim.keymap.set("n", "gj", M.go_to_import_header, { noremap = true, silent = true, desc = "Go to import header" })
 end
 
+M.split_go_to_defintion = function()
+  vim.lsp.buf.definition({
+    on_list = function(options)
+      if options.items and #options.items > 0 then
+        vim.cmd("vsplit")
+        vim.fn.setqflist({}, " ", options)
+        vim.cmd("cfirst")
+      else
+        vim.notify("No definition found", vim.log.levels.WARN)
+      end
+    end,
+  })
+end
+
 return M

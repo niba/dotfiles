@@ -34,6 +34,20 @@ return {
     },
   },
   {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
+    enabled = true,
+    opts = {
+      markdown_inline = {
+
+        checkboxes = {
+          checked = { text = "󰗠", hl = "MarkviewCheckboxChecked", scope_hl = "" },
+          unchecked = { text = "󰄰", hl = "MarkviewCheckboxUnchecked", scope_hl = "" },
+        },
+      },
+    },
+  },
+  {
     "OXY2DEV/helpview.nvim",
     lazy = false,
     enabled = true,
@@ -50,6 +64,7 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
+    enabled = false,
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {},

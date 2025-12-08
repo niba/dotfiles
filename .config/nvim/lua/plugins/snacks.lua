@@ -31,6 +31,7 @@ return {
   },
   {
     "folke/snacks.nvim",
+    dev = true,
     opts = function(_, opts)
       return vim.tbl_deep_extend("force", opts or {}, {
         picker = {
