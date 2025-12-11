@@ -31,7 +31,32 @@ return {
   },
   {
     "folke/snacks.nvim",
-    dev = true,
+    opts = {
+      picker = {
+        transform = function(item)
+          if item.file then
+            item.filename = vim.fn.fnamemodify(item.file, ":t")
+          elseif item.text then
+            item.filename = vim.fn.fnamemodify(item.text, ":t")
+          end
+        end,
+
+        sources = {
+          recent = {
+            sort = snacks_extras.sort,
+          },
+          buffers = {
+            sort = snacks_extras.sort,
+          },
+          files = {
+            sort = { fields = { "score:desc", "#text", "idx" } },
+          },
+        },
+      },
+    },
+  },
+  {
+    "folke/snacks.nvim",
     opts = function(_, opts)
       return vim.tbl_deep_extend("force", opts or {}, {
         picker = {
@@ -45,7 +70,6 @@ return {
   },
   {
     "folke/snacks.nvim",
-    dev = true,
     opts = {
       scope = {
         enabled = false,
@@ -109,7 +133,7 @@ return {
             picker:focus("input")
           end,
         },
-        sorter = snacks_extras.zf_sorter,
+        -- sorter = snacks_extras.zf_sorter,
         formatters = {
           file = {
             filename_first = true,

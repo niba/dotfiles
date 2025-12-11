@@ -14,11 +14,11 @@ return {
     config = true,
   },
   {
-    -- "niba/continue.nvim",
-    "continue",
+    "niba/continue.nvim",
     -- enabled = testing,
     enabled = true,
-    dev = true,
+    -- "continue",
+    -- dev = true,
     lazy = false,
     config = true,
     keys = {

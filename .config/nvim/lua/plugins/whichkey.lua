@@ -1,6 +1,8 @@
 return {
   {
     "folke/which-key.nvim",
+    url = "https://github.com/niba/which-key.nvim",
+    branch = "fix/localleader_popup",
     event = "VeryLazy",
     opts = {
       -- preset = "helix",

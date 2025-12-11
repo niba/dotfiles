@@ -54,6 +54,23 @@ function M.flash(picker)
   })
 end
 
+function M.sort(a, b)
+  -- Same logic for buffers
+  if a.score ~= b.score then
+    return a.score > b.score
+  end
+  local TOO_FAR = 5
+  if math.abs(a.idx - b.idx) < TOO_FAR then
+    return a.idx < b.idx
+  end
+  local av = a.filename and #a.filename or #a.text
+  local bv = b.filename and #b.filename or #b.text
+  if av ~= bv then
+    return av < bv
+  end
+  return a.idx < b.idx
+end
+
 -- we want to use sort that works like zf, not fzf
 function M.zf_sorter(picker, fields)
   local normalized_fields = {} ---@type snacks.picker.sort.Field[]
