@@ -1,260 +1,157 @@
+tap "azure/functions"
 tap "bloznelis/tap"
 tap "codecrafters-io/tap"
+tap "michaeleisel/zld"
+tap "nikitabobko/tap"
+
+brew "azure/functions/azure-functions-core-tools@4"
+brew "bloznelis/tap/kbt"
+brew "codecrafters-io/tap/codecrafters"
+
+brew "act"
+brew "aichat"
+brew "xz"
+brew "apr-util"
+brew "python@3.13"
+brew "automake"
+brew "bash"
+brew "glib"
+brew "cairo"
+brew "capnp"
+brew "carapace"
+brew "ccache"
+brew "cloudflared"
+brew "cloc"
+brew "unbound"
+brew "harfbuzz"
+brew "python@3.12"
+brew "tesseract"
+brew "fnm"
+brew "git-filter-repo"
+brew "helix"
+brew "node"
+brew "node@20"
+brew "mint"
+brew "socat"
+brew "pyenv"
+brew "python@3.10"
+brew "python@3.11"
+brew "poppler"
+brew "zf"
+brew "yarn"
+
+tap "dimentium/autoraise"
 tap "felixkratz/formulae"
 tap "jackielii/tap"
 tap "knqyf263/pet"
 tap "koekeishiya/formulae"
 tap "mhaeuser/mhaeuser"
-tap "michaeleisel/zld"
-tap "nikitabobko/tap"
 tap "oven-sh/bun"
 tap "sst/tap"
-# Run your GitHub Actions locally
-brew "act"
-# All-in-one AI-Powered CLI Chat & Copilot
-brew "aichat"
-# General-purpose data compression with high compression ratio
-brew "xz"
-# Companion library to apr, the Apache Portable Runtime library
-brew "apr-util"
-# Code searching, linting, rewriting
+
 brew "ast-grep"
-# Tool for generating GNU Standards-compliant Makefiles
-brew "automake"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.12"
-# Microsoft Azure CLI 2.0
 brew "azure-cli"
-# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
-# Core application library for C
-brew "glib"
-# Vector graphics library with cross-device output support
-brew "cairo"
-# Data interchange format and capability-based RPC system
-brew "capnp"
-# Multi-shell multi-command argument completer
-brew "carapace"
-# Object-file caching compiler wrapper
-brew "ccache"
-# Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
-# Statistics utility to count lines of code
-brew "cloc"
-# Cross-platform make
+brew "clipboard"
 brew "cmake"
-# GNU File, Shell, and Text utilities
-brew "coreutils"
-# Good-lookin' diffs with diff-highlight and more
-brew "diff-so-fancy"
-# Diff that understands syntax
-brew "difftastic"
-# .NET Core
-brew "dotnet"
-# C library of Git core methods that is re-entrant and linkable
-brew "libgit2"
-# Modern, maintained replacement for ls
-brew "eza"
-# Simple, fast and user-friendly alternative to find
-brew "fd"
-# Validating, recursive, caching DNS resolver
-brew "unbound"
-# OpenType text shaping engine
-brew "harfbuzz"
-# OCR (Optical Character Recognition) engine
-brew "tesseract"
-# Play, record, convert, and stream audio and video
-brew "ffmpeg"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.13"
-# Create thumbnails for your video files
-brew "ffmpegthumbnailer"
-# User-friendly command-line shell for UNIX-like operating systems
-brew "fish"
-# Fast and simple Node.js version manager
-brew "fnm"
-# Command-line fuzzy finder written in Go
-brew "fzf"
-# GNU awk utility
-brew "gawk"
-# GitHub command-line tool
-brew "gh"
-# Syntax-highlighting pager for git and diff output
-brew "git-delta"
-# Quickly rewrite git repository history
-brew "git-filter-repo"
-# Simple and efficient way to access statistics in git
-brew "git-quick-stats"
-# Git blame for file trees
-brew "git-who"
-# Audit git repos for secrets
-brew "gitleaks"
-# GNU implementation of the famous stream editor
-brew "gnu-sed"
-# GNU Pretty Good Privacy (PGP) package
-brew "gnupg"
-# Open source programming language to build simple/reliable/efficient software
-brew "go"
-# Perfect hash function generator
-brew "gperf"
-# Library access to GnuPG
-brew "gpgme"
-# Post-modern modal text editor
-brew "helix"
-# Git-compatible distributed version control system
-brew "jj"
-# TUI for interacting with the Jujutsu version control system
-brew "jjui"
-# Command-line pager for JSON data
-brew "jless"
-# Lightweight and flexible command-line JSON processor
-brew "jq"
-# Handy way to save and run project-specific commands
-brew "just"
-# Simple terminal UI for git commands
-brew "lazygit"
-# Implementation of the file(1) command
-brew "libmagic"
-# Postgres C API library
-brew "libpq", link: true
-# Curses-based tool for viewing and analyzing log files
-brew "lnav"
-# Package manager for the Lua programming language
-brew "luarocks"
-# Mac App Store command-line interface
-brew "mas"
-# Dependency manager that installs and runs Swift command-line tool packages
-brew "mint"
-# Polyglot runtime manager (asdf rust clone)
-brew "mise"
-# Clean C library for processing UTF-8 Unicode data
-brew "utf8proc"
-# Ambitious Vim-fork focused on extensibility and agility
-brew "neovim"
-# Small build system for use with gyp or CMake
-brew "ninja"
-# Platform built on V8 to build network applications
-brew "node"
-# Platform built on V8 to build network applications
-brew "node@20"
-# Modern shell for the GitHub era
-brew "nushell"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@1.1"
-# PAM module for reattaching to the user's GUI (Aqua) session
-brew "pam-reattach"
-# Swiss-army knife of markup format conversion
-brew "pandoc"
-# Package compiler and linker metadata toolkit
-brew "pkgconf"
-# Fast, disk space efficient package manager
-brew "pnpm", link: false
-# PDF rendering library (based on the xpdf-3.0 code base)
-brew "poppler"
-# Protocol buffers (Google's data interchange format)
-brew "protobuf"
-# Python version management
-brew "pyenv"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.10"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.11"
-# Generic machine emulator and virtualizer
-brew "qemu"
-# Search tool like grep and The Silver Searcher
 brew "ripgrep"
-# Utility that provides fast incremental file transfer
+brew "codex"
+brew "coreutils"
+brew "diff-so-fancy"
+brew "difftastic"
+brew "dotnet"
+brew "dust"
+brew "libgit2"
+brew "eza"
+brew "fd"
+brew "ffmpeg"
+brew "ffmpegthumbnailer"
+brew "fish"
+brew "fzf"
+
+brew "gawk"
+brew "gh"
+brew "git-delta"
+brew "git-quick-stats"
+brew "git-who"
+brew "gitleaks"
+brew "gnu-sed"
+brew "gnupg"
+brew "go"
+brew "gperf"
+brew "gpgme"
+brew "jj"
+brew "jjui"
+brew "jless"
+brew "jq"
+brew "just"
+brew "lazygit"
+brew "libmagic"
+brew "libpq", link: true
+brew "lnav"
+brew "luarocks"
+brew "mas"
+brew "mise"
+brew "utf8proc"
+brew "neovim"
+brew "ninja"
+brew "nushell"
+brew "openssl@1.1"
+brew "pam-reattach"
+brew "pandoc"
+brew "pkgconf"
+brew "pnpm", link: false
+brew "protobuf"
+brew "qemu"
 brew "rsync"
-# Safe, concurrent, practical language
 brew "rust"
-# Experimental Rust compiler front-end for IDEs
 brew "rust-analyzer"
-# Simple keystroke visualizer
 brew "showkey"
-# SOcket CAT: netcat on steroids
-brew "socat"
-# Cross-shell prompt for astronauts
 brew "starship"
-# Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
-# Version control system designed to be a better CVS
 brew "subversion"
-# Change macOS audio source from the command-line
 brew "switchaudio-osx"
-# Terminal multiplexer
 brew "tmux", args: ["HEAD"]
-# Program that allows you to count code, quickly
 brew "tokei"
-# Display directories as trees (with optional color/HTML output)
+brew "topiary"
 brew "tree"
-# Command-line unarchiving tools supporting multiple formats
 brew "unar"
-# Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
-# Vi 'workalike' with many additional features
 brew "vim"
-# Generator for LS_COLORS with support for multiple color themes
 brew "vivid"
-# Internet file retriever
 brew "wget"
-# JavaScript package manager
-brew "yarn"
-# Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
-# Pluggable terminal workspace, with terminal multiplexer as the base feature
 brew "zellij"
-# Command-line fuzzy finder that prioritizes matches on filenames
-brew "zf"
-# Shell extension to navigate your filesystem faster
 brew "zoxide"
-# Keyboard tester in terminal
-brew "bloznelis/tap/kbt"
-# CodeCrafters CLI
-brew "codecrafters-io/tap/codecrafters"
-# A window border system for macOS
+
+brew "dimentium/autoraise/autoraise", args: ["with-dalternative_task_switcher", "with-dexperimental_focus_first"]
 brew "felixkratz/formulae/borders"
-# Custom macOS statusbar with shell plugin, interaction and graph support
 brew "felixkratz/formulae/sketchybar"
-# Simple hotkey daemon for macOS, written in Zig
 brew "jackielii/tap/skhd-zig"
-# Simple command-line snippet manager
 brew "knqyf263/pet/pet"
-# A tiling window manager for macOS based on binary space partitioning.
 brew "koekeishiya/formulae/yabai"
-# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
-# The AI coding agent built for the terminal.
 brew "sst/tap/opencode"
-# Command-line interface for 1Password
+
 cask "1password-cli"
-# AeroSpace is an i3-like tiling window manager for macOS
 cask "aerospace"
-# Menu bar status indicator
+cask "alt-tab"
 cask "anybar"
-# Control the platform power state of your Apple Silicon device
 cask "battery-toolkit"
-# Free and open-source web browser
 cask "chromium"
 cask "font-fira-code"
 cask "font-monaspace"
 cask "font-source-code-pro"
-# Keyboard shortcuts for every button on your screen
 cask "homerow"
-# Keyboard customiser
+cask "jordanbaird-ice"
 cask "karabiner-elements"
-# GPU-based terminal emulator
-cask "kitty@nightly"
-# Free cross-platform office suite, fresh version
+cask "kitty"
 cask "libreoffice"
-# Neovim Client
 cask "neovide-app"
-# Rust-based terminal
 cask "warp"
-# GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
-# Network protocol analyzer
 cask "wireshark-app"
 vscode "alefragnani.bookmarks"
 vscode "anthropic.claude-code"
@@ -282,6 +179,9 @@ vscode "github.vscode-pull-request-github"
 vscode "leetcode.vscode-leetcode"
 vscode "letmaik.git-tree-compare"
 vscode "mrmlnc.vscode-scss"
+vscode "ms-azuretools.vscode-azurefunctions"
+vscode "ms-azuretools.vscode-azureresourcegroups"
+vscode "ms-azuretools.vscode-azurestaticwebapps"
 vscode "ms-azuretools.vscode-containers"
 vscode "ms-azuretools.vscode-docker"
 vscode "ms-playwright.playwright"
@@ -302,9 +202,8 @@ vscode "qinjia.seti-icons"
 vscode "rust-lang.rust-analyzer"
 vscode "sdras.night-owl"
 vscode "shan.code-settings-sync"
-vscode "sourcegraph.amp"
+vscode "typescriptteam.native-preview"
 vscode "usernamehw.errorlens"
-vscode "visualjj.visualjj"
 vscode "vitest.explorer"
 vscode "vscodevim.vim"
 vscode "yoavbls.pretty-ts-errors"
