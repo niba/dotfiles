@@ -143,7 +143,7 @@
 
     # Misc CLI tools
     stow
-    mas # Mac App Store CLI
+    # mas - installed automatically by homebrew when masApps is used
     mise
     pet # snippet manager
 

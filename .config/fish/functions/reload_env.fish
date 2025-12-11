@@ -1,3 +1,3 @@
 function reload_env
-    nix develop ~/.config/nix --command apply
+    sudo darwin-rebuild switch --flake ~/.config/nix
 end
