@@ -2,5 +2,9 @@
 idiomatic_version_file_enable_tools = ["node"]
 
 [tools]
-node = "20"
 npm = "latest"
+bun = "latest"
+node = "24"
+pnpm = "latest"
+python = "3.11"
+rust = "latest"
