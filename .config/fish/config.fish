@@ -4,11 +4,6 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
-set -x PYENV_ROOT $HOME/.pyenv
-fish_add_path $PYENV_ROOT/bin
-
-status --is-interactive; and pyenv init --path | source
-
 starship init fish | source
 zoxide init fish | source
 jj util completion fish | source
