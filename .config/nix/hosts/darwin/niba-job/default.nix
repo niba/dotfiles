@@ -32,6 +32,8 @@
   system.defaults.dock.persistent-apps = [
   # Calendar
     "/System/Applications/Calendar.app"
+    "/Applications/Arc.app"
+    "/Applications/Google Chrome.app"
     # Gmail (Chrome App)
     "~/Applications/Chrome Apps/Gmail.app"
     # Microsoft Outlook
