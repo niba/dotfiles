@@ -33,9 +33,9 @@ fish_add_path $PNPM_HOME
 fish_add_path /Users/niba/scripts
 
 # generate secrets
-if test ! -f ~/.op-env
-    reload_env
+if test ! -f ~/tmp/.op-env
+    reload_variables
 end
-source ~/.op-env
+source ~/tmp/.op-env
 
 alias devturbo="/Users/niba/Documents/Projects/forks/turborepo/target/debug/turbo"
