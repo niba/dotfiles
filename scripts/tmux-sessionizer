@@ -3,9 +3,9 @@
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
-	# selected=$(fd -H --prune --exclude "node_modules" "^.git\$" ~/Documents/Projects/ | xargs -I{} dirname {} | while read -r p; do zoxide query -l -s "$p/"; done | sort -rnk1 | fzf --no-sort | awk '{print $2}')
-	selected=$(fd -H --no-ignore-vcs --prune --exclude "node_modules" "^.git\$" ~/Documents/Projects/ | xargs -I{} dirname {} | fzf)
-	# selectedtest=$(fd -H --prune --exclude "node_modules" "^.git\$" ~/Documents/Projects/ | xargs -I{} dirname {})
+	# selected=$(fd -H --prune --exclude "node_modules" "^.git\$" "$PROJECTS_PATH/" | xargs -I{} dirname {} | while read -r p; do zoxide query -l -s "$p/"; done | sort -rnk1 | fzf --no-sort | awk '{print $2}')
+	selected=$(fd -H --no-ignore-vcs --prune --exclude "node_modules" "^.git\$" "$PROJECTS_PATH/" | xargs -I{} dirname {} | fzf)
+	# selectedtest=$(fd -H --prune --exclude "node_modules" "^.git\$" "$PROJECTS_PATH/" | xargs -I{} dirname {})
 	# selected=$(find ~/Documents/projects -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
@@ -40,7 +40,7 @@ echo "selected: $selected"
 if [[ -z $selected ]]; then
 	exit 0
 fi
-selected_name=$(echo "$selected" | sed -n 's/.*\/Users\/niba\/Documents\/Projects\/\(.*\)/\1/p' | tr / _ | tr . _)
+selected_name=$(echo "$selected" | sed -n "s|.*$PROJECTS_PATH/\(.*\)|\1|p" | tr / _ | tr . _)
 tmux_running=$(pgrep tmux)
 
 echo "selected name: $selected_name"

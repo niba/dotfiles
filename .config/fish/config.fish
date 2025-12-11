@@ -38,4 +38,3 @@ if test ! -f ~/.op-env
 end
 source ~/.op-env
 
-alias devturbo="/Users/niba/Documents/Projects/forks/turborepo/target/debug/turbo"

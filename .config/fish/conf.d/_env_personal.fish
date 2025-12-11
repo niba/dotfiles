@@ -12,6 +12,13 @@ set -gx JJ_CONFIG "$XDG_CONFIG_HOME/jj/config.toml"
 set -gx TOPIARY_CONFIG_FILE "$XDG_CONFIG_HOME/topiary/languages.ncl"
 set -gx TOPIARY_LANGUAGE_DIR "$XDG_CONFIG_HOME/topiary/languages"
 
+# Projects directory - check if old location exists first
+if test -d "$HOME/Documents/Projects"
+    set -gx PROJECTS_PATH "$HOME/Documents/Projects"
+else
+    set -gx PROJECTS_PATH "$HOME/Developer"
+end
+
 set -q MANPATH || set -gx MANPATH ''
 for manpath in
     $__fish_data_dir/man \
