@@ -65,7 +65,7 @@
     openssl
 
     #AI
-    claude-code
+    inputs.claude-code-nix.packages.${system}.default
 
     # Search & Navigation
     ripgrep
