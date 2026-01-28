@@ -1,5 +1,6 @@
 .config/tmux/plugins
 .config/raycast/extensions
+.config/raycast/config.json
 .config/op
 .config/fish/fish_variables
 .config/karabiner/automatic_backups

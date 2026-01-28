@@ -64,6 +64,9 @@
     gnused
     openssl
 
+    #AI
+    claude-code
+
     # Search & Navigation
     ripgrep
     fd
@@ -335,6 +338,8 @@
 
     # Screenshot - save to Documents
     screencapture.location = "~/Documents";
+
+    SoftwareUpdate.AutomaticallyInstallMacOSUpdates = false;
 
     # Menu bar clock
     menuExtraClock = {
