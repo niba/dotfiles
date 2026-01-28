@@ -301,19 +301,12 @@ return {
           },
         },
       },
-      strategies = {
-        agent = {
-          adapter = "anthropic",
-        },
-        inline = {
-          adapter = "anthropic",
-        },
+      interactions = {
         chat = {
-          adapter = "claude_code",
-          -- adapter = {
-          --   name = "copilot",
-          --   model = "claude-sonnet-4",
-          -- },
+          adapter = {
+            model = "opus",
+            namet = "claude_code",
+          },
           keymaps = {
             completion = {
               modes = {
@@ -341,16 +334,16 @@ return {
                 n = "<localleader>y",
               },
             },
-            pin = {
-              modes = {
-                n = "<localleader>p",
-              },
-            },
-            watch = {
-              modes = {
-                n = "<localleader>w",
-              },
-            },
+            -- pin = {
+            --   modes = {
+            --     n = "<localleader>p",
+            --   },
+            -- },
+            -- watch = {
+            --   modes = {
+            --     n = "<localleader>w",
+            --   },
+            -- },
             codeblock = {
               modes = {
                 n = "<localleader>c",
@@ -372,6 +365,12 @@ return {
               },
             },
           },
+        },
+        agent = {
+          adapter = "anthropic",
+        },
+        inline = {
+          adapter = "anthropic",
         },
       },
       prompt_library = {

@@ -27,7 +27,7 @@ return {
           enabled = false,
         },
         vtsls = {
-          enabled = false,
+          enabled = true,
           settings = {
             complete_function_calls = false,
             autoUseWorkspaceTsdk = true,
@@ -41,9 +41,9 @@ return {
               },
             },
             typescript = {
-              experimental = {
-                useTsgo = true,
-              },
+              -- experimental = {
+              --   useTsgo = true,
+              -- },
               updateImportsOnFileMove = { enabled = "always" },
               tsserver = {
                 maxTsServerMemory = 8192,
