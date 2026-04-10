@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
+# Ensure HOME is set (tmux popup may not have it)
+HOME="${HOME:-$(eval echo ~)}"
+
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
-	# selected=$(fd -H --prune --exclude "node_modules" "^.git\$" "$PROJECTS_PATH/" | xargs -I{} dirname {} | while read -r p; do zoxide query -l -s "$p/"; done | sort -rnk1 | fzf --no-sort | awk '{print $2}')
-	selected=$(fd -H --no-ignore-vcs --prune --exclude "node_modules" "^.git\$" "$PROJECTS_PATH/" | xargs -I{} dirname {} | fzf)
-	# selectedtest=$(fd -H --prune --exclude "node_modules" "^.git\$" "$PROJECTS_PATH/" | xargs -I{} dirname {})
-	# selected=$(find ~/Documents/projects -mindepth 1 -maxdepth 1 -type d | fzf)
+	# Build list of existing project directories
+	paths=()
+	for dir in "$HOME/Documents/Projects" "$HOME/Developer"; do
+		[[ -d "$dir" ]] && paths+=("$dir")
+	done
+	selected=$(fd -H --no-ignore-vcs --prune --exclude "node_modules" "^.git\$" "${paths[@]}" | xargs -I{} dirname {} | fzf)
 fi
 
 # Create an associative array with default score of 0 for all repos
@@ -40,7 +45,12 @@ echo "selected: $selected"
 if [[ -z $selected ]]; then
 	exit 0
 fi
-selected_name=$(echo "$selected" | sed -n "s|.*$PROJECTS_PATH/\(.*\)|\1|p" | tr / _ | tr . _)
+# Strip any known project base path to get relative name
+selected_name="$selected"
+for base in "$HOME/Documents/Projects" "$HOME/Developer"; do
+	selected_name="${selected_name#$base/}"
+done
+selected_name=$(echo "$selected_name" | tr / _ | tr . _)
 tmux_running=$(pgrep tmux)
 
 echo "selected name: $selected_name"

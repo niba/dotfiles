@@ -12,11 +12,10 @@ set -gx JJ_CONFIG "$XDG_CONFIG_HOME/jj/config.toml"
 set -gx TOPIARY_CONFIG_FILE "$XDG_CONFIG_HOME/topiary/languages.ncl"
 set -gx TOPIARY_LANGUAGE_DIR "$XDG_CONFIG_HOME/topiary/languages"
 
-# Projects directory - check if old location exists first
-if test -d "$HOME/Documents/Projects"
-    set -gx PROJECTS_PATH "$HOME/Documents/Projects"
-else
-    set -gx PROJECTS_PATH "$HOME/Developer"
+# Projects directories - include all that exist
+set -gx PROJECTS_PATHS
+for dir in "$HOME/Documents/Projects" "$HOME/Developer"
+    test -d $dir && set -a PROJECTS_PATHS $dir
 end
 
 set -q MANPATH || set -gx MANPATH ''
